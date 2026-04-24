@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     //     alt: "abdulrahman sameh portfo Preview",
     //   },
     // ],
-    // url: 'https://your-domain.com',
+    url: 'https://portfolite-mocha.vercel.app/',
   },
   twitter: {
     card: "summary_large_image",
