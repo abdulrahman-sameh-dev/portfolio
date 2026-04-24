@@ -1,7 +1,6 @@
 "use client";
 import { useId } from "react";
-import { motion } from "framer-motion"; // تأكد من اسم المكتبة عندك لو هي motion/react
-
+import { motion } from "motion/react";
 const HexNode = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
   const uniqueId = useId().replace(/:/g, ""); // توليد ID فريد للـ Gradients
   const nodes = [
