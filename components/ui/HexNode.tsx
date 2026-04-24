@@ -1,5 +1,5 @@
 "use client";
-import React, { useId } from "react";
+import { useId } from "react";
 import { motion } from "framer-motion"; // تأكد من اسم المكتبة عندك لو هي motion/react
 
 const HexNode = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
