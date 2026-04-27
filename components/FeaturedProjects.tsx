@@ -17,7 +17,7 @@ export const FeaturedProjects = () => {
       description: "Architecting a high-end digital agency focused on premium software solutions and elite branding.",
       tags: ["Product Strategy", "Full-Stack Architecture", "Next.js"],
       size: "large",
-      image: "/assets/Projects/DarkHub.png",
+      image: "/assets/Projects/Darkhub.png",
     },
     {
       id: "portfolite-platform",
