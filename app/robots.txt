@@ -1,0 +1,6 @@
+# Allow all crawlers to access the entire site.
+User-agent: *
+Allow: /
+
+# Point crawlers to the generated sitemap endpoint.
+Sitemap: https://portfolite-mocha.vercel.app/sitemap.xml
