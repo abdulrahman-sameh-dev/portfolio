@@ -5,11 +5,6 @@ import { AlignRightIcon } from "@/components/ui/align-right";
 import { motion, AnimatePresence } from "motion/react";
 import { XIcon } from "@/components/ui/x";
 import { usePathname } from "next/navigation";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 
 const MotionLink = motion.create(Link);
 
@@ -63,14 +58,15 @@ export const Navebar = () => {
       >
         Portfolite<span className="text-indigo-700">.</span>
       </Link>
-      {/* <HoverCard>
-        <HoverCardTrigger className=" text-3xl poppins-thin w-fit">
-          abdulrahman
-        </HoverCardTrigger>
-        <HoverCardContent>
-          The React Framework – created and maintained by @vercel.
-        </HoverCardContent>
-      </HoverCard> */}
+      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm">
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+        </span>
+        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">
+          System Building
+        </span>
+      </div>
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="relative cursor-pointer z-50"
@@ -106,42 +102,42 @@ export const Navebar = () => {
                 </button>
               </div>
               <div className="flex flex-col gap-4 pl-4">
-              <MotionLink
-                whileHover={{ x: 10 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => setIsOpen(false)}
-                variants={linkVariants}
-                href="/"
-              >
-                Home
-              </MotionLink>
-              <MotionLink
-                whileHover={{ x: 10 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => setIsOpen(false)}
-                variants={linkVariants}
-                href="/about"
-              >
-                About
-              </MotionLink>
-              <MotionLink
-                whileHover={{ x: 10 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => setIsOpen(false)}
-                variants={linkVariants}
-                href="/contact"
-              >
-                Contact
-              </MotionLink>
-              <MotionLink
-                whileHover={{ x: 10 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => setIsOpen(false)}
-                variants={linkVariants}
-                href="/get_start"
-              >
-                Get Started
-              </MotionLink>
+                <MotionLink
+                  whileHover={{ x: 10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => setIsOpen(false)}
+                  variants={linkVariants}
+                  href="/"
+                >
+                  Home
+                </MotionLink>
+                <MotionLink
+                  whileHover={{ x: 10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => setIsOpen(false)}
+                  variants={linkVariants}
+                  href="/about"
+                >
+                  About
+                </MotionLink>
+                <MotionLink
+                  whileHover={{ x: 10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => setIsOpen(false)}
+                  variants={linkVariants}
+                  href="/contact"
+                >
+                  Contact
+                </MotionLink>
+                <MotionLink
+                  whileHover={{ x: 10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => setIsOpen(false)}
+                  variants={linkVariants}
+                  href="/get_start"
+                >
+                  Get Started
+                </MotionLink>
               </div>
             </motion.div>
           </motion.nav>
