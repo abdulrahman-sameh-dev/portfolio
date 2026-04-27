@@ -1,6 +1,6 @@
 "use client"
+import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { SiNextdotjs, SiReact, SiDocker, SiGithub, SiLinux, SiLivekit, SiMongodb, SiNodedotjs, SiTailwindcss, SiFramer, SiGit } from 'react-icons/si'
 
 // البيانات المحدثة بناءً على خبرتك الحقيقية
