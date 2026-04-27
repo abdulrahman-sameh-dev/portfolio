@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import NavigationWrapper from "@/components/NavigationWrapper";
+import { Analytics } from "@vercel/analytics/next"
+import { Toaster } from "@/components/ui/sonner"
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,14 +40,14 @@ export const metadata: Metadata = {
       "Building Scalable Software Solutions with an Engineering Mindset.",
     type: "website",
     locale: "en_US",
-    // images: [
-    //   {
-    //     url: "/og-main.png",
-    //     width: 1200,
-    //     height: 630,
-    //     alt: "abdulrahman sameh portfo Preview",
-    //   },
-    // ],
+    images: [
+      {
+        url: "/assets/MetaDeta.png",
+        width: 1200,
+        height: 630,
+        alt: "abdulrahman sameh portfo Preview",
+      },
+    ],
     url: 'https://portfolite-mocha.vercel.app/',
   },
   twitter: {
@@ -72,6 +75,8 @@ export default function RootLayout({
         {process.env.NODE_ENV === "development" && (
           <Script src="http://localhost:8097" strategy="afterInteractive" />
         )}
+        <Analytics /> 
+        <Toaster />
       </body>
     </html>
   );
