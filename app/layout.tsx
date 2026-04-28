@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     default: "Abdulrahman Sameh | Full Stack Developer",
     template: "%s | Abdulrahman Sameh", // عشان لو عملت صفحات تانية زي /projects
   },
+  verification: {
+    google: "OZK-VlhBTdy11FQf4a0uuq-rjERT39lDsJ1ag_0up0o", // حط الكود اللي بعد كلمة content هنا
+  },
   description:
     "Professional Full Stack Developer & DevOps enthusiast specializing in building scalable web systems, Next.js architecture, and high-performance solutions.",
   keywords: [
