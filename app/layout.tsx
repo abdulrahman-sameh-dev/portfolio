@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://portfolite-mocha.vercel.app/'),
   title: {
     default: "Abdulrahman Sameh | Full Stack Developer",
     template: "%s | Abdulrahman Sameh", // عشان لو عملت صفحات تانية زي /projects

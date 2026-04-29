@@ -70,7 +70,7 @@ const Hero = () => {
       </motion.div>
 
       {/* الـ HexNode كـ Background */}
-      <div className="absolute top-1/2 -translate-y-1/2 -right-30 w-full max-w-[700px] opacity-50 md:opacity-100 transition-opacity pt-20">
+      <div className="absolute top-1/2 -translate-y-1/2 hidden lg:flex -right-30 w-full max-w-[700px] opacity-50 md:opacity-100 transition-opacity pt-20">
         <HexNode className="w-2/3" />
       </div>
     </section>

@@ -5,6 +5,7 @@ import { AlignRightIcon } from "@/components/ui/align-right";
 import { motion, AnimatePresence } from "motion/react";
 import { XIcon } from "@/components/ui/x";
 import { usePathname } from "next/navigation";
+import { Button } from "./ui/button";
 
 const MotionLink = motion.create(Link);
 
@@ -58,7 +59,7 @@ export const Navebar = () => {
       >
         Portfolite<span className="text-indigo-700">.</span>
       </Link>
-      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm">
+      <div className="lg:flex items-center gap-2 px-3 py-1 rounded-full hidden bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm">
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
@@ -94,12 +95,13 @@ export const Navebar = () => {
                 <h1 className="items-center text-3xl tracking-wider font-bold text-white">
                   Portfolite<span className="text-indigo-700">.</span>
                 </h1>
-                <button
+                <Button
+                  variant={"outline"}
                   onClick={() => setIsOpen(!isOpen)}
                   className="w-fit self-end cursor-pointer"
                 >
                   <XIcon />
-                </button>
+                </Button>
               </div>
               <div className="flex flex-col gap-4 pl-4">
                 <MotionLink

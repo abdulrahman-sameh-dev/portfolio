@@ -3,6 +3,7 @@ import { FeaturedProjects } from '@/components/FeaturedProjects'
 import Hero from '@/components/Hero'
 import StackGrid from '@/components/StackGrid'
 import ContactForm from '@/components/ContactForm'
+import Footer from '@/components/Footer'
 
 const page = () => {
 
@@ -15,6 +16,8 @@ const page = () => {
       <StackGrid />
 
       <ContactForm />
+
+      <Footer />
     </section>
   )
 }
