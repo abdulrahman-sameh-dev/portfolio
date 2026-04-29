@@ -143,9 +143,9 @@ export const Navebar = () => {
                 <div className="space-y-4">
                   <h4 className="text-zinc-600 font-mono text-[10px] uppercase tracking-[0.4em] font-bold">Connect</h4>
                   <div className="flex gap-8">
-                    <Link href="https://github.com/abdulrahmansameh" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><GithubIcon size={24}/></Link>
-                    <Link href="https://linkedin.com/in/abdulrahman-sameh" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><LinkedinIcon size={24}/></Link>
-                    <Link href="https://x.com/abdulrahman_dev" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><TwitterIcon size={24}/></Link>
+                    <Link href="https://github.com/abdulrahman-sameh-dev" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><GithubIcon size={24}/></Link>
+                    <Link href="https://www.linkedin.com/in/abdulrahman-sameh-dev/" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><LinkedinIcon size={24}/></Link>
+                    <Link href="https://x.com/darkhub_dev" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><TwitterIcon size={24}/></Link>
                   </div>
                 </div>
 

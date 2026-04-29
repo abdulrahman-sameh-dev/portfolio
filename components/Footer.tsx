@@ -6,9 +6,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { name: "GitHub", href: "https://github.com/abdulrahman.sameh.dev", icon: <GithubIcon size={16} /> },
-    { name: "LinkedIn", href: "https://linkedin.com/in/abdulrahman-sameh", icon: <LinkedinIcon size={16} /> },
-    { name: "X (Twitter)", href: "https://x.com/abdulrahman_dev", icon: <TwitterIcon size={16} /> },
+    { name: "GitHub", href: "https://github.com/abdulrahman-sameh-dev", icon: <GithubIcon size={16} /> },
+    { name: "LinkedIn", href: "https://www.linkedin.com/in/abdulrahman-sameh-dev/", icon: <LinkedinIcon size={16} /> },
+    { name: "X (Twitter)", href: "https://x.com/darkhub_dev", icon: <TwitterIcon size={16} /> },
   ];
 
   return (
