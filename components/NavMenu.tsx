@@ -6,7 +6,7 @@ import { XIcon, GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-animated";
 import { Button } from "./ui/button";
 import { Globe } from "lucide-react";
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 interface NavMenuProps {
   isOpen: boolean;
