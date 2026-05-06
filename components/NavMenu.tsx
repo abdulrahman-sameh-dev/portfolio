@@ -52,7 +52,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="fixed inset-0 z-110 bg-black p-6 md:p-12 flex flex-col overflow-hidden"
+          className="fixed inset-0 max-sm:overflow-y-auto z-110 bg-black p-6 md:p-12 flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div className="flex justify-between items-center mb-8 md:mb-12">

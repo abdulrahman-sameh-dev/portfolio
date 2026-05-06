@@ -231,20 +231,15 @@ export default function StackGrid() {
                   <div className="relative w-10 h-10 rounded-xl backdrop-blur-2xl bg-indigo-400/50 flex items-center justify-center border border-zinc-800 transition-all duration-500 overflow-hidden text-white">
                     {/* طبقة اللون اللي بتظهر في الـ Hover فقط */}
                     <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ backgroundColor: skill.color }}
-                    />
+  className="absolute inset-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
+  style={{ backgroundColor: skill.color }}
+/>
 
                     {/* الأيقونة - بتتحول للأسود في الـ Hover عشان الخلفية نورت */}
                     <skill.Icon
-                      className="w-5 h-5 relative z-10 transition-all duration-500 grayscale group-hover:grayscale-0 "
-                      style={{
-                        color:
-                          activeTab === skill.category || activeTab === "All"
-                            ? skill.textColor
-                            : "inherit",
-                      }}
-                    />
+  className="w-5 h-5 relative z-10 transition-all duration-500 grayscale-0 md:grayscale md:group-hover:grayscale-0"
+  style={{ color: skill.textColor }}
+/>
                   </div>
                   <span className="text-[12px] font-mono text-zinc-600 group-hover:text-indigo-400">
                     // {skill.level}

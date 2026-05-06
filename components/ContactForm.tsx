@@ -58,7 +58,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="py-24 scroll-mt-24 px-6 max-w-7xl mx-auto min-h-[85vh]">
+    <section id="contact" className="py-24 scroll-mt-24 px-6 max-sm:px-2 max-w-7xl mx-auto min-h-[85vh]">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         
         <div className="space-y-8 lg:sticky lg:top-24">
@@ -78,7 +78,7 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className="p-8 rounded-xl border border-zinc-800 bg-zinc-950/50 backdrop-blur-sm shadow-2xl">
+        <div className="max-sm:p-6 p-8 rounded-xl border border-zinc-800 bg-zinc-950/50 backdrop-blur-sm shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

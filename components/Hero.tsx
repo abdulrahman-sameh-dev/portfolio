@@ -59,11 +59,11 @@ const Hero = () => {
         </motion.p>
 
         {/* الأزرار */}
-        <motion.div variants={item} className="flex gap-6">
-          <Button className="w-fit text-xl text-white bg-linear-30 from-indigo-700 to-indigo-400 border-0 py-6 px-6 md:px-8">
+        <motion.div variants={item} className="flex gap-6 max-sm:gap-4">
+          <Button className="w-fit text-xl text-white bg-linear-30 from-indigo-700 to-indigo-400 border-0 py-6 md:px-8">
             Get Started
           </Button>
-          <Button className="w-fit text-xl bg-white/0 text-white border-indigo-300/40 border py-6 px-6 md:px-8">
+          <Button className="w-fit text-xl bg-white/0 text-white border-indigo-300/40 border py-6 md:px-8">
             Learn More <ArrowUpRightIcon />
           </Button>
         </motion.div>

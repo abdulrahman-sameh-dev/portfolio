@@ -67,7 +67,7 @@ export const FeaturedProjects = () => {
         </p>
       </motion.div>
 
-      <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[350px]">
+      <div className="relative grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[350px] max-sm:auto-rows-auto max-sm:gap-4">
         <div className="absolute inset-0 bg-linear-to-t from-[#050505] via-[#050505]/80 to-transparent rounded-b-2xl" />
 
         {/* Dark Hub - المربع الكبير */}

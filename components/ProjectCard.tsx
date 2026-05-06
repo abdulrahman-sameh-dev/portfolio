@@ -33,8 +33,9 @@ const ProjectCard = ({ project }: ProjectProps) => {
   return (
     <motion.div
       whileHover={{ y: -5 }}
-      className="group relative h-full w-full overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/20 backdrop-blur-2xl p-8 hover:border-indigo-500/50 transition-all duration-500"
+      className="group relative h-full w-full overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/20 backdrop-blur-2xl p-8 max-sm:py-6 hover:border-indigo-500/50 transition-all duration-500"
     >
+        <div className="absolute inset-0 bg-linear-to-tr from-indigo-300/5 flex md:hidden via-indigo-600/15 m-1 backdrop-blur-3xl opacity-50 from-35% z-20 to-transparent rounded-2xl" />
       {/* 1. Background Image Layer */}
       {project.image && (
         <div className="absolute inset-0 z-0">
