@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import { GithubIcon, ArrowUpRightIcon, LinkedinIcon, TwitterIcon } from "lucide-animated";
 

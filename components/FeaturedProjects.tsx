@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "motion/react";
 import ProjectCard from "@/components/ProjectCard";
 import { Button } from "./ui/button";

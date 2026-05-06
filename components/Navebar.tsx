@@ -1,4 +1,3 @@
-// components/Navebar.tsx
 "use client";
 import Link from "next/link";
 import { AlignRightIcon } from "lucide-animated";

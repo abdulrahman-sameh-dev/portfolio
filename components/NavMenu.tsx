@@ -1,6 +1,5 @@
-// components/NavMenu.tsx
 "use client";
-import { motion, AnimatePresence, Variants } from "motion/react"; // أو motion/react حسب نسختك
+import { motion, AnimatePresence, Variants } from "motion/react";
 import Link from "next/link";
 import { XIcon, GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-animated";
 import { Button } from "./ui/button";

@@ -1,5 +1,5 @@
 "use client";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { GithubIcon, ArrowUpRightIcon, BoxIcon, LockIcon, TerminalIcon } from "lucide-animated";
 import { Button } from "./ui/button";
 import Image from "next/image";

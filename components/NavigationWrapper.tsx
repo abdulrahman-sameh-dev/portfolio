@@ -1,6 +1,4 @@
-// components/NavigationWrapper.tsx
 "use client";
-
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { Navebar } from "./Navebar";

@@ -3,9 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef } from 'react'
 import { SiNextdotjs, SiReact, SiDocker, SiGithub, SiLinux, SiLivekit, SiMongodb, SiNodedotjs, SiTailwindcss, SiFramer, SiGit } from 'react-icons/si'
 
-// البيانات المحدثة بناءً على خبرتك الحقيقية
 const skills = [
-  // Frontend
   {
     id: 1,
     name: "Next.js 15",

@@ -5,6 +5,7 @@ import Script from "next/script";
 import NavigationWrapper from "@/components/NavigationWrapper";
 import { Analytics } from "@vercel/analytics/next"
 import { Toaster } from "@/components/ui/sonner"
+import CustomCursor from "@/components/ui/CustomCursor";
 
 
 const geistSans = Geist({
@@ -82,6 +83,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#050505] text-white flex flex-col`}
       >
+        <CustomCursor />
         <NavigationWrapper />
         {/* الـ container يكون هنا عشان يتحكم في عرض المحتوى بس */}
         <main className="relative grow container mx-auto px-4 pt-20">{children}</main>
