@@ -84,7 +84,7 @@ export default function RootLayout({
       >
         <NavigationWrapper />
         {/* الـ container يكون هنا عشان يتحكم في عرض المحتوى بس */}
-        <main className="relative grow container mx-auto px-4">{children}</main>
+        <main className="relative grow container mx-auto px-4 pt-20">{children}</main>
         {process.env.NODE_ENV === "development" && (
           <Script src="http://localhost:8097" strategy="afterInteractive" />
         )}

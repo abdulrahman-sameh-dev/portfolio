@@ -1,203 +1,34 @@
+// components/Navebar.tsx
 "use client";
-
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { AlignRightIcon } from "@/components/ui/align-right";
-import { motion, AnimatePresence, Variants } from "motion/react"; // استيراد Variants هنا
-import { XIcon } from "@/components/ui/x";
-import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
-import { GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-animated";
-import { Globe } from "lucide-react";
+import { AlignRightIcon } from "lucide-animated";
 
-const MotionLink = motion.create(Link);
-
-export const Navebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-
-  // 1. تعريف الـ Variants بنوع صريح لحل مشكلة الـ TypeScript
-  const menuVariants: Variants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        duration: 0.5, 
-        ease: "circOut", 
-        staggerChildren: 0.1,
-        when: "beforeChildren"
-      } 
-    },
-    exit: { 
-      opacity: 0, 
-      transition: { duration: 0.3, ease: "circIn" } 
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { x: -20, opacity: 0 },
-    visible: { 
-      x: 0, 
-      opacity: 1,
-      transition: { duration: 0.4, ease: "easeOut" }
-    }
-  };
-
-  // 2. إدارة الـ Side Effects
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [isOpen]);
-
+export const Navebar = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
   return (
-    <nav className="flex justify-between items-center p-6 w-full max-w-7xl mx-auto z-100 relative">
-      {/* Logo */}
+    <nav className="flex justify-between items-center p-4 w-full max-w-7xl mx-auto z-100 relative">
       <Link href="/" className="text-2xl font-bold text-white tracking-tighter group transition-all">
         Abdulrahman<span className="text-indigo-600 group-hover:animate-pulse">.</span>
       </Link>
 
-      {/* Right Side: Quick Status + Toggle */}
       <div className="flex items-center gap-6">
-        {/* <div className="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm shadow-sm">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-medium">
-            Available for Hire
-          </span>
-        </div> */}
-
         <div className="lg:flex items-center gap-2 px-3 py-1 rounded-full hidden bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-        </span>
-        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">
-          System Building
-        </span>
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+          </span>
+          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">System Building</span>
         </div>
-        
-        <button 
-          onClick={() => setIsOpen(true)}
+
+        <button
+          onClick={onOpenMenu}
           className="p-2 hover:bg-zinc-900 rounded-xl transition-all active:scale-90 cursor-pointer"
-          aria-label="Open Menu"
         >
           <AlignRightIcon className="w-8 h-8 text-white" />
         </button>
       </div>
-
-      {/* Fullscreen Overlay Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="fixed inset-0 z-110 bg-black p-6 md:p-12 flex flex-col overflow-hidden"
-          >
-            {/* Menu Header */}
-            <div className="flex justify-between items-center mb-8 md:mb-12">
-              <span className="text-sm font-mono text-zinc-400/80 uppercase tracking-[0.3em]">Navigation System</span>
-              <Button 
-                variant="outline" 
-                onClick={() => setIsOpen(false)}
-                className="rounded-full w-12 h-12  border-zinc-800 hover:bg-zinc-900 hover:text-white cursor-pointer transition-transform active:scale-90"
-              >
-                <XIcon size={40} className="" />
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 grow items-center">
-              {/* Left Side: Navigation Links */}
-              <div className="flex flex-col gap-2 md:gap-4">
-                {["Home", "About", "Projects", "Contact"].map((item) => (
-                  <motion.div key={item} variants={itemVariants}>
-                    <MotionLink
-                      href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                      className="text-5xl md:text-8xl font-bold text-zinc-400 lg:text-zinc-600 hover:text-white transition-all tracking-tighter inline-block"
-                      whileHover={{ x: 25, transition: { duration: 0.3 } }}
-                    >
-                      {item}<span className="text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity">.</span>
-                    </MotionLink>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Right Side: System Info Panels */}
-              <motion.div 
-                variants={itemVariants}
-                className="flex flex-col space-y-10 lg:pl-16 lg:border-l border-zinc-900"
-              >
-                {/* Social Links Section */}
-                <div className="space-y-4">
-                  <h4 className="text-zinc-600 font-mono text-[10px] uppercase tracking-[0.4em] font-bold">Connect</h4>
-                  <div className="flex gap-8">
-                    <Link href="https://github.com/abdulrahman-sameh-dev" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><GithubIcon size={24}/></Link>
-                    <Link href="https://www.linkedin.com/in/abdulrahman-sameh-dev/" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><LinkedinIcon size={24}/></Link>
-                    <Link href="https://x.com/darkhub_dev" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"><TwitterIcon size={24}/></Link>
-                  </div>
-                </div>
-
-                {/* Location Display */}
-                <div className="space-y-4">
-                  <h4 className="text-zinc-600 font-mono text-[10px] uppercase tracking-[0.4em] font-bold">HQ Location</h4>
-                  <div className="flex items-center gap-3 text-zinc-200 text-lg font-medium">
-                    <Globe size={20} className="text-indigo-500 animate-pulse" />
-                    <span>Cairo, Egypt — GMT+2</span>
-                  </div>
-                </div>
-
-                {/* Current Project Snapshot */}
-                <div className="p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-md space-y-4 max-w-sm shadow-2xl">
-                  <div className="flex justify-between items-start">
-                    <p className="text-zinc-500 text-xs font-mono">Current Focus</p>
-                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">65%</span>
-                  </div>
-                  <p className="text-white font-bold text-lg tracking-tight">Portfolite Platform Architecture</p>
-                  <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
-                    <motion.div 
-                      className="h-full bg-indigo-500"
-                      initial={{ width: 0 }}
-                      animate={{ width: "65%" }}
-                      transition={{ duration: 1.5, delay: 0.8 }}
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Menu Footer Line */}
-            <div className="mt-auto pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4">
-              <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.3em]">
-                © 2026 Abdulrahman Sameh / Systems Architect
-              </span>
-              <div className="flex gap-4">
-                <span className="text-foreground text-[10px] font-mono uppercase tracking-[0.3em]">
-                  V1.0.4-Stable
-                </span>
-                <span className="text-indigo-700 text-[10px] font-mono uppercase tracking-[0.3em]">
-                  Next.js 14
-                </span>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </nav>
   );
 };
-
 // "use client";
 
 // import Link from "next/link";
@@ -217,10 +48,10 @@ export const Navebar = () => {
 
 //   const menuVariants: Variants = {
 //     hidden: { opacity: 0, scale: 0.98 },
-//     visible: { 
-//       opacity: 1, 
+//     visible: {
+//       opacity: 1,
 //       scale: 1,
-//       transition: { duration: 0.4, ease: "circOut", staggerChildren: 0.1, when: "beforeChildren" } 
+//       transition: { duration: 0.4, ease: "circOut", staggerChildren: 0.1, when: "beforeChildren" }
 //     },
 //     exit: { opacity: 0, transition: { duration: 0.3 } }
 //   };
@@ -259,7 +90,7 @@ export const Navebar = () => {
 //           </span>
 //         </div>
 
-//         <button 
+//         <button
 //           onClick={() => setIsOpen(true)}
 //           className="p-2 hover:bg-zinc-900 rounded-xl transition-all cursor-pointer border border-transparent hover:border-zinc-800"
 //         >
@@ -282,8 +113,8 @@ export const Navebar = () => {
 //                 <Box className="text-indigo-500" size={24} />
 //                 <span className="text-lg font-bold text-white tracking-widest uppercase">System Menu</span>
 //               </div>
-//               <Button 
-//                 variant="outline" 
+//               <Button
+//                 variant="outline"
 //                 onClick={() => setIsOpen(false)}
 //                 className="rounded-full w-14 h-14 border-zinc-700 hover:bg-white hover:text-black cursor-pointer transition-all"
 //               >
@@ -308,7 +139,7 @@ export const Navebar = () => {
 //               </div>
 
 //               {/* Sidebar Info - High Contrast */}
-//               <motion.div 
+//               <motion.div
 //                 variants={itemVariants}
 //                 className="flex flex-col justify-center space-y-12 lg:border-l lg:border-zinc-800 lg:pl-16"
 //               >
@@ -341,7 +172,7 @@ export const Navebar = () => {
 //                     Portfolite SaaS Core
 //                   </p>
 //                   <div className="w-full h-3 bg-zinc-800 rounded-full overflow-hidden border border-zinc-700">
-//                     <motion.div 
+//                     <motion.div
 //                       className="h-full bg-indigo-500"
 //                       initial={{ width: 0 }}
 //                       animate={{ width: "65%" }}

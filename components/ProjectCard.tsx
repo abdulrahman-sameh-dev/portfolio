@@ -42,6 +42,7 @@ const ProjectCard = ({ project }: ProjectProps) => {
             src={project.image}
             alt={project.title}
             fill
+            sizes="100"
             className="object-cover opacity-20 group-hover:opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-linear-to-t from-[#050505] via-[#050505]/90 to-transparent" />
