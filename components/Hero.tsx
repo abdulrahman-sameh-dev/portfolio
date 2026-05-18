@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import HexNode from "@/components/ui/HexNode";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightIcon } from "@/components/ui/arrow-up-right";
+import Link from "next/link";
 
 const Hero = () => {
   // تعريف الـ Animation Variants للـ Staggering
@@ -60,11 +61,15 @@ const Hero = () => {
 
         {/* الأزرار */}
         <motion.div variants={item} className="flex gap-6 max-sm:gap-4">
-          <Button className="w-fit text-xl text-white bg-linear-30 from-indigo-700 to-indigo-400 border-0 py-6 md:px-8">
+          <Button className="w-fit text-xl text-white bg-linear-30 from-indigo-700 to-indigo-400 border-0 py-6 md:px-8" asChild>
+            <Link href={"#contact"} type="Get Started">
             Get Started
+            </Link>
           </Button>
-          <Button className="w-fit text-xl bg-white/0 text-white border-indigo-300/40 border py-6 md:px-8">
+          <Button className="w-fit text-xl bg-white/0 group text-white hover:bg-white/1 border-indigo-300/40 border py-6 md:px-8" asChild>
+            <Link href={"/about"} type="Learn more about me" className="group-hover:bg-white/1">
             Learn More <ArrowUpRightIcon />
+            </Link>
           </Button>
         </motion.div>
       </motion.div>
