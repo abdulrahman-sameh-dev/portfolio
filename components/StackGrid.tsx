@@ -1,12 +1,12 @@
 "use client"
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react';
 import { SiNextdotjs, SiReact, SiDocker, SiGithub, SiLinux, SiLivekit, SiMongodb, SiNodedotjs, SiTailwindcss, SiFramer, SiGit } from 'react-icons/si'
 
 const skills = [
   {
     id: 1,
-    name: "Next.js 15",
+    name: "Next.js 16",
     category: "Frontend",
     level: "Expert",
     desc: "App Router, Server Actions & High-performance rendering.",
@@ -124,46 +124,9 @@ const categories = ["All", "Frontend", "Backend", "DevOps"];
 
 export default function StackGrid() {
   const [activeTab, setActiveTab] = useState("All");
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  
-  const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
-  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
-  const resumeTimer = useRef<NodeJS.Timeout | null>(null);
 
-  // منطق التبديل التلقائي
-  const startAutoPlay = () => {
-    stopAutoPlay(); // للتأكد من عدم وجود عدادين في نفس الوقت
-    autoPlayTimer.current = setInterval(() => {
-      setActiveTab((prev) => {
-        const currentIndex = categories.indexOf(prev);
-        return categories[(currentIndex + 1) % categories.length];
-      });
-    }, 4000);
-  };
-
-  const stopAutoPlay = () => {
-    if (autoPlayTimer.current) clearInterval(autoPlayTimer.current);
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-  };
-
-  useEffect(() => {
-    if (isAutoPlaying) startAutoPlay();
-    return () => stopAutoPlay();
-  }, [isAutoPlaying]);
-
-  // التغيير عند الـ Hover على زر الفلتر
-  const handleFilterHover = (cat: string) => {
-    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
-    
-    hoverTimeout.current = setTimeout(() => {
-      setActiveTab(cat);
-      setIsAutoPlaying(false); // وقف العداد لأن المستخدم يتفاعل
-      
-      // ارجع شغل العداد بعد 8 ثواني من "آخر" تفاعل للمستخدم
-      resumeTimer.current = setTimeout(() => {
-        setIsAutoPlaying(true);
-      }, 8000);
-    }, 150); // تأخير بسيط لمنع التبديل العشوائي
+  const handleFilterClick = (cat: string) => {
+    setActiveTab(cat);
   };
 
   const filteredSkills = activeTab === "All" ? skills : skills.filter(s => s.category === activeTab);
@@ -171,8 +134,6 @@ export default function StackGrid() {
   return (
     <section
       className="px-6 max-w-6xl mx-auto min-h-[90vh] items-center flex flex-col justify-center"
-      onMouseEnter={stopAutoPlay} // وقف العداد لما الماوس يدخل منطقة العمل
-      onMouseLeave={() => isAutoPlaying && startAutoPlay()} // ارجع شغله لو مسموح
     >
       <div className="text-center mb-12">
         <h2 className="text-5xl font-bold text-white mb-3">
@@ -188,8 +149,8 @@ export default function StackGrid() {
         {categories.map((cat) => (
           <button
             key={cat}
-            onMouseEnter={() => handleFilterHover(cat)}
-            className={`relative px-6 py-2 rounded-full text-xs font-medium transition-all duration-300 ${
+            onClick={() => handleFilterClick(cat)}
+            className={`relative px-6 py-2 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
               activeTab === cat
                 ? "text-white"
                 : "text-zinc-500 hover:text-zinc-300"
@@ -240,7 +201,7 @@ export default function StackGrid() {
 />
                   </div>
                   <span className="text-[12px] font-mono text-zinc-600 group-hover:text-indigo-400">
-                    // {skill.level}
+                    {skill.level}
                   </span>
                 </div>
 

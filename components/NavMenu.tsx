@@ -111,13 +111,13 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                   Connect
                 </h4>
                 <div className="flex gap-8">
-                  <Link href="https://github.com" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
+                  <Link href="https://github.com" target="_blank" aria-label="GitHub" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
                     <GithubIcon size={24} />
                   </Link>
-                  <Link href="https://linkedin.com" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
+                  <Link href="https://linkedin.com" target="_blank" aria-label="LinkedIn" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
                     <LinkedinIcon size={24} />
                   </Link>
-                  <Link href="https://x.com" target="_blank" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
+                  <Link href="https://x.com" target="_blank" aria-label="X (Twitter)" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
                     <TwitterIcon size={24} />
                   </Link>
                 </div>
@@ -135,7 +135,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
               </div>
 
               {/* Project Card */}
-              <div className="p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-md space-y-4 max-w-sm shadow-2xl">
+              <div className="p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-md space-y-4 max-w-sm">
                 <div className="flex justify-between items-start">
                   <p className="text-zinc-500 text-xs font-mono">
                     Current Focus
@@ -172,7 +172,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                 V1.0.4-Stable
               </span>
               <span className="text-indigo-700 text-[10px] font-mono uppercase tracking-[0.3em]">
-                Next.js 14
+                Next.js 16
               </span>
             </div>
           </div>

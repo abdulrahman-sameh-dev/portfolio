@@ -76,7 +76,7 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className="max-sm:p-6 p-8 rounded-xl border border-zinc-800 bg-zinc-950/50 backdrop-blur-sm shadow-2xl">
+        <div className="max-sm:p-6 p-8 rounded-xl border border-zinc-800 bg-zinc-950/50 backdrop-blur-sm">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -88,6 +88,7 @@ export default function ContactForm() {
               <div className="space-y-2">
                 <Label htmlFor="lastName" className="text-zinc-300">Last Name</Label>
                 <Input id="lastName" {...register("lastName")} placeholder="Sameh" className="bg-zinc-900/50 border-zinc-800 focus-visible:ring-indigo-500" />
+                {errors.lastName && <p className="text-xs text-red-500">{errors.lastName.message}</p>}
               </div>
             </div>
 

@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "motion/react";
-import { GithubIcon, ArrowUpRightIcon, BoxIcon, LockIcon, TerminalIcon } from "lucide-animated";
+import { GithubIcon, ArrowUpRightIcon } from "lucide-animated";
+import { SchematicStack, SchematicFlow, SchematicPipeline } from "@/components/SchematicIcons";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,9 +24,9 @@ interface ProjectProps {
 const ProjectCard = ({ project }: ProjectProps) => {
   // دالة لتحديد أيقونة ونص الـ Hover بناءً على الحالة
   const getStatusOverlay = (status: string) => {
-    if (status.includes("Vision")) return { icon: <BoxIcon className="w-8 h-8" />, label: "Architecting Infrastructure" };
-    if (status.includes("Beta")) return { icon: <LockIcon className="w-8 h-8" />, label: "Private Beta Access" };
-    return { icon: <TerminalIcon className="w-8 h-8" />, label: "Compiling MVP" };
+    if (status.includes("Vision")) return { icon: <SchematicStack className="w-8 h-8" />, label: "Architecting Infrastructure" };
+    if (status.includes("Beta")) return { icon: <SchematicFlow className="w-8 h-8" />, label: "Private Beta Access" };
+    return { icon: <SchematicPipeline className="w-8 h-8" />, label: "Compiling MVP" };
   };
 
   const overlay = getStatusOverlay(project.status);

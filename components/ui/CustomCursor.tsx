@@ -36,10 +36,10 @@ export default function CustomCursor() {
 
   return (
     // المكون لا يظهر إلا في الشاشات الكبيرة (أكبر من Tablet)
-    <div className="hidden md:block pointer-events-none fixed inset-0 z-9999">
+    <div className="hidden md:block pointer-events-none fixed inset-0 z-130">
       {/* الدائرة الأساسية (The Core) */}
       <motion.div
-        className="absolute w-4 h-4 bg-indigo-500 rounded-full mix-blend-difference"
+        className="absolute w-4 h-4 bg-indigo-500 rounded-full"
         style={{ x: mainX, y: mainY, translateX: "-50%", translateY: "-50%" }}
         animate={{
           scale: isHovered ? 4 : 1,

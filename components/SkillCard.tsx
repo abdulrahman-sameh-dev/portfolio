@@ -1,7 +1,19 @@
 "use client"
 import { motion } from 'motion/react'
 
-export default function SkillCard({ skill }: { skill: any }) {
+interface Skill {
+  id: number;
+  name: string;
+  category: string;
+  level: string;
+  desc: string;
+  Icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  textColor: string;
+  color: string;
+  padding: string;
+}
+
+export default function SkillCard({ skill }: { skill: Skill }) {
   return (
     <motion.div
       layout

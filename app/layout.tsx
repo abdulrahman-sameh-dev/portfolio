@@ -6,6 +6,8 @@ import NavigationWrapper from "@/components/NavigationWrapper";
 import { Analytics } from "@vercel/analytics/next"
 import { Toaster } from "@/components/ui/sonner"
 import CustomCursor from "@/components/ui/CustomCursor";
+import TransitionLayout from "@/components/TransitionLayout";
+import CommandPalette from "@/components/CommandPalette";
 
 
 const geistSans = Geist({
@@ -85,8 +87,11 @@ export default function RootLayout({
       >
         <CustomCursor />
         <NavigationWrapper />
+        <CommandPalette />
         {/* الـ container يكون هنا عشان يتحكم في عرض المحتوى بس */}
-        <main className="relative grow container mx-auto px-4 pt-20">{children}</main>
+        <main className="relative grow container mx-auto px-4 pt-20">
+          <TransitionLayout>{children}</TransitionLayout>
+        </main>
         {process.env.NODE_ENV === "development" && (
           <Script src="http://localhost:8097" strategy="afterInteractive" />
         )}

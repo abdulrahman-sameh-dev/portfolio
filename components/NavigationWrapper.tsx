@@ -1,7 +1,7 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
-import { Navebar } from "./Navebar";
+import { Navbar } from "./Navbar";
 import { NavMenu } from "./NavMenu";
 
 export default function NavigationWrapper() {
@@ -111,7 +111,7 @@ export default function NavigationWrapper() {
           }
         `}
       >
-        <Navebar 
+        <Navbar 
           key={`${pathname}-${forceRebuild}`} 
           onOpenMenu={() => setIsOpen(true)} 
         />
