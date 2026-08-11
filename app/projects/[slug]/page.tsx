@@ -14,9 +14,32 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const project = siteConfig.projects.find((p) => p.slug === slug);
   if (!project) return {};
+
+  const title = `${project.title} — Case Study`;
+  const image = project.image ?? "/assets/MetaDeta.png";
+  const pageUrl = `${siteConfig.siteUrl}/projects/${project.slug}`;
+
   return {
-    title: `${project.title} — Case Study`,
+    title,
     description: project.description,
+    keywords: [...project.tags, ...project.architecture.stack],
+    alternates: {
+      canonical: pageUrl,
+    },
+    openGraph: {
+      title,
+      description: project.description,
+      url: pageUrl,
+      siteName: siteConfig.name,
+      type: "website",
+      images: [{ url: image, width: 1200, height: 630, alt: project.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: project.description,
+      images: [image],
+    },
   };
 }
 
@@ -25,8 +48,34 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ s
   const project = siteConfig.projects.find((p) => p.slug === slug);
   if (!project) notFound();
 
+  const pageUrl = `${siteConfig.siteUrl}/projects/${project.slug}`;
+  const imageUrl = project.image
+    ? `${siteConfig.siteUrl}${project.image}`
+    : `${siteConfig.siteUrl}/assets/MetaDeta.png`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: project.title,
+    description: project.description,
+    url: pageUrl,
+    image: imageUrl,
+    author: {
+      "@type": "Person",
+      name: siteConfig.name,
+    },
+    datePublished: project.datePublished,
+    applicationCategory: "WebApplication",
+    operatingSystem: "Web",
+    keywords: [...project.tags, ...project.architecture.stack].join(", "),
+  };
+
   return (
     <section className="border border-zinc-800/80 rounded-3xl overflow-hidden bg-zinc-900/[0.03]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ── Monitor Header ── */}
       <div className="flex items-center justify-between px-5 md:px-6 py-3 border-b border-zinc-800/60">
         <div className="flex items-center gap-3">

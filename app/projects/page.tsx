@@ -3,8 +3,9 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Layers } from "lucide-react";
+import { ArrowLeft, BookOpen, Layers, ArrowUpRight } from "lucide-react";
 import { SchematicStack, SchematicFlow, SchematicPipeline, SchematicNodes } from "@/components/SchematicIcons";
+import { siteConfig } from "@/lib/site";
 
 const systems = [
   {
@@ -146,6 +147,48 @@ export default function Projects() {
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Case Studies */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-5">
+              <BookOpen size={16} className="text-indigo-400" />
+              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-indigo-400">
+                Case Studies
+              </span>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {siteConfig.projects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className="group relative flex flex-col bg-zinc-900/60 p-6 rounded-3xl border border-zinc-800/50 hover:border-indigo-500/50 transition-colors duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-indigo-500/30 bg-indigo-500/10 text-indigo-400">
+                      {project.status}
+                    </span>
+                    <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-indigo-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2 tracking-tight group-hover:text-indigo-300 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-zinc-400 leading-relaxed mb-5 flex-1 line-clamp-3">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.slice(0, 3).map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-800/80 text-zinc-400 border border-zinc-700/50"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
 
           {/* Back Link */}

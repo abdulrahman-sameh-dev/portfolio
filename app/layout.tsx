@@ -9,6 +9,7 @@ import CustomCursor from "@/components/ui/CustomCursor";
 import TransitionLayout from "@/components/TransitionLayout";
 import CommandPalette from "@/components/CommandPalette";
 import MotionProvider from "@/components/MotionProvider";
+import { siteConfig } from "@/lib/site";
 
 
 const geistSans = Geist({
@@ -22,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolite-mocha.vercel.app/'),
+  metadataBase: new URL(siteConfig.siteUrl),
   title: {
     default: "Abdulrahman Sameh",
     template: "%s | Abdulrahman Sameh", // عشان لو عملت صفحات تانية زي /projects
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
         alt: "abdulrahman sameh portfo Preview",
       },
     ],
-    url: 'https://portfolite-mocha.vercel.app/',
+    url: siteConfig.siteUrl,
   },
   twitter: {
     card: "summary_large_image",

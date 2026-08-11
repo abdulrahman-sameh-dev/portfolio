@@ -6,6 +6,7 @@ export type Project = {
   tags: string[];
   size: "large" | "medium";
   image?: string;
+  datePublished: string;
   url?: {
     liveDemo?: string;
     github?: string;
@@ -26,6 +27,7 @@ export type Project = {
 export const siteConfig = {
   name: "Abdulrahman Sameh",
   email: "hello@abdulrahmansameh.dev",
+  siteUrl: "https://portfolite-mocha.vercel.app",
   resumeUrl: "/resume.pdf",
   availability: {
     label: "Available for Full-time & Contract Roles",
@@ -46,6 +48,7 @@ export const siteConfig = {
       tags: ["Product Strategy", "Full-Stack Architecture", "Next.js"],
       size: "large",
       image: "/assets/Projects/Darkhub.png",
+      datePublished: "2026-01-15",
       overview:
         "The flagship vision of Dark Hub — a premium digital product studio engineering software and brand experiences for teams that refuse to look generic.",
       problem:
@@ -74,6 +77,7 @@ export const siteConfig = {
         "A specialized platform for developers to deploy premium portfolios with zero design effort and custom subdomains.",
       tags: ["Multi-tenancy", "SaaS", "Wildcard Domains", "Next.js"],
       size: "medium",
+      datePublished: "2026-02-01",
       overview:
         "Portfolite is a platform for developers who want a premium portfolio without the design grind — isolated workspaces, custom subdomains, and one-command deploys.",
       problem:
@@ -102,6 +106,7 @@ export const siteConfig = {
         "Low-latency video conferencing platform utilizing WebRTC for seamless real-time collaboration.",
       tags: ["WebRTC", "Socket.io", "Real-time"],
       size: "medium",
+      datePublished: "2026-03-01",
       overview:
         "Red Connect is a real-time collaboration platform engineered for low-latency video, with a pragmatic upgrade path from peer-to-peer rooms to SFU-backed scale.",
       problem:
