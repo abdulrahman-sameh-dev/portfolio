@@ -5,20 +5,10 @@ import { SchematicStack, SchematicFlow, SchematicPipeline } from "@/components/S
 import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import type { Project } from "@/lib/site";
 
 interface ProjectProps {
-  project: {
-    id: string;
-    title: string;
-    url: {
-      liveDemo: string;
-      github: string;
-    };
-    status: string;
-    description: string;
-    tags: string[];
-    image?: string;
-  };
+  project: Project;
 }
 
 const ProjectCard = ({ project }: ProjectProps) => {
@@ -90,7 +80,12 @@ const ProjectCard = ({ project }: ProjectProps) => {
           </div>
 
           <h3 className="text-3xl font-bold text-white mb-4 tracking-tight">
-            {project.title}
+            <Link
+              href={`/projects/${project.slug}`}
+              className="hover:text-indigo-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded-lg"
+            >
+              {project.title}
+            </Link>
           </h3>
 
           <p className="text-zinc-400 leading-relaxed mb-6 line-clamp-3">
@@ -112,18 +107,28 @@ const ProjectCard = ({ project }: ProjectProps) => {
 
 
           <div className="flex flex-row gap-2 justify-end grow">
-            <Link href={project.url.liveDemo} >
-            <Button className="text-white bg-linear-30 cursor-pointer from-indigo-700 to-indigo-400 border-0 ">
-              Live Demo
-              <ArrowUpRightIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
-            </Button>
+            <Link href={`/projects/${project.slug}`}>
+              <Button className="text-white bg-linear-30 cursor-pointer from-indigo-700 to-indigo-400 border-0">
+                Case Study
+                <ArrowUpRightIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
+              </Button>
             </Link>
-            <Link href={project.url.github} >
-            <Button className="bg-white/0 text-white cursor-pointer border-indigo-300/40 ">
-              GitHub
-              <GithubIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
-            </Button>
-            </Link>
+            {project.url?.liveDemo && (
+              <Link href={project.url.liveDemo} target="_blank" rel="noopener noreferrer">
+                <Button className="bg-white/0 text-white cursor-pointer border-indigo-300/40">
+                  Live Demo
+                  <ArrowUpRightIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
+                </Button>
+              </Link>
+            )}
+            {project.url?.github && (
+              <Link href={project.url.github} target="_blank" rel="noopener noreferrer">
+                <Button className="bg-white/0 text-white cursor-pointer border-indigo-300/40">
+                  GitHub
+                  <GithubIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

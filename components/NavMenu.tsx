@@ -126,7 +126,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 grow items-center">
             {/* Links */}
             <div className="flex flex-col gap-2 md:gap-4">
-              {["Home", "About", "Projects", "Get in touch"].map((item) => (
+              {["Home", "About", "Projects", "Resume", "Get in touch"].map((item) => (
                 <motion.div key={item} variants={itemVariants}>
                   <MotionLink
                     href={
@@ -134,8 +134,12 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                         ? "/"
                         : item === "Get in touch"
                         ? "/#contact"
+                        : item === "Resume"
+                        ? siteConfig.resumeUrl
                         : `/${item.toLowerCase()}`
                     }
+                    target={item === "Resume" ? "_blank" : undefined}
+                    rel={item === "Resume" ? "noopener noreferrer" : undefined}
                     onClick={(e) => {
                       if (item === "Get in touch") {
                         handleContactClick(e);

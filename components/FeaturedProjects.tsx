@@ -2,52 +2,10 @@ import { motion } from "motion/react";
 import ProjectCard from "@/components/ProjectCard";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { siteConfig } from "@/lib/site";
 
 export const FeaturedProjects = () => {
-  const projects = [
-    {
-      id: "dark-hub",
-      title: "Dark Hub",
-      url: {
-        liveDemo: "https://www.darkhub.dev/",
-        github: "https://www.darkhub.dev/",
-      },
-      status: "The Vision",
-      description:
-        "Architecting a high-end digital agency focused on premium software solutions and elite branding.",
-      tags: ["Product Strategy", "Full-Stack Architecture", "Next.js"],
-      size: "large",
-      image: "/assets/Projects/Darkhub.png",
-    },
-    {
-      id: "portfolite-platform",
-      title: "Portfolite SaaS",
-      url: {
-        liveDemo: "https://www.darkhub.dev/",
-        github: "https://www.darkhub.dev/",
-      },
-      status: "Beta / In-Concept",
-      description:
-        "A specialized platform for developers to deploy premium portfolios with zero design effort and custom subdomains.",
-      tags: ["Multi-tenancy", "SaaS", "Wildcard Domains", "Next.js"],
-      size: "medium",
-      // image: "",
-    },
-    {
-      id: "red-connect",
-      title: "Red Connect",
-      url: {
-        liveDemo: "https://www.darkhub.dev/",
-        github: "https://www.darkhub.dev/",
-      },
-      status: "Technical MVP",
-      description:
-        "Low-latency video conferencing platform utilizing WebRTC for seamless real-time collaboration.",
-      tags: ["WebRTC", "Socket.io", "Real-time"],
-      size: "medium",
-      // image: "",
-    },
-  ];
+  const projects = siteConfig.projects;
 
   return (
     <section className="py-24 px-6 w-full max-w-7xl mx-auto">

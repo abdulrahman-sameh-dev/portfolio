@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { AlignRightIcon } from "lucide-animated";
+import { AlignRightIcon, ArrowUpRightIcon } from "lucide-animated";
+import { siteConfig } from "@/lib/site";
 
 export const Navbar = ({ onOpenMenu, isOpen }: { onOpenMenu: () => void; isOpen: boolean }) => {
   return (
@@ -17,6 +18,16 @@ export const Navbar = ({ onOpenMenu, isOpen }: { onOpenMenu: () => void; isOpen:
           </span>
           <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">System Building</span>
         </div>
+
+        <Link
+          href={siteConfig.resumeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-800 text-sm font-medium text-zinc-300 hover:text-white hover:border-indigo-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 transition-all"
+        >
+          Resume
+          <ArrowUpRightIcon size={14} />
+        </Link>
 
         <button
           onClick={onOpenMenu}

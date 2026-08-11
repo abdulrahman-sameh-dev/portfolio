@@ -4,6 +4,7 @@ import HexNode from "@/components/ui/HexNode";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightIcon } from "@/components/ui/arrow-up-right";
 import Link from "next/link";
+import { siteConfig } from "@/lib/site";
 
 const Hero = () => {
   const container = {
@@ -57,10 +58,28 @@ const Hero = () => {
               Full Stack Developer specialized in Next.js, TypeScript, Node.js & Scalable Architecture.
             </motion.p>
 
-            <motion.div variants={item} className="flex gap-4">
+            <motion.div
+              variants={item}
+              className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800 w-fit max-sm:flex-wrap max-sm:items-start"
+            >
+              <span className="relative flex h-2 w-2 mt-0.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+              </span>
+              <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-300 leading-tight">
+                {siteConfig.availability.label}
+              </span>
+            </motion.div>
+
+            <motion.div variants={item} className="flex flex-wrap gap-4">
               <Button className="text-white bg-linear-30 from-indigo-700 to-indigo-400 border-0 py-5 px-7 text-base" asChild>
                 <Link href={"/#contact"}>
                   Get Started
+                </Link>
+              </Button>
+              <Button className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border py-5 px-7 text-base" asChild>
+                <Link href={siteConfig.resumeUrl} target="_blank" rel="noopener noreferrer">
+                  View Resume <ArrowUpRightIcon />
                 </Link>
               </Button>
               <Button className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border py-5 px-7 text-base" asChild>
