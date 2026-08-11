@@ -121,11 +121,11 @@ const Hero = () => {
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">STACK:</span> NEXT.JS 16
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">//</span>
+          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">ENV:</span> PRODUCTION
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">//</span>
+          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">UPTIME:</span> 99.9%
           </span>

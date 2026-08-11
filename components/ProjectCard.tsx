@@ -36,10 +36,10 @@ const ProjectCard = ({ project }: ProjectProps) => {
       whileHover={{ y: -5 }}
       className="group relative h-full w-full overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/20 backdrop-blur-2xl p-8 max-sm:py-6 hover:border-indigo-500/50 transition-all duration-500"
     >
-        <div className="absolute inset-0 bg-linear-to-tr from-indigo-300/5 flex md:hidden via-indigo-600/15 m-1 backdrop-blur-3xl opacity-50 from-35% z-20 to-transparent rounded-2xl" />
+        <div className="absolute inset-0 bg-linear-to-tr from-indigo-300/5 flex md:hidden via-indigo-600/15 m-1 backdrop-blur-3xl opacity-50 from-35% z-20 to-transparent rounded-2xl pointer-events-none" />
       {/* 1. Background Image Layer */}
       {project.image && (
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
             src={project.image}
             alt={project.title}
@@ -52,7 +52,7 @@ const ProjectCard = ({ project }: ProjectProps) => {
       )}
 
       {/* 2. COMING SOON OVERLAY (The Magic Part) */}
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
         <motion.div 
           initial={{ scale: 0.8, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}

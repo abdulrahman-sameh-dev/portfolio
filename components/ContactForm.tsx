@@ -66,7 +66,7 @@ export default function ContactForm() {
               <span className="text-indigo-500 font-mono">systematically.</span>
             </h2>
             <p className="text-zinc-400 text-lg md:text-xl max-w-md leading-relaxed">
-              Have a project in mind? Let's discuss the architecture and implementation.
+              Have a project in mind? Let&apos;s discuss the architecture and implementation.
             </p>
           </div>
           

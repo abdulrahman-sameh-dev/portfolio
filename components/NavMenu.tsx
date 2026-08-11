@@ -4,13 +4,14 @@ import Link from "next/link";
 import { XIcon, GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-animated";
 import { Button } from "./ui/button";
 import { Globe } from "lucide-react";
+import { siteConfig } from "@/lib/site";
 
 const MotionLink = motion.create(Link);
 
 interface NavMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  handleContactClick: (e: any) => void;
+  handleContactClick: (e: React.MouseEvent) => void;
 }
 
 export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) => {
@@ -111,15 +112,22 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                   Connect
                 </h4>
                 <div className="flex gap-8">
-                  <Link href="https://github.com" target="_blank" aria-label="GitHub" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
-                    <GithubIcon size={24} />
-                  </Link>
-                  <Link href="https://linkedin.com" target="_blank" aria-label="LinkedIn" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
-                    <LinkedinIcon size={24} />
-                  </Link>
-                  <Link href="https://x.com" target="_blank" aria-label="X (Twitter)" className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300">
-                    <TwitterIcon size={24} />
-                  </Link>
+                  {[
+                    { name: "GitHub", href: siteConfig.socials.github, Icon: GithubIcon },
+                    { name: "LinkedIn", href: siteConfig.socials.linkedin, Icon: LinkedinIcon },
+                    { name: "X (Twitter)", href: siteConfig.socials.x, Icon: TwitterIcon },
+                  ].map(({ name, href, Icon }) => (
+                    <Link
+                      key={name}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={name}
+                      className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"
+                    >
+                      <Icon size={24} />
+                    </Link>
+                  ))}
                 </div>
               </div>
 

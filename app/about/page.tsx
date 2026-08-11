@@ -70,7 +70,7 @@ export default function AboutPage() {
             <span className="text-zinc-500 italic">Engineering Mindset.</span>
           </h1>
           <p className="text-zinc-400 max-w-2xl leading-relaxed">
-            I'm Abdulrahman Sameh, a 22-year-old Full Stack Developer building
+            I&apos;m Abdulrahman Sameh, a 22-year-old Full Stack Developer building
             scalable architectures with Next.js and TypeScript. My work is defined
             by minimalist aesthetics and robust system structure.
           </p>
@@ -168,7 +168,7 @@ export default function AboutPage() {
                   target="_blank"
                   className="text-indigo-400 text-xs font-mono uppercase tracking-widest mt-1 inline-block hover:text-indigo-300 transition-colors"
                 >
-                  30°07'59.2"N, 31°03'45.7"E
+                  {`30°07'59.2"N, 31°03'45.7"E`}
                 </Link>
               </div>
             </div>
@@ -301,11 +301,11 @@ export default function AboutPage() {
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">PROFILE:</span> FULL-STACK ARCHITECT
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">//</span>
+          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">LOCATION:</span> GIZA, EGYPT
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">//</span>
+          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">EXPERIENCE:</span> 4 YEARS
           </span>

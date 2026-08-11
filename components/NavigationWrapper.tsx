@@ -13,6 +13,15 @@ export default function NavigationWrapper() {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [forceRebuild, setForceRebuild] = useState(0);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  // --- 4. Close Menu on Route Change ---
+  // Adjust state during render instead of an effect to avoid cascading renders
+  // (react-hooks/set-state-in-effect).
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setIsOpen(false);
+  }
 
   // --- 1. Scroll Direction Logic (Hide/Show Navbar) ---
   useEffect(() => {
@@ -62,11 +71,6 @@ export default function NavigationWrapper() {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
-
-  // --- 4. Close Menu on Route Change ---
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
 
   // --- 5. Navigation & Contact Logic ---
   const handleContactClick = useCallback((e: React.MouseEvent) => {

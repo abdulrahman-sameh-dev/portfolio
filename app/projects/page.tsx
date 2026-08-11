@@ -180,11 +180,11 @@ export default function Projects() {
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">SYSTEMS:</span> 4
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">//</span>
+          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">UPTIME:</span> ALL NOMINAL
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">//</span>
+          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
             <span className="text-zinc-500">ENV:</span> DEVELOPMENT
           </span>

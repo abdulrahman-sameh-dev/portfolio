@@ -32,7 +32,7 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseover", handleHover);
     };
-  }, []);
+  }, [cursorX, cursorY]);
 
   return (
     // المكون لا يظهر إلا في الشاشات الكبيرة (أكبر من Tablet)
