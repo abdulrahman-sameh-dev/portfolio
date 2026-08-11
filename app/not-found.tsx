@@ -105,7 +105,7 @@ export default function NotFound() {
       >
         <div className="flex items-center justify-center gap-3 mb-5">
           <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-600">
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-400">
             Signal Lost
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
@@ -115,7 +115,7 @@ export default function NotFound() {
           404<span className="text-indigo-500">.</span>
         </h1>
 
-        <p className="text-zinc-500 text-base leading-relaxed mb-10 max-w-sm mx-auto">
+        <p className="text-zinc-400 text-base leading-relaxed mb-10 max-w-sm mx-auto">
           The route you requested does not exist on this server. 
           The connection was terminated.
         </p>

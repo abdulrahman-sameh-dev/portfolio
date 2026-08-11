@@ -57,11 +57,11 @@ export default function Projects() {
             <span className="w-2 h-2 rounded-full bg-yellow-500/30" />
             <span className="w-2 h-2 rounded-full bg-green-500/30" />
           </div>
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-600">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">
             SYSTEMS DASHBOARD
           </span>
         </div>
-        <span className="font-mono text-[9px] tracking-wider text-zinc-700">
+        <span className="font-mono text-[9px] tracking-wider text-zinc-400">
           v2.4.1
         </span>
       </div>
@@ -86,7 +86,7 @@ export default function Projects() {
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-4">
               Architectures<span className="text-indigo-500">.</span>
             </h1>
-            <p className="max-w-xl text-zinc-500 text-lg leading-relaxed">
+            <p className="max-w-xl text-zinc-400 text-lg leading-relaxed">
               Systems in active development — each layer is engineered for precision, 
               performance, and production readiness.
             </p>
@@ -109,11 +109,11 @@ export default function Projects() {
                       <div className="w-9 h-9 rounded-xl bg-zinc-800 flex items-center justify-center">
                         <Icon className="w-4 h-4 text-zinc-400 group-hover:text-indigo-400 transition-colors duration-300" />
                       </div>
-                      <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-600">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-zinc-400">
                         {system.status}
                       </span>
                     </div>
-                    <span className="text-xs font-mono text-zinc-600">{system.progress}%</span>
+                    <span className="text-xs font-mono text-zinc-400">{system.progress}%</span>
                   </div>
 
                   <h3 className="text-lg font-bold text-white mb-3 tracking-tight">
@@ -137,7 +137,7 @@ export default function Projects() {
                     {system.tech.map((t) => (
                       <span
                         key={t}
-                        className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-md bg-zinc-800/80 text-zinc-500 border border-zinc-700/50"
+                        className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-md bg-zinc-800/80 text-zinc-400 border border-zinc-700/50"
                       >
                         {t}
                       </span>
@@ -154,7 +154,7 @@ export default function Projects() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <Button asChild variant="ghost" className="text-zinc-500 hover:text-white px-0">
+            <Button asChild variant="ghost" className="text-zinc-400 hover:text-white px-0">
               <Link href="/">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to index
@@ -172,21 +172,21 @@ export default function Projects() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-500">
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-400">
             STATUS: LIVE
           </span>
         </div>
         <div className="hidden sm:flex items-center gap-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">SYSTEMS:</span> 4
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">SYSTEMS:</span> 4
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">UPTIME:</span> ALL NOMINAL
+          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">UPTIME:</span> ALL NOMINAL
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">ENV:</span> DEVELOPMENT
+          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">ENV:</span> DEVELOPMENT
           </span>
         </div>
       </div>

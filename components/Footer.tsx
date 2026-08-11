@@ -21,7 +21,7 @@ export default function Footer() {
             <h3 className="text-white font-bold text-lg tracking-tighter">
               Abdulrahman Sameh<span className="text-indigo-500">.</span>
             </h3>
-            <p className="text-zinc-500 text-sm font-mono">
+            <p className="text-zinc-400 text-sm font-mono">
               © {currentYear} — Built with Next.js & Passion.
             </p>
           </div>

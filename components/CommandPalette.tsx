@@ -97,7 +97,7 @@ export default function CommandPalette() {
               className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden"
             >
               <div className="px-4 py-2.5 border-b border-zinc-800">
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-600">
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-400">
                   {leader === "?" ? "Shortcuts" : "Command"}
                 </span>
               </div>
@@ -111,7 +111,7 @@ export default function CommandPalette() {
                     <span className="text-sm text-zinc-400 group-hover:text-white transition-colors">
                       {s.label}
                     </span>
-                    <kbd className="font-mono text-[10px] text-zinc-600 tracking-wider flex gap-1">
+                    <kbd className="font-mono text-[10px] text-zinc-400 tracking-wider flex gap-1">
                       {s.keys.map((k, i) => (
                         <span key={i} className="px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700">
                           {k === " " ? "SPACE" : k}
@@ -122,7 +122,7 @@ export default function CommandPalette() {
                 ))}
               </div>
               <div className="px-4 py-2 border-t border-zinc-800">
-                <span className="font-mono text-[9px] text-zinc-700 uppercase tracking-[0.2em]">
+                <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-[0.2em]">
                   Press <kbd className="px-1 rounded bg-zinc-800 border border-zinc-700">Esc</kbd> to close &middot; <kbd className="px-1 rounded bg-zinc-800 border border-zinc-700">/</kbd> to open
                 </span>
               </div>

@@ -44,11 +44,11 @@ export default function AboutPage() {
             <span className="w-2 h-2 rounded-full bg-yellow-500/30" />
             <span className="w-2 h-2 rounded-full bg-green-500/30" />
           </div>
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-600">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">
             PROFILE
           </span>
         </div>
-        <span className="font-mono text-[9px] tracking-wider text-zinc-700">
+        <span className="font-mono text-[9px] tracking-wider text-zinc-400">
           v2.4.1
         </span>
       </div>
@@ -143,12 +143,12 @@ export default function AboutPage() {
                 <div className="flex w-full items-center flex-row justify-between">
                   <div className="mt-6 items-center">
                     <div className="h-px w-12 bg-indigo-500/50" />
-                    <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+                    <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
                       Engineering Mindset v2.0
                     </p>
                   </div>
                   <div className="w-16 h-16 absolute right-0 rounded-full border border-zinc-800 flex items-center mt-4 justify-center group-hover:border-indigo-500/50 transition-colors">
-                    <SchematicBox className="w-7 h-7 text-zinc-600 group-hover:text-indigo-400" />
+                    <SchematicBox className="w-7 h-7 text-zinc-400 group-hover:text-indigo-400" />
                   </div>
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default function AboutPage() {
               <div className="z-10">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                  <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-[0.2em]">Location</span>
+                  <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-[0.2em]">Location</span>
                 </div>
                 <p className="text-3xl font-black tracking-wider text-white">Giza, Egypt</p>
                 <Link
@@ -251,7 +251,7 @@ export default function AboutPage() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: cumulativeDelay, duration: 0.4 }}
                     >
-                      <span className="text-[10px] font-mono text-zinc-500 font-bold uppercase tracking-[0.2em]">
+                      <span className="text-[10px] font-mono text-zinc-400 font-bold uppercase tracking-[0.2em]">
                         {exp.year}
                       </span>
 
@@ -274,7 +274,7 @@ export default function AboutPage() {
                         )}
                       </div>
 
-                      <p className="text-xs text-zinc-500 font-medium font-mono mt-1">
+                      <p className="text-xs text-zinc-400 font-medium font-mono mt-1">
                         {exp.role}
                       </p>
                     </motion.div>
@@ -293,21 +293,21 @@ export default function AboutPage() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-500">
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-400">
             STATUS: ACTIVE
           </span>
         </div>
         <div className="hidden sm:flex items-center gap-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">PROFILE:</span> FULL-STACK ARCHITECT
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">PROFILE:</span> FULL-STACK ARCHITECT
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">LOCATION:</span> GIZA, EGYPT
+          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">LOCATION:</span> GIZA, EGYPT
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">EXPERIENCE:</span> 4 YEARS
+          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">EXPERIENCE:</span> 4 YEARS
           </span>
         </div>
       </div>

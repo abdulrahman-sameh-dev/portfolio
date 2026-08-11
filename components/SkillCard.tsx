@@ -37,7 +37,7 @@ export default function SkillCard({ skill }: { skill: Skill }) {
         </div>
 
         {/* الوصف التقني اللي بيظهر بس في الـ Hover */}
-        <p className="text-sm text-zinc-500 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+        <p className="text-sm text-zinc-400 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
           {skill.desc}
         </p>
       </div>

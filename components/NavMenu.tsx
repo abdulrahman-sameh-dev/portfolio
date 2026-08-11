@@ -89,7 +89,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                         onClose();
                       }
                     }}
-                    className="text-5xl md:text-8xl font-bold text-zinc-400 lg:text-zinc-600 hover:text-white transition-all tracking-tighter inline-block"
+                    className="text-5xl md:text-8xl font-bold text-zinc-400 lg:text-zinc-500 hover:text-white transition-all tracking-tighter inline-block"
                     whileHover={{ x: 25, transition: { duration: 0.3 } }}
                   >
                     {item}
@@ -108,7 +108,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
             >
               {/* Social */}
               <div className="space-y-4">
-                <h4 className="text-zinc-600 font-mono text-[10px] uppercase tracking-[0.4em] font-bold">
+                <h4 className="text-zinc-400 font-mono text-[10px] uppercase tracking-[0.4em] font-bold">
                   Connect
                 </h4>
                 <div className="flex gap-8">
@@ -133,7 +133,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
 
               {/* Location */}
               <div className="space-y-4">
-                <h4 className="text-zinc-600 font-mono text-[10px] uppercase tracking-[0.4em] font-bold">
+                <h4 className="text-zinc-400 font-mono text-[10px] uppercase tracking-[0.4em] font-bold">
                   HQ Location
                 </h4>
                 <div className="flex items-center gap-3 text-zinc-200 text-lg font-medium">
@@ -145,7 +145,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
               {/* Project Card */}
               <div className="p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-md space-y-4 max-w-sm">
                 <div className="flex justify-between items-start">
-                  <p className="text-zinc-500 text-xs font-mono">
+                  <p className="text-zinc-400 text-xs font-mono">
                     Current Focus
                   </p>
                   <span className="text-[10px] px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
@@ -179,7 +179,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
               <span className="text-foreground text-[10px] font-mono uppercase tracking-[0.3em]">
                 V1.0.4-Stable
               </span>
-              <span className="text-indigo-700 text-[10px] font-mono uppercase tracking-[0.3em]">
+              <span className="text-indigo-400 text-[10px] font-mono uppercase tracking-[0.3em]">
                 Next.js 16
               </span>
             </div>

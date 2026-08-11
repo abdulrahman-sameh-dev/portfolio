@@ -84,11 +84,11 @@ const Hero = () => {
                   <span className="w-2 h-2 rounded-full bg-yellow-500/30" />
                   <span className="w-2 h-2 rounded-full bg-green-500/30" />
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-600">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">
                   SYSTEM TOPOLOGY
                 </span>
               </div>
-              <span className="font-mono text-[9px] tracking-wider text-zinc-700">
+              <span className="font-mono text-[9px] tracking-wider text-zinc-400">
                 v2.4.1
               </span>
             </div>
@@ -113,21 +113,21 @@ const Hero = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-500">
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-400">
             STATUS: OPERATIONAL
           </span>
         </div>
         <div className="hidden sm:flex items-center gap-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">STACK:</span> NEXT.JS 16
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">STACK:</span> NEXT.JS 16
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">ENV:</span> PRODUCTION
+          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">ENV:</span> PRODUCTION
           </span>
-          <span className="font-mono text-[10px] text-zinc-700">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-600">
-            <span className="text-zinc-500">UPTIME:</span> 99.9%
+          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="text-zinc-300">UPTIME:</span> 99.9%
           </span>
         </div>
       </div>

@@ -153,7 +153,7 @@ export default function StackGrid() {
             className={`relative px-6 py-2 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
               activeTab === cat
                 ? "text-white"
-                : "text-zinc-500 hover:text-zinc-300"
+                : "text-zinc-400 hover:text-zinc-200"
             }`}
           >
             {activeTab === cat && (
@@ -200,7 +200,7 @@ export default function StackGrid() {
   style={{ color: skill.textColor }}
 />
                   </div>
-                  <span className="text-[12px] font-mono text-zinc-600 group-hover:text-indigo-400">
+                  <span className="text-[12px] font-mono text-zinc-400 group-hover:text-indigo-400">
                     {skill.level}
                   </span>
                 </div>

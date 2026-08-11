@@ -71,7 +71,7 @@ export default function ContactForm() {
           </div>
           
           <div className="pt-8 border-t border-zinc-800 flex flex-col gap-1">
-            <span className="text-zinc-500 text-sm font-medium uppercase tracking-wider">Direct Line</span>
+            <span className="text-zinc-400 text-sm font-medium uppercase tracking-wider">Direct Line</span>
             <span className="text-white text-lg font-mono">hello@abdulrahmansameh.dev</span>
           </div>
         </div>

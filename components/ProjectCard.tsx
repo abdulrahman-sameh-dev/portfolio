@@ -103,7 +103,7 @@ const ProjectCard = ({ project }: ProjectProps) => {
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 text-[10px] font-mono rounded-md border border-zinc-800 bg-zinc-900/50 text-zinc-500 uppercase tracking-wider"
+                className="px-3 py-1 text-[10px] font-mono rounded-md border border-zinc-800 bg-zinc-900/50 text-zinc-400 uppercase tracking-wider"
               >
                 {tag}
               </span>
