@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner"
 import CustomCursor from "@/components/ui/CustomCursor";
 import TransitionLayout from "@/components/TransitionLayout";
 import CommandPalette from "@/components/CommandPalette";
+import MotionProvider from "@/components/MotionProvider";
 
 
 const geistSans = Geist({
@@ -85,11 +86,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#050505] text-white flex flex-col`}
       >
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-150 focus:px-4 focus:py-2 focus:rounded-xl focus:bg-zinc-900 focus:border focus:border-indigo-500/50 focus:text-white focus:text-sm font-mono"
+        >
+          Skip to content
+        </a>
+        <MotionProvider>
         <CustomCursor />
         <NavigationWrapper />
         <CommandPalette />
         {/* الـ container يكون هنا عشان يتحكم في عرض المحتوى بس */}
-        <main className="relative grow container mx-auto px-4 pt-20">
+        <main id="main" className="relative grow container mx-auto px-4 pt-20">
           <TransitionLayout>{children}</TransitionLayout>
         </main>
         {process.env.NODE_ENV === "development" && (
@@ -97,6 +105,7 @@ export default function RootLayout({
         )}
         <Analytics /> 
         <Toaster />
+        </MotionProvider>
       </body>
     </html>
   );

@@ -5,6 +5,7 @@ import { XIcon, GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-animated";
 import { Button } from "./ui/button";
 import { Globe } from "lucide-react";
 import { siteConfig } from "@/lib/site";
+import { useEffect, useRef } from "react";
 
 const MotionLink = motion.create(Link);
 
@@ -15,6 +16,54 @@ interface NavMenuProps {
 }
 
 export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) => {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const lastFocused = useRef<HTMLElement | null>(null);
+
+  // Focus management: remember the trigger, move focus into the menu on open,
+  // restore it on close, and keep focus trapped while the menu is open.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    lastFocused.current = document.activeElement as HTMLElement | null;
+
+    const firstFocusable =
+      menuRef.current?.querySelector<HTMLElement>("a, button");
+    firstFocusable?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key === "Tab" && menuRef.current) {
+        const focusables = Array.from(
+          menuRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled])'
+          )
+        );
+        if (focusables.length === 0) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+
+        if (e.shiftKey && (active === first || active === menuRef.current)) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      lastFocused.current?.focus();
+    };
+  }, [isOpen, onClose]);
   
   // نفس الـ Variants اللي إنت معرفها بالظبط
   const menuVariants: Variants = {
@@ -48,6 +97,10 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          ref={menuRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
           variants={menuVariants}
           initial="hidden"
           animate="visible"
@@ -63,6 +116,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
             <Button
               variant="outline"
               onClick={onClose}
+              aria-label="Close menu"
               className="rounded-full w-12 h-12 border-zinc-800 hover:bg-zinc-900 hover:text-white cursor-pointer transition-transform active:scale-90"
             >
               <XIcon size={40} />
@@ -89,7 +143,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                         onClose();
                       }
                     }}
-                    className="text-5xl md:text-8xl font-bold text-zinc-400 lg:text-zinc-500 hover:text-white transition-all tracking-tighter inline-block"
+                    className="text-5xl md:text-8xl font-bold text-zinc-400 lg:text-zinc-500 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:underline decoration-indigo-400 underline-offset-8 transition-all tracking-tighter inline-block"
                     whileHover={{ x: 25, transition: { duration: 0.3 } }}
                   >
                     {item}
@@ -123,7 +177,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={name}
-                      className="text-zinc-400 hover:text-white transition-colors hover:-translate-y-1 duration-300"
+                      className="text-zinc-400 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded-lg transition-colors hover:-translate-y-1 duration-300"
                     >
                       <Icon size={24} />
                     </Link>

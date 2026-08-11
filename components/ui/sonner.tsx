@@ -1,15 +1,15 @@
 "use client"
 
-import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 import { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from "lucide-react"
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
-
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      // الموقع دا Dark-only أصلاً (className="dark" على الـ html)
+      // فبنثبّت الـ theme على dark عشان الـ Toasts تفضل متوافقة مع التصميم
+      // حتى لو نظام المستخدم Light — وده بيضمن الـ Contrast المطلوب
+      theme="dark"
       className="toaster group"
       icons={{
         success: (
@@ -30,9 +30,22 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       style={
         {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
+          "--normal-bg": "#0c0c0e",
+          "--normal-text": "oklch(0.985 0 0)",
+          "--normal-border": "oklch(1 0 0 / 14%)",
+          "--normal-bg-hover": "oklch(1 0 0 / 8%)",
+          "--success-bg": "#0c0c0e",
+          "--success-text": "oklch(0.8 0.15 150)",
+          "--success-border": "oklch(0.7 0.15 150 / 35%)",
+          "--info-bg": "#0c0c0e",
+          "--info-text": "oklch(0.7 0.15 270)",
+          "--info-border": "oklch(0.7 0.15 270 / 35%)",
+          "--warning-bg": "#0c0c0e",
+          "--warning-text": "oklch(0.8 0.13 85)",
+          "--warning-border": "oklch(0.75 0.13 85 / 35%)",
+          "--error-bg": "#0c0c0e",
+          "--error-text": "oklch(0.7 0.2 25)",
+          "--error-border": "oklch(0.7 0.2 25 / 35%)",
           "--border-radius": "var(--radius)",
         } as React.CSSProperties
       }

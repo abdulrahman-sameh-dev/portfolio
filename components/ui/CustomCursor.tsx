@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { motion, useSpring, useMotionValue } from "motion/react";
+import { motion, useSpring, useMotionValue, useReducedMotion } from "motion/react";
 
 export default function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
+  const reduceMotion = useReducedMotion();
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
@@ -36,25 +37,30 @@ export default function CustomCursor() {
 
   return (
     // المكون لا يظهر إلا في الشاشات الكبيرة (أكبر من Tablet)
-    <div className="hidden md:block pointer-events-none fixed inset-0 z-130">
-      {/* الدائرة الأساسية (The Core) */}
-      <motion.div
-        className="absolute w-4 h-4 bg-indigo-500 rounded-full"
-        style={{ x: mainX, y: mainY, translateX: "-50%", translateY: "-50%" }}
-        animate={{
-          scale: isHovered ? 4 : 1,
-          opacity: isHovered ? .39 : 1
-        }}
-      />
-      {/* الحلقة الخارجية (The Ring) */}
-      <motion.div
-        className="absolute w-8 h-8 border border-indigo-500/50 rounded-full"
-        style={{ x: mainX, y: mainY, translateX: "-50%", translateY: "-50%" }}
-        animate={{
-          scale: isHovered ? 1.5 : 1,
-          opacity: isHovered ? 0 : 1,
-        }}
-      />
+    // مع الـ Reduced Motion بنخفيه نهائياً لأن الحركة دي أساس الغرض منه
+    <div className="hidden md:block pointer-events-none fixed inset-0 z-130" aria-hidden="true">
+      {!reduceMotion && (
+        <>
+          {/* الدائرة الأساسية (The Core) */}
+          <motion.div
+            className="absolute w-4 h-4 bg-indigo-500 rounded-full"
+            style={{ x: mainX, y: mainY, translateX: "-50%", translateY: "-50%" }}
+            animate={{
+              scale: isHovered ? 4 : 1,
+              opacity: isHovered ? .39 : 1
+            }}
+          />
+          {/* الحلقة الخارجية (The Ring) */}
+          <motion.div
+            className="absolute w-8 h-8 border border-indigo-500/50 rounded-full"
+            style={{ x: mainX, y: mainY, translateX: "-50%", translateY: "-50%" }}
+            animate={{
+              scale: isHovered ? 1.5 : 1,
+              opacity: isHovered ? 0 : 1,
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }

@@ -34,7 +34,7 @@ export default function Footer() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm font-medium"
+                className="group flex items-center gap-2 text-zinc-400 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded-lg transition-colors text-sm font-medium"
               >
                 {link.icon}
                 {link.name}

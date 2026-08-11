@@ -2,10 +2,10 @@
 import Link from "next/link";
 import { AlignRightIcon } from "lucide-animated";
 
-export const Navbar = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
+export const Navbar = ({ onOpenMenu, isOpen }: { onOpenMenu: () => void; isOpen: boolean }) => {
   return (
-    <nav className="flex justify-between items-center p-4 w-full max-w-7xl mx-auto z-100 relative">
-      <Link href="/" className="text-2xl font-bold text-white tracking-tighter group transition-all">
+    <nav aria-label="Main navigation" className="flex justify-between items-center p-4 w-full max-w-7xl mx-auto z-100 relative">
+      <Link href="/" className="text-2xl font-bold text-white tracking-tighter group transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded-lg">
         Abdulrahman<span className="text-indigo-600 group-hover:animate-pulse">.</span>
       </Link>
 
@@ -20,7 +20,9 @@ export const Navbar = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
 
         <button
           onClick={onOpenMenu}
-          className="p-2 hover:bg-zinc-900 rounded-xl transition-all active:scale-90 cursor-pointer"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          className="p-2 hover:bg-zinc-900 rounded-xl transition-all active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
         >
           <AlignRightIcon className="w-8 h-8 text-white" />
         </button>

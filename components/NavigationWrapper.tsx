@@ -77,10 +77,12 @@ export default function NavigationWrapper() {
     e.preventDefault();
     setIsOpen(false);
 
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     if (pathname === "/") {
       const el = document.getElementById("contact");
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
       }
     } else {
       // لو مش في الصفحة الرئيسية، بنروح لها ونضيف الـ hash
@@ -93,8 +95,9 @@ export default function NavigationWrapper() {
     if (window.location.hash === "#contact") {
       const el = document.getElementById("contact");
       if (el) {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         setTimeout(() => {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
         }, 100);
       }
     }
@@ -118,6 +121,7 @@ export default function NavigationWrapper() {
         <Navbar 
           key={`${pathname}-${forceRebuild}`} 
           onOpenMenu={() => setIsOpen(true)} 
+          isOpen={isOpen}
         />
       </div>
 

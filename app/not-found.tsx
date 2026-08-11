@@ -124,7 +124,7 @@ export default function NotFound() {
           <Link
             href="/"
             onClick={handleReconnect}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-indigo-500/30 bg-indigo-500/5 text-indigo-300 font-mono text-xs uppercase tracking-[0.2em] hover:bg-indigo-500/10 hover:border-indigo-500/50 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-indigo-500/30 bg-indigo-500/5 text-indigo-300 font-mono text-xs uppercase tracking-[0.2em] hover:bg-indigo-500/10 hover:border-indigo-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 transition-all duration-300"
           >
             <motion.span
               animate={{ opacity: [0.3, 1, 0.3] }}

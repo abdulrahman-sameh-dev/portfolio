@@ -150,7 +150,8 @@ export default function StackGrid() {
           <button
             key={cat}
             onClick={() => handleFilterClick(cat)}
-            className={`relative px-6 py-2 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
+            aria-pressed={activeTab === cat}
+            className={`relative px-6 py-2 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${
               activeTab === cat
                 ? "text-white"
                 : "text-zinc-400 hover:text-zinc-200"
