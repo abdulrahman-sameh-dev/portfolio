@@ -6,45 +6,16 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookOpen, Layers, ArrowUpRight } from "lucide-react";
 import { SchematicStack, SchematicFlow, SchematicPipeline, SchematicNodes } from "@/components/SchematicIcons";
 import { siteConfig } from "@/lib/site";
+import type { SystemIcon } from "@/lib/site";
 
-const systems = [
-  {
-    id: "frontend",
-    label: "Frontend Architecture",
-    description: "Component-driven design system with Motion-driven micro-interactions and Tailwind CSS 4 token layers.",
-    tech: ["Next.js 16", "React 19", "Motion", "Tailwind CSS 4", "TypeScript 5"],
-    status: "Live",
-    progress: 95,
-    Icon: SchematicStack,
-  },
-  {
-    id: "backend",
-    label: "Backend Systems",
-    description: "RESTful API architecture with Node.js, MongoDB schema design, and real-time WebRTC infrastructure.",
-    tech: ["Node.js", "MongoDB", "LiveKit", "WebRTC"],
-    status: "Building",
-    progress: 65,
-    Icon: SchematicFlow,
-  },
-  {
-    id: "devops",
-    label: "DevOps & Infrastructure",
-    description: "Containerized deployments, CI/CD pipelines, and Linux-based server orchestration.",
-    tech: ["Docker", "GitHub Actions", "Linux", "Nginx"],
-    status: "Optimizing",
-    progress: 50,
-    Icon: SchematicPipeline,
-  },
-  {
-    id: "realtime",
-    label: "Real-Time Systems",
-    description: "Low-latency communication layer powering live events, presence, and data synchronization.",
-    tech: ["LiveKit", "WebSockets", "WebRTC"],
-    status: "Designing",
-    progress: 30,
-    Icon: SchematicNodes,
-  },
-];
+const systemIcons: Record<SystemIcon, React.ComponentType<{ className?: string }>> = {
+  stack: SchematicStack,
+  flow: SchematicFlow,
+  pipeline: SchematicPipeline,
+  nodes: SchematicNodes,
+};
+
+const systems = siteConfig.systems;
 
 export default function Projects() {
   return (
@@ -96,7 +67,7 @@ export default function Projects() {
           {/* System Grid */}
           <div className="grid md:grid-cols-2 gap-px bg-zinc-800/50 rounded-3xl overflow-hidden border border-zinc-800/50 mb-10">
             {systems.map((system, index) => {
-              const Icon = system.Icon;
+              const Icon = systemIcons[system.icon];
               return (
                 <motion.div
                   key={system.id}

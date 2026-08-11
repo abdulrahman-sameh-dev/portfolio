@@ -2,6 +2,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { SchematicZap, SchematicBox, SchematicGlobe } from "@/components/SchematicIcons";
+import { siteConfig } from "@/lib/site";
 
 export default function AboutPage() {
   const experiences = [
@@ -32,6 +33,8 @@ export default function AboutPage() {
   ];
 
   const stepDuration = 0.6;
+
+  const featuredSkills = siteConfig.skills.filter((skill) => skill.featured);
 
   return (
     <section className="border border-zinc-800/80 rounded-3xl overflow-hidden bg-zinc-900/[0.03]">
@@ -96,30 +99,21 @@ export default function AboutPage() {
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {[
-                  { name: "Next.js", icon: "NX", level: "95%" },
-                  { name: "TypeScript", icon: "TS", level: "90%" },
-                  { name: "Tailwind", icon: "TW", level: "98%" },
-                  { name: "Postgres", icon: "PG", level: "85%" },
-                  { name: "Docker", icon: "DK", level: "80%" },
-                  { name: "Prisma", icon: "PR", level: "92%" },
-                  { name: "Framer", icon: "FM", level: "88%" },
-                  { name: "Node.js", icon: "JS", level: "90%" },
-                ].map((tech, i) => (
+                {featuredSkills.map((tech, i) => (
                   <motion.div
                     key={tech.name}
                     whileHover={{ y: -5 }}
                     className="p-4 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:bg-indigo-500/5 hover:border-indigo-500/40 transition-all cursor-crosshair group/item"
                   >
                     <div className="flex justify-between items-center mb-3">
-                      <span className="text-[10px] font-mono text-indigo-500 font-bold">{tech.icon}</span>
+                      <span className="text-[10px] font-mono text-indigo-500 font-bold">{tech.code}</span>
                       <div className="w-1 h-1 rounded-full bg-zinc-700 group-hover/item:bg-indigo-500 transition-colors" />
                     </div>
                     <p className="text-sm font-bold text-zinc-200 mb-1">{tech.name}</p>
                     <div className="w-full h-[2px] bg-zinc-800 rounded-full overflow-hidden">
                       <motion.div 
                         initial={{ width: 0 }}
-                        whileInView={{ width: tech.level }}
+                        whileInView={{ width: `${tech.proficiency}%` }}
                         transition={{ duration: 1, delay: i * 0.1 }}
                         className="h-full bg-indigo-500/50" 
                       />
@@ -162,13 +156,13 @@ export default function AboutPage() {
                   <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
                   <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-[0.2em]">Location</span>
                 </div>
-                <p className="text-3xl font-black tracking-wider text-white">Giza, Egypt</p>
+                <p className="text-3xl font-black tracking-wider text-white">{siteConfig.location.city}</p>
                 <Link
-                  href={"https://maps.app.goo.gl/ywy3QXCJ7y8EfdQL6"}
+                  href={siteConfig.location.mapsUrl}
                   target="_blank"
                   className="text-indigo-400 text-xs font-mono uppercase tracking-widest mt-1 inline-block hover:text-indigo-300 transition-colors"
                 >
-                  {`30°07'59.2"N, 31°03'45.7"E`}
+                  {siteConfig.location.coordinates}
                 </Link>
               </div>
             </div>
@@ -302,9 +296,9 @@ export default function AboutPage() {
             <span className="text-zinc-300">PROFILE:</span> FULL-STACK ARCHITECT
           </span>
           <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
-            <span className="text-zinc-300">LOCATION:</span> GIZA, EGYPT
-          </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+              <span className="text-zinc-300">LOCATION:</span> {siteConfig.location.city.toUpperCase()}
+            </span>
           <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
             <span className="text-zinc-300">EXPERIENCE:</span> 4 YEARS

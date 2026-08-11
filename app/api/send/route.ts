@@ -1,6 +1,15 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
 
@@ -16,18 +25,26 @@ export async function POST(req: Request) {
   try {
     const { firstName, lastName, email, category, message } = await req.json();
 
+    const safe = {
+      firstName: escapeHtml(String(firstName ?? "")),
+      lastName: escapeHtml(String(lastName ?? "")),
+      email: escapeHtml(String(email ?? "")),
+      category: escapeHtml(String(category ?? "")),
+      message: escapeHtml(String(message ?? "")),
+    };
+
     const { data, error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>', // لما تربط دومينك غير ده
       to: ['darkness.itec.eg@gmail.com'], // حط إيميلك الشخصي هنا اللي عايز تستقبل عليه
-      subject: `New Inquiry: ${category} from ${firstName} ${lastName}`,
-      replyTo: email,
+      subject: `New Inquiry: ${safe.category} from ${safe.firstName} ${safe.lastName}`,
+      replyTo: safe.email,
       html: `
         <h3>New Contact Form Submission</h3>
-        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Category:</strong> ${category}</p>
+        <p><strong>Name:</strong> ${safe.firstName} ${safe.lastName}</p>
+        <p><strong>Email:</strong> ${safe.email}</p>
+        <p><strong>Category:</strong> ${safe.category}</p>
         <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <p>${safe.message}</p>
       `,
     });
 

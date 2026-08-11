@@ -196,7 +196,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                 </h4>
                 <div className="flex items-center gap-3 text-zinc-200 text-lg font-medium">
                   <Globe size={20} className="text-indigo-500 animate-pulse" />
-                  <span>Cairo, Egypt — GMT+2</span>
+                  <span>{siteConfig.location.city} — {siteConfig.location.timezone}</span>
                 </div>
               </div>
 

@@ -24,6 +24,34 @@ export type Project = {
   }[];
 };
 
+export type SkillCategory = "Frontend" | "Backend" | "DevOps";
+
+export type Skill = {
+  name: string;
+  code: string;
+  category: SkillCategory;
+  level: "Expert" | "Advanced" | "Intermediate" | "Basic";
+  proficiency: number;
+  description: string;
+  icon: string;
+  brand: string;
+  brandBg: string;
+  padding: string;
+  featured?: boolean;
+};
+
+export type SystemIcon = "stack" | "flow" | "pipeline" | "nodes";
+
+export type System = {
+  id: string;
+  label: string;
+  description: string;
+  tech: string[];
+  status: string;
+  progress: number;
+  icon: SystemIcon;
+};
+
 export const siteConfig = {
   name: "Abdulrahman Sameh",
   email: "hello@abdulrahmansameh.dev",
@@ -38,6 +66,220 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/in/abdulrahman-sameh-dev/",
     x: "https://x.com/darkhub_dev",
   },
+  location: {
+    city: "Giza, Egypt",
+    timezone: "GMT+2",
+    mapsUrl: "https://maps.app.goo.gl/ywy3QXCJ7y8EfdQL6",
+    coordinates: "30°07'59.2\"N, 31°03'45.7\"E",
+  },
+  skills: [
+    {
+      name: "Next.js",
+      code: "NX",
+      category: "Frontend",
+      level: "Expert",
+      proficiency: 95,
+      description: "App Router, Server Actions & High-performance rendering.",
+      icon: "nextjs",
+      brand: "#000000",
+      brandBg: "#ffffff",
+      padding: "2px",
+      featured: true,
+    },
+    {
+      name: "TypeScript",
+      code: "TS",
+      category: "Frontend",
+      level: "Expert",
+      proficiency: 90,
+      description: "Type-safe development with strict interfaces & generics.",
+      icon: "typescript",
+      brand: "#3178C6",
+      brandBg: "#ffffff",
+      padding: "0px",
+      featured: true,
+    },
+    {
+      name: "Tailwind CSS",
+      code: "TW",
+      category: "Frontend",
+      level: "Expert",
+      proficiency: 98,
+      description: "Utility-first CSS & Scalable Design Systems.",
+      icon: "tailwind",
+      brand: "#FFFFFF",
+      brandBg: "#38BDF8",
+      padding: "4px",
+      featured: true,
+    },
+    {
+      name: "Postgres",
+      code: "PG",
+      category: "Backend",
+      level: "Advanced",
+      proficiency: 85,
+      description: "Relational schema design & query optimization.",
+      icon: "postgres",
+      brand: "#FFFFFF",
+      brandBg: "#336791",
+      padding: "0px",
+      featured: true,
+    },
+    {
+      name: "Docker",
+      code: "DK",
+      category: "DevOps",
+      level: "Basic",
+      proficiency: 80,
+      description: "Containerizing apps for consistent dev/prod workflows.",
+      icon: "docker",
+      brand: "#FFFFFF",
+      brandBg: "#2496ED",
+      padding: "6px",
+      featured: true,
+    },
+    {
+      name: "Prisma",
+      code: "PR",
+      category: "Backend",
+      level: "Advanced",
+      proficiency: 92,
+      description: "Type-safe ORM modeling, migrations & data access.",
+      icon: "prisma",
+      brand: "#FFFFFF",
+      brandBg: "#5A67D8",
+      padding: "0px",
+      featured: true,
+    },
+    {
+      name: "Framer Motion",
+      code: "FM",
+      category: "Frontend",
+      level: "Advanced",
+      proficiency: 88,
+      description: "Complex SVG animations & micro-interactions.",
+      icon: "framer",
+      brand: "#FFFFFF",
+      brandBg: "#000000",
+      padding: "7px",
+      featured: true,
+    },
+    {
+      name: "Node.js",
+      code: "JS",
+      category: "Backend",
+      level: "Advanced",
+      proficiency: 90,
+      description: "Building scalable server-side logic & RESTful APIs.",
+      icon: "node",
+      brand: "#000000",
+      brandBg: "#339933",
+      padding: "5px",
+      featured: true,
+    },
+    {
+      name: "React",
+      code: "RC",
+      category: "Frontend",
+      level: "Expert",
+      proficiency: 90,
+      description: "Modern Hooks, Context API & Component Architecture.",
+      icon: "react",
+      brand: "#61DAFB",
+      brandBg: "#23272F",
+      padding: "2px",
+    },
+    {
+      name: "MongoDB",
+      code: "MG",
+      category: "Backend",
+      level: "Advanced",
+      proficiency: 85,
+      description: "NoSQL Schema design & Mongoose optimization.",
+      icon: "mongodb",
+      brand: "#00ED64",
+      brandBg: "#00684A",
+      padding: "4px",
+    },
+    {
+      name: "LiveKit",
+      code: "LK",
+      category: "Backend",
+      level: "Intermediate",
+      proficiency: 70,
+      description: "Real-time communication & WebRTC infrastructure.",
+      icon: "livekit",
+      brand: "#1F85FF",
+      brandBg: "#000000",
+      padding: "7px",
+    },
+    {
+      name: "Linux",
+      code: "LN",
+      category: "DevOps",
+      level: "Advanced",
+      proficiency: 85,
+      description: "Power user in Bash scripting & system management.",
+      icon: "linux",
+      brand: "#000000",
+      brandBg: "#FFFFFF",
+      padding: "2px",
+    },
+    {
+      name: "Git & GitHub",
+      code: "GH",
+      category: "DevOps",
+      level: "Expert",
+      proficiency: 90,
+      description: "Advanced branching strategies & CI/CD workflows.",
+      icon: "github",
+      brand: "#FFFFFF",
+      brandBg: "#181717",
+      padding: "0px",
+    },
+  ] as Skill[],
+  systems: [
+    {
+      id: "frontend",
+      label: "Frontend Architecture",
+      description:
+        "Component-driven design system with Motion-driven micro-interactions and Tailwind CSS 4 token layers.",
+      tech: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+      status: "Live",
+      progress: 95,
+      icon: "stack",
+    },
+    {
+      id: "backend",
+      label: "Backend Systems",
+      description:
+        "RESTful API architecture with Node.js, MongoDB schema design, and real-time WebRTC infrastructure.",
+      tech: ["Node.js", "MongoDB", "LiveKit", "WebRTC"],
+      status: "Building",
+      progress: 65,
+      icon: "flow",
+    },
+    {
+      id: "devops",
+      label: "DevOps & Infrastructure",
+      description:
+        "Containerized deployments, CI/CD pipelines, and Linux-based server orchestration.",
+      tech: ["Docker", "Linux", "Nginx", "GitHub Actions"],
+      status: "Optimizing",
+      progress: 50,
+      icon: "pipeline",
+    },
+    {
+      id: "realtime",
+      label: "Real-Time Systems",
+      description:
+        "Low-latency communication layer powering live events, presence, and data synchronization.",
+      tech: ["LiveKit", "WebRTC", "WebSockets"],
+      status: "Designing",
+      progress: 30,
+      icon: "nodes",
+    },
+  ] as System[],
   projects: [
     {
       slug: "dark-hub",
