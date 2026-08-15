@@ -83,7 +83,7 @@ export const siteConfig = {
       icon: "nextjs",
       brand: "#000000",
       brandBg: "#ffffff",
-      padding: "2px",
+      padding: "0px",
       featured: true,
     },
     {
@@ -109,7 +109,7 @@ export const siteConfig = {
       icon: "tailwind",
       brand: "#FFFFFF",
       brandBg: "#38BDF8",
-      padding: "4px",
+      padding: "0px",
       featured: true,
     },
     {
@@ -135,7 +135,7 @@ export const siteConfig = {
       icon: "docker",
       brand: "#FFFFFF",
       brandBg: "#2496ED",
-      padding: "6px",
+      padding: "0px",
       featured: true,
     },
     {
@@ -161,7 +161,7 @@ export const siteConfig = {
       icon: "framer",
       brand: "#FFFFFF",
       brandBg: "#000000",
-      padding: "7px",
+      padding: "0px",
       featured: true,
     },
     {
@@ -174,7 +174,7 @@ export const siteConfig = {
       icon: "node",
       brand: "#000000",
       brandBg: "#339933",
-      padding: "5px",
+      padding: "0px",
       featured: true,
     },
     {
@@ -187,7 +187,7 @@ export const siteConfig = {
       icon: "react",
       brand: "#61DAFB",
       brandBg: "#23272F",
-      padding: "2px",
+      padding: "0px",
     },
     {
       name: "MongoDB",
@@ -199,7 +199,7 @@ export const siteConfig = {
       icon: "mongodb",
       brand: "#00ED64",
       brandBg: "#00684A",
-      padding: "4px",
+      padding: "0px",
     },
     {
       name: "LiveKit",
@@ -211,7 +211,7 @@ export const siteConfig = {
       icon: "livekit",
       brand: "#1F85FF",
       brandBg: "#000000",
-      padding: "7px",
+      padding: "0px",
     },
     {
       name: "Linux",
@@ -223,7 +223,7 @@ export const siteConfig = {
       icon: "linux",
       brand: "#000000",
       brandBg: "#FFFFFF",
-      padding: "2px",
+      padding: "0px",
     },
     {
       name: "Git & GitHub",
