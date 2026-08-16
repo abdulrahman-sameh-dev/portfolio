@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
     const { data, error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>', // لما تربط دومينك غير ده
-      to: ['darkness.itec.eg@gmail.com'], // حط إيميلك الشخصي هنا اللي عايز تستقبل عليه
+      to: ['abdulrahman.sameh.giza.eg@gmail.com'], // حط إيميلك الشخصي هنا اللي عايز تستقبل عليه
       subject: `New Inquiry: ${safe.category} from ${safe.firstName} ${safe.lastName}`,
       replyTo: safe.email,
       html: `
