@@ -35,9 +35,7 @@ type Frame = { x: number; y: number; w: number; h: number };
 
 const SHOTS: Record<string, Frame> = {
   client: { x: 5, y: 105, w: 90, h: 90 },
-  transit: { x: 25, y: 20, w: 185, h: 185 },
   core: { x: 104, y: 8, w: 112, h: 112 },
-  transitDb: { x: 152, y: 45, w: 150, h: 150 },
   db: { x: 210, y: 90, w: 105, h: 105 },
   release: { x: 150, y: 210, w: 105, h: 105 },
   full: { x: 0, y: 0, w: 320, h: 320 },
@@ -135,41 +133,32 @@ const DataFlowDiagram = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
       await wait(900 + delay * 1000);
       while (!cancelled) {
         setPhase("client");
-        await cam(SHOTS.client, 1.6);
-        await wait(1500);
+        await cam(SHOTS.client, 1.8);
+        await wait(1000);
         if (cancelled) return;
 
         setPhase("transit");
         pkt1.set("0%");
-        await Promise.all([cam(SHOTS.transit, 2.0), travel(pkt1, 2.0)]);
-        await wait(600);
-        if (cancelled) return;
-
-        setPhase("core");
-        await cam(SHOTS.core, 1.3);
-        tab.set(0);
-        await tabTo(1, 1.0);
-        await tabTo(2, 1.0);
-        await wait(500);
+        await Promise.all([cam(SHOTS.core, 1.8), travel(pkt1, 1.8), tabTo(2, 1.8)]);
+        await wait(1000);
         if (cancelled) return;
 
         setPhase("deploy");
         pkt2.set("0%");
-        await Promise.all([cam(SHOTS.transitDb, 1.5), travel(pkt2, 1.5)]);
-        await cam(SHOTS.db, 1.3);
-        await wait(1400);
+        await Promise.all([cam(SHOTS.db, 1.8), travel(pkt2, 1.8)]);
+        await wait(1000);
         if (cancelled) return;
 
         setPhase("release");
         pkt3.set("0%");
-        await Promise.all([cam(SHOTS.release, 1.3), travel(pkt3, 1.3)]);
-        await wait(1600);
+        await Promise.all([cam(SHOTS.release, 1.8), travel(pkt3, 1.8)]);
+        await wait(1000);
         if (cancelled) return;
 
         setPhase("overview");
-        await cam(SHOTS.full, 2.4);
         tab.set(1);
-        await wait(4600);
+        await cam(SHOTS.full, 1.8);
+        await wait(4000);
       }
     };
 
