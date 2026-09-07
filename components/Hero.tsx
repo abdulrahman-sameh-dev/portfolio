@@ -1,12 +1,15 @@
 "use client";
 import { motion } from "motion/react";
+import { useState } from "react";
 import HexNode from "@/components/ui/HexNode";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightIcon } from "@/components/ui/arrow-up-right";
+import ExecutiveSummary from "@/components/ui/executive-summary";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 
 const Hero = () => {
+  const [summaryOpen, setSummaryOpen] = useState(false);
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -72,15 +75,19 @@ const Hero = () => {
             </motion.div>
 
             <motion.div variants={item} className="flex flex-wrap gap-4">
-              <Button className="text-white bg-linear-30 from-indigo-700 to-indigo-400 border-0 py-5 px-7 text-base" asChild>
-                <Link href={"/#contact"}>
-                  Get Started
+              <Button
+                className="text-white bg-linear-30 from-indigo-700 to-indigo-400 border-0 py-5 px-7 text-base hover:shadow-[0_0_28px_rgba(99,102,241,0.4)]"
+                asChild
+              >
+                <Link href={"/career-path"}>
+                  Explore Career Topology <span className="font-mono">-&gt;</span>
                 </Link>
               </Button>
-              <Button className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border py-5 px-7 text-base" asChild>
-                <Link href={siteConfig.resumeUrl} target="_blank" rel="noopener noreferrer">
-                  View Resume <ArrowUpRightIcon />
-                </Link>
+              <Button
+                className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border py-5 px-7 text-base"
+                onClick={() => setSummaryOpen(true)}
+              >
+                View Executive Summary
               </Button>
               <Button className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border py-5 px-7 text-base" asChild>
                 <Link href={"/about"}>
@@ -151,6 +158,7 @@ const Hero = () => {
         </div>
       </div>
 
+      <ExecutiveSummary open={summaryOpen} onClose={() => setSummaryOpen(false)} />
     </section>
   );
 };

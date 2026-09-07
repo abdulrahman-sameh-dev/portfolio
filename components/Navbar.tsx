@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
-import { AlignRightIcon, ArrowUpRightIcon } from "lucide-animated";
-import { siteConfig } from "@/lib/site";
+import { AlignRightIcon } from "lucide-animated";
 
 export const Navbar = ({ onOpenMenu, isOpen }: { onOpenMenu: () => void; isOpen: boolean }) => {
   return (
@@ -20,13 +19,12 @@ export const Navbar = ({ onOpenMenu, isOpen }: { onOpenMenu: () => void; isOpen:
         </div>
 
         <Link
-          href={siteConfig.resumeUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/career-path"
           className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-800 text-sm font-medium text-zinc-300 hover:text-white hover:border-indigo-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 transition-all"
         >
-          Resume
-          <ArrowUpRightIcon size={14} />
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em]">
+            [System Status / Career]
+          </span>
         </Link>
 
         <button

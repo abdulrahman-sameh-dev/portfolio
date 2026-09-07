@@ -52,11 +52,19 @@ export type System = {
   icon: SystemIcon;
 };
 
+export type Service = {
+  id: string;
+  code: string;
+  title: string;
+  description: string;
+  stack: string[];
+};
+
 export const siteConfig = {
   name: "Abdulrahman Sameh",
   email: "hello@abdulrahmansameh.dev",
   siteUrl: "https://portfolite-mocha.vercel.app",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/resume",
   availability: {
     label: "Available for Full-time & Contract Roles",
     status: "open",
@@ -280,6 +288,32 @@ export const siteConfig = {
       icon: "nodes",
     },
   ] as System[],
+  services: [
+    {
+      id: "architecture",
+      code: "// ARCHITECTURE",
+      title: "Architecture & System Design",
+      description:
+        "End-to-end architecture that starts with data contracts and ends with a deployment path. I design typed boundaries, service topology, and production readiness before a single UI pixel ships.",
+      stack: ["Next.js / Node.js", "PostgreSQL / Prisma", "Docker · CI/CD Pipelines", "Contracts & System Diagrams"],
+    },
+    {
+      id: "build",
+      code: "// FULL-STACK BUILD",
+      title: "Full-Stack Product Builds",
+      description:
+        "From greenfield to ship, I own the full vertical slice — schema, API, interface, and deployment. The result is a coherent system, not a stack of loosely coupled features.",
+      stack: ["Next.js · TypeScript", "Tailwind CSS · Motion", "Node.js · WebSockets", "Vercel · Managed Hosting"],
+    },
+    {
+      id: "audit",
+      code: "// PERFORMANCE AUDIT",
+      title: "Performance & Reliability Audit",
+      description:
+        "A forensic pass over latency, bundle weight, and failure modes with a prioritized remediation plan. I measure first, then surgically optimize what moves the metric.",
+      stack: ["Bundle / Runtime Profiling", "Query & Index Review", "WebVitals Benchmarks", "Load & Failure Testing"],
+    },
+  ] as Service[],
   projects: [
     {
       slug: "dark-hub",

@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
+import { useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button"; 
 import { Input } from "@/components/ui/input";
@@ -26,11 +27,19 @@ const contactFormSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
+// Maps a service request protocol to the contact form category + message prefix.
+const serviceProtocols: Record<string, { category: string; label: string }> = {
+  architecture: { category: "Consultation", label: "ARCHITECTURE" },
+  build: { category: "Project", label: "FULL-STACK BUILD" },
+  audit: { category: "Consultation", label: "PERFORMANCE AUDIT" },
+};
+
 export default function ContactForm() {
   const { 
     register, 
     handleSubmit, 
     reset, 
+    setValue,
     control, // محتاجين control عشان الـ Select
     formState: { errors, isSubmitting } 
   } = useForm<ContactFormValues>({
@@ -39,6 +48,19 @@ export default function ContactForm() {
       category: "Project",
     }
   });
+
+  // Read the ?service= request protocol from the URL and pre-fill the subject.
+  const protocolAppliedRef = useRef(false);
+  useEffect(() => {
+    if (protocolAppliedRef.current) return;
+    const params = new URLSearchParams(window.location.search);
+    const service = params.get("service");
+    const protocol = service ? serviceProtocols[service] : undefined;
+    if (!protocol) return;
+    setValue("category", protocol.category);
+    setValue("message", `[REQUEST PROTOCOL: ${protocol.label}] `);
+    protocolAppliedRef.current = true;
+  }, [setValue]);
 
   const onSubmit = async (data: ContactFormValues) => {
     try {
