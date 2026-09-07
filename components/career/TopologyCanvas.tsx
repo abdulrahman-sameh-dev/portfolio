@@ -5,8 +5,8 @@ import type { Easing } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   CAREER_CANVAS,
+  type CareerCategory,
   type CareerNode,
-  type CareerNodeType,
 } from "@/lib/data/career";
 
 const NODE_W = 176;
@@ -33,36 +33,34 @@ function edgeEndpoint(a: { x: number; y: number }, b: { x: number; y: number }) 
 }
 
 function Glyph({
-  type,
+  category,
   active,
 }: {
-  type: CareerNodeType;
+  category: CareerCategory;
   active: boolean;
 }) {
   const stroke = active ? "#818cf8" : "#71717a";
   const fill = active ? "#818cf8" : "none";
   return (
     <g fill="none" stroke={stroke} strokeWidth="1.1" vectorEffect="non-scaling-stroke">
-      {type === "Company" || type === "KeyProject" ? (
+      {category === "company" ? (
         <>
           <rect x="2" y="2" width="16" height="11" rx="1.5" />
           <path d="M6 16 H14" />
           <path d="M10 13 V16" />
-          {type === "KeyProject" && (
-            <circle cx="10" cy="7.5" r="2" fill={fill} stroke="none" />
-          )}
+          <circle cx="10" cy="7.5" r="2" fill={fill} stroke="none" />
         </>
-      ) : type === "SkillEpoch" ? (
+      ) : category === "project" ? (
+        <>
+          <rect x="4.5" y="4.5" width="11" height="11" rx="1" transform="rotate(45 10 10)" />
+          <circle cx="10" cy="10" r="1.2" fill={fill} stroke="none" />
+        </>
+      ) : (
         <>
           <rect x="2" y="2" width="16" height="14" rx="1.5" />
           <path d="M5 6 H15" />
           <path d="M5 9 H15" />
           <path d="M5 12 H11" />
-        </>
-      ) : (
-        <>
-          <rect x="4.5" y="4.5" width="11" height="11" rx="1" transform="rotate(45 10 10)" />
-          <circle cx="10" cy="10" r="1.2" fill={fill} stroke="none" />
         </>
       )}
     </g>
@@ -115,6 +113,8 @@ export default function TopologyCanvas({
   const svgRef = useRef<SVGSVGElement>(null);
   const pointersRef = useRef<Map<number, Pointer>>(new Map());
   const gestureRef = useRef<Gesture | null>(null);
+  const suppressClickRef = useRef(false);
+  const dragAnchorRef = useRef<Pointer | null>(null);
 
   const viewBox = useMotionValue(
     `0 0 ${CAREER_CANVAS.w} ${CAREER_CANVAS.h}`
@@ -179,7 +179,9 @@ export default function TopologyCanvas({
 
   const handlePointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     svgRef.current?.setPointerCapture(e.pointerId);
+    suppressClickRef.current = false;
     const v = toView(e.clientX, e.clientY);
+    dragAnchorRef.current = v;
     pointersRef.current.set(e.pointerId, v);
     const size = pointersRef.current.size;
     if (size === 1) {
@@ -205,6 +207,14 @@ export default function TopologyCanvas({
     if (!pointersRef.current.has(e.pointerId)) return;
     const v = toView(e.clientX, e.clientY);
     pointersRef.current.set(e.pointerId, v);
+    const anchor = dragAnchorRef.current;
+    if (
+      anchor &&
+      pointersRef.current.size === 1 &&
+      Math.hypot(v.x - anchor.x, v.y - anchor.y) > 8
+    ) {
+      suppressClickRef.current = true;
+    }
     const g = gestureRef.current;
     if (!g) return;
 
@@ -240,6 +250,7 @@ export default function TopologyCanvas({
 
   const handlePointerUp = (e: React.PointerEvent<SVGSVGElement>) => {
     pointersRef.current.delete(e.pointerId);
+    dragAnchorRef.current = null;
     const remaining = [...pointersRef.current.entries()];
     gestureRef.current =
       remaining.length === 1
@@ -395,8 +406,12 @@ export default function TopologyCanvas({
                 style={{ transition: "opacity 300ms ease", cursor: "pointer" }}
                 role="button"
                 tabIndex={0}
-                aria-label={`${node.name}. ${node.dateRange.label}. Click to inspect.`}
+                aria-label={`${node.title}. ${node.timeline}. Click to inspect.`}
                 onClick={() => {
+                  if (suppressClickRef.current) {
+                    suppressClickRef.current = false;
+                    return;
+                  }
                   if (selectedId === node.id) {
                     onSelect(null);
                     fitToNodes(nodes, !reduced);
@@ -429,31 +444,35 @@ export default function TopologyCanvas({
                   animate={active ? { strokeOpacity: [0.55, 1, 0.55] } : { strokeOpacity: 1 }}
                   transition={active ? { duration: 2.2, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
                 />
-                {selected && !reduced && (
-                  <motion.rect
+                {selected && (
+                  <rect
                     width={NODE_W}
                     height={NODE_H}
                     rx={10}
                     fill="none"
-                    stroke="#6366f1"
-                    strokeWidth={2}
+                    className="stroke-indigo-400 ring-1 ring-indigo-500"
+                    strokeWidth={1.5}
                     vectorEffect="non-scaling-stroke"
-                    initial={{ opacity: 0.7 }}
-                    animate={{ opacity: 0.15 }}
-                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                    style={{
+                      filter: reduced
+                        ? undefined
+                        : "drop-shadow(0 0 8px rgba(99,102,241,0.45))",
+                    }}
                   />
                 )}
                 <g transform="translate(10 20)">
-                  <Glyph type={node.type} active={active} />
+                  <Glyph category={node.category} active={active} />
                 </g>
                 <text
                   x="38"
                   y="22"
                   className="font-mono"
-                  style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: "0.02em" }}
+                  textLength={118}
+                  lengthAdjust="spacingAndGlyphs"
+                  style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: "0.01em" }}
                   fill={active ? "#f4f4f5" : "#d4d4d8"}
                 >
-                  {node.name.toUpperCase()}
+                  {node.title.toUpperCase()}
                 </text>
                 <text
                   x="38"
@@ -462,7 +481,7 @@ export default function TopologyCanvas({
                   style={{ fontSize: 7.5 }}
                   fill="#52525b"
                 >
-                  {`${node.type.toUpperCase()} · ${node.dateRange.label}`}
+                  {`${node.category.toUpperCase()} · ${node.timeline}`}
                 </text>
                 <circle
                   cx={NODE_W - 9}

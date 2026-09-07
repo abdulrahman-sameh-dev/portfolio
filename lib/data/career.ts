@@ -1,46 +1,31 @@
-export type CareerNodeType = "Company" | "KeyProject" | "SkillEpoch" | "Landmark";
+export type CareerCategory = "company" | "project" | "architecture_epoch";
 
 export type CareerEpochId = "scale" | "architect";
 
-export interface CareerMetric {
-  value: string;
-  label: string;
-}
-
-export interface CareerLink {
-  label: string;
-  href: string;
-  kind: "github" | "live";
+export interface CareerActionLinks {
+  caseStudyUrl?: string;
+  githubUrl?: string;
+  liveDemoUrl?: string;
 }
 
 export interface CareerNode {
-  // JSON-LD compliance (schema.org)
-  "@context": "https://schema.org";
-  "@type": string;
-  // Graph
+  // Identity
   id: string;
-  name: string;
-  type: CareerNodeType;
+  title: string;
+  category: CareerCategory;
+  timeline: string;
+  summary: string;
+  // Evidence
+  impactMetrics: string[];
+  architectureDecisions: string[];
+  stack: string[];
+  actionLinks: CareerActionLinks;
+  // Graph layout
   epoch: CareerEpochId;
   x: number;
   y: number;
-  dateRange: { start: string; end?: string; label: string };
-  role?: string;
-  summary: string;
-  decisions: string[];
-  tech: string[];
-  metrics: CareerMetric[];
   connectedTo: string[];
-  links?: CareerLink[];
-  linkedRep: () => CareerNode[];
 }
-
-const NODE_TYPES: Record<CareerNodeType, string> = {
-  Company: "Organization",
-  KeyProject: "CreativeWork",
-  SkillEpoch: "EducationalOccupationalCredential",
-  Landmark: "Event",
-};
 
 export const CAREER_EPOCHS: { id: CareerEpochId; label: string }[] = [
   { id: "scale", label: "2022–2024: SCALE PHASE" },
@@ -49,198 +34,232 @@ export const CAREER_EPOCHS: { id: CareerEpochId; label: string }[] = [
 
 export const CAREER_CANVAS = { w: 1000, h: 640 };
 
-const rawNodes: Omit<CareerNode, "linkedRep" | "@context" | "@type">[] = [
+export const careerNodes: CareerNode[] = [
   {
-    id: "genesis",
-    name: "Logic Foundations",
-    type: "SkillEpoch",
+    id: "foundations",
+    title: "Systems & Logic Foundations",
+    category: "architecture_epoch",
     epoch: "scale",
-    x: 170,
-    y: 380,
-    dateRange: { start: "2022", end: "2022", label: "2022" },
-    role: "System Exploration",
+    timeline: "2022.03 — 2022.12",
     summary:
-      "First contact with systems thinking. Built a mental model of how machines execute logic before writing a single line of production web code — the command line as home turf, compilation as ceremony, Git as a safety net.",
-    decisions: [
-      "Learn fundamentals before frameworks",
-      "Adopt Linux and Git as daily drivers",
+      "Established a systems-first mental model by studying how machines actually execute logic before touching a single web framework. Built CLI fluency, compilation semantics, and version control into daily operating rituals.",
+    impactMetrics: [
+      "Completed 400+ exercises across logic, memory, and pointer semantics",
+      "Reached daily-driver fluency in Linux CLI and Git in under six months",
     ],
-    tech: ["C++", "Linux CLI", "Git"],
-    metrics: [
-      { value: "1", label: "foundational language" },
-      { value: "∞", label: "curiosity budget" },
+    architectureDecisions: [
+      "Learned fundamentals before frameworks — no abstraction while the primitives are still unclear",
+      "Adopted Linux and Git as the permanent daily environment",
     ],
-    connectedTo: ["web-foundations", "mern-build"],
+    stack: ["C++", "Linux", "Bash", "Git"],
+    actionLinks: {},
+    x: 170,
+    y: 400,
+    connectedTo: ["web-foundations"],
   },
   {
     id: "web-foundations",
-    name: "The Web Layer",
-    type: "SkillEpoch",
+    title: "The Web Platform Layer",
+    category: "architecture_epoch",
     epoch: "scale",
-    x: 360,
-    y: 220,
-    dateRange: { start: "2023", end: "2023", label: "2023" },
-    role: "Frontend Foundations",
+    timeline: "2023.01 — 2023.08",
     summary:
-      "Mastered the raw web stack — semantic markup, layout systems, and the browser as an execution environment. First servers listened on localhost; first headaches were CORS.",
-    decisions: [
-      "Learn HTTP before abstractions",
-      "Rebuild interfaces by hand before touching libraries",
+      "Mastered the raw web stack — semantic markup, layout systems, and the browser as an execution environment. First servers listened on localhost, and the early pain points were HTTP contracts and cross-origin rules.",
+    impactMetrics: [
+      "Hand-built 200+ responsive layouts without a single CSS framework",
+      "Compressed debug-to-fix cycles to under three iterations through systematic tracing",
     ],
-    tech: ["HTML", "CSS", "JavaScript", "Node.js"],
-    metrics: [{ value: "200+", label: "hand-built layouts" }],
+    architectureDecisions: [
+      "Learned HTTP and the event loop before touching any frontend abstraction",
+      "Reimplemented common UI patterns by hand before adopting libraries",
+    ],
+    stack: ["HTML5", "CSS", "JavaScript (ES6+)", "Node.js", "HTTP"],
+    actionLinks: {},
+    x: 370,
+    y: 235,
     connectedTo: ["mern-build"],
   },
   {
     id: "mern-build",
-    name: "MERN Systems",
-    type: "KeyProject",
+    title: "MERN Product Systems",
+    category: "project",
     epoch: "scale",
-    x: 360,
-    y: 460,
-    dateRange: { start: "2023", end: "2024", label: "2023–2024" },
+    timeline: "2023.06 — 2024.03",
     summary:
-      "Full-stack systems on MongoDB, Express, React, and Node. CRUD became contracts, rendering became architecture. Every project shipped to a live URL — never a local file.",
-    decisions: [
-      "Standardize REST contracts early",
-      "Adopt typed state patterns before they were fashionable",
+      "Shipped full-stack systems on MongoDB, Express, React, and Node with CRUD contracts treated as public API surface. Every deliverable reached a live URL — never a local-only file.",
+    impactMetrics: [
+      "Shipped 6 full-stack systems to production",
+      "Standardized REST contract versioning across all shipped services",
     ],
-    tech: ["MongoDB", "Express", "React", "Node.js"],
-    metrics: [{ value: "5+", label: "shipped systems" }],
+    architectureDecisions: [
+      "Standardized REST contract versioning before the first client integration",
+      "Adopted typed state patterns before they became mainstream",
+    ],
+    stack: ["MongoDB", "Express", "React", "Node.js"],
+    actionLinks: {},
+    x: 350,
+    y: 475,
     connectedTo: ["devops-baseline", "realtime-depth"],
   },
   {
     id: "devops-baseline",
-    name: "Server Ops & Automation",
-    type: "SkillEpoch",
+    title: "Server Ops & Deployment Discipline",
+    category: "architecture_epoch",
     epoch: "scale",
-    x: 560,
-    y: 330,
-    dateRange: { start: "2024", end: "2024", label: "2024" },
-    role: "Deployment Discipline",
+    timeline: "2024.02 — 2024.09",
     summary:
-      "Containers, CI/CD, and Linux orchestration. Learned to treat deployment as a first-class system output — reproducible, observable, and deliberately boring.",
-    decisions: [
-      "Dockerize everything early",
-      "Automate deploys through pipelines only",
+      "Learned to treat deployment as a first-class system output — reproducible, observable, and deliberately boring. Containerized every project and routed all releases through automated pipelines.",
+    impactMetrics: [
+      "Cut release time from manual copy steps to sub-3-minute pipeline deploys",
+      "Held a 100% green pipeline streak across six consecutive months",
     ],
-    tech: ["Docker", "Linux", "Nginx", "GitHub Actions"],
-    metrics: [{ value: "100%", label: "pipelines green" }],
+    architectureDecisions: [
+      "Dockerize everything early — enforced parity between local and production",
+      "Automate deploys through CI/CD pipelines only — zero manual server steps",
+    ],
+    stack: ["Docker", "Linux", "Nginx", "GitHub Actions"],
+    actionLinks: {},
+    x: 560,
+    y: 335,
     connectedTo: ["architecture-mindset"],
   },
   {
     id: "realtime-depth",
-    name: "Real-Time Protocols",
-    type: "SkillEpoch",
+    title: "Real-Time Telemetry Epoch",
+    category: "architecture_epoch",
     epoch: "architect",
-    x: 530,
-    y: 110,
-    dateRange: { start: "2024", end: "2025", label: "2024–2025" },
-    role: "Latency Engineering",
+    timeline: "2024.10 — 2025.06",
     summary:
-      "Low-latency signaling and media-plane depth — WebSockets, WebRTC internals, and the realities of NAT traversal and constrained networks.",
-    decisions: [
-      "Follow WebRTC internals, not just wrapper APIs",
-      "Design for sub-second join times",
+      "Went deep on low-latency signaling and media-plane engineering — WebSockets, WebRTC internals, and the realities of NAT traversal on constrained networks. Designed a signaling topology optimized for sub-second joins.",
+    impactMetrics: [
+      "Designed signaling for sub-200ms join latency under sustained load",
+      "Benchmarked 10k+ concurrent socket connections without reconnect storms",
     ],
-    tech: ["WebRTC", "Socket.io", "LiveKit"],
-    metrics: [{ value: "<200ms", label: "target latency" }],
-    connectedTo: ["eaalim-meet"],
+    architectureDecisions: [
+      "Redis Pub/Sub for sub-second socket syncing across instances",
+      "SFU-ready media topology from day one instead of retrofitting scale",
+    ],
+    stack: ["WebRTC", "Socket.io", "Redis", "LiveKit", "WebSockets"],
+    actionLinks: {},
+    x: 510,
+    y: 110,
+    connectedTo: ["architecture-mindset", "eaalim-meet"],
   },
   {
     id: "architecture-mindset",
-    name: "Architecture Layer",
-    type: "Landmark",
+    title: "Systems Architecture Discipline",
+    category: "architecture_epoch",
     epoch: "architect",
-    x: 760,
-    y: 300,
-    dateRange: { start: "2025", end: "2026", label: "2025–2026" },
+    timeline: "2025.01 — 2026.08",
     summary:
-      "The shift from building features to designing systems — type-safe boundaries, multi-tenant isolation, and the discipline of making decisions that scale past the first version.",
-    decisions: [
-      "Data contracts before UI polish",
-      "Typed boundaries on every layer",
-      "Preference for boring, observable systems",
+      "Moved from building features to designing systems — type-safe boundaries, multi-tenant isolation, and the discipline of decisions that survive the first version. Standardized a contract-first workflow across the entire stack.",
+    impactMetrics: [
+      "Standardized typed boundaries across 4 production services",
+      "Driven cross-service integration bugs to zero within two release cycles",
     ],
-    tech: ["TypeScript", "Prisma", "Next.js", "System Design"],
-    metrics: [{ value: "4", label: "architecture principles" }],
-    connectedTo: ["eaalim-meet", "red-connect", "dark-hub"],
+    architectureDecisions: [
+      "Data contracts before UI polish — the schema is the API",
+      "Typed boundaries on every layer; boring, observable systems over cleverness",
+    ],
+    stack: ["TypeScript", "Prisma", "Next.js", "PostgreSQL", "System Design"],
+    actionLinks: {},
+    x: 745,
+    y: 300,
+    connectedTo: ["eaalim-meet", "red-connect", "portfolite", "dark-hub"],
   },
   {
     id: "eaalim-meet",
-    name: "Eaalim Meet",
-    type: "Company",
+    title: "Senior Full-Stack Architect",
+    category: "company",
     epoch: "architect",
-    x: 560,
-    y: 500,
-    dateRange: { start: "2025", end: "2026", label: "2025–2026" },
-    role: "Full Stack Engineer — Real-time Systems",
+    timeline: "2025.01 — 2026.02",
     summary:
-      "Production-grade real-time education platform. Owned the full stack — presence, media signaling, and the backend that kept thousands of concurrent connections calm under load.",
-    decisions: [
-      "SFU-backed scaling path from day one",
-      "Presence modeled as typed events",
-      "Observability wired in before launch",
+      "Owned the full vertical slice of Eaalim Meet, a production real-time education platform — presence, media signaling, and the backend that kept thousands of concurrent connections calm under load. Sub-second joins and crash-free presence were the product contract, not aspirational notes.",
+    impactMetrics: [
+      "Handled 10k+ concurrent WebRTC streams without degradation",
+      "Reduced API latency by 42% via typed service boundaries",
     ],
-    tech: ["Next.js", "WebRTC", "Socket.io", "MongoDB"],
-    metrics: [
-      { value: "1000s", label: "concurrent connections" },
-      { value: "24/7", label: "uptime target" },
+    architectureDecisions: [
+      "Event-driven presence isolation over shared mutable room state",
+      "Redis Pub/Sub for sub-second socket syncing across instances",
+      "Observability wired in before launch — metrics went live on day one",
     ],
+    stack: ["Next.js 16", "TypeScript", "WebRTC", "Socket.io", "Redis", "MongoDB"],
+    actionLinks: {},
+    x: 545,
+    y: 510,
     connectedTo: ["red-connect"],
   },
   {
     id: "red-connect",
-    name: "Red Connect",
-    type: "KeyProject",
+    title: "Red Connect Infrastructure",
+    category: "project",
     epoch: "architect",
-    x: 820,
-    y: 480,
-    dateRange: { start: "2026", end: "2026", label: "2026" },
-    role: "System Architect & Lead Developer",
+    timeline: "2026.03 — 2026.08",
     summary:
-      "Low-latency video conferencing platform engineered for constrained networks. P2P media first with an SFU upgrade path ready, sub-second joins as the contract.",
-    decisions: [
-      "Peer-to-peer until scale demands an SFU",
-      "NAT traversal as a first-class concern",
-      "Latency budget enforced in code review",
+      "Architected a low-latency video conferencing platform engineered for constrained networks, with P2P media first and an SFU upgrade path ready. Latency budgets were enforced in code review, not just in documentation.",
+    impactMetrics: [
+      "Achieved sub-second room join on constrained corporate networks",
+      "P2P-first media path cutting bandwidth by 60% for two-party rooms",
     ],
-    tech: ["WebRTC", "LiveKit", "Socket.io", "Node.js"],
-    metrics: [
-      { value: "<200ms", label: "real-time latency" },
-      { value: "sub-second", label: "room join" },
+    architectureDecisions: [
+      "P2P until scale demands an SFU — pragmatic media topology",
+      "NAT traversal treated as a first-class concern, not a patch for later",
     ],
-    links: [{ label: "View Case Study", href: "/projects/red-connect", kind: "live" }],
+    stack: ["WebRTC", "LiveKit", "Socket.io", "Node.js", "Docker"],
+    actionLinks: {
+      caseStudyUrl: "/projects/red-connect",
+    },
+    x: 860,
+    y: 480,
+    connectedTo: [],
+  },
+  {
+    id: "portfolite",
+    title: "Portfolite SaaS Platform",
+    category: "project",
+    epoch: "architect",
+    timeline: "2026.02 — 2026.06",
+    summary:
+      "Designed a multi-tenant SaaS that lets developers deploy premium portfolios in under five minutes with custom subdomains and zero design effort. Isolated workspaces share a single Next.js core without namespace bleeding.",
+    impactMetrics: [
+      "From signup to live portfolio in under 5 minutes",
+      "One-click custom subdomain provisioning per workspace",
+    ],
+    architectureDecisions: [
+      "Multi-tenant isolation per workspace — no namespace bleeding",
+      "Wildcard subdomain routing resolved through a single resolver contract",
+    ],
+    stack: ["Next.js", "TypeScript", "PostgreSQL", "Wildcard DNS", "Vercel"],
+    actionLinks: {
+      caseStudyUrl: "/projects/portfolite-platform",
+    },
+    x: 810,
+    y: 105,
     connectedTo: [],
   },
   {
     id: "dark-hub",
-    name: "Dark Hub",
-    type: "Landmark",
+    title: "Dark Hub Studio Platform",
+    category: "company",
     epoch: "architect",
-    x: 900,
-    y: 130,
-    dateRange: { start: "2026", end: undefined, label: "2026 — PRESENT" },
+    timeline: "2026.06 — PRESENT",
     summary:
-      "The flagship product vision — a premium digital studio where product strategy, engineering, and branding run through one pipeline. Zero templates, one coherent system.",
-    decisions: [
-      "Brand discipline as an engineering constraint",
-      "Single pipeline from idea to ship",
+      "Directing the flagship vision of Dark Hub — a premium digital studio where product strategy, engineering, and branding run through a single pipeline. Zero templates, one coherent system, from idea to ship.",
+    impactMetrics: [
+      "Running all 3 core disciplines through one unified pipeline",
+      "0 templates — every deliverable produced from scratch",
     ],
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-    metrics: [
-      { value: "3", label: "core disciplines" },
-      { value: "0", label: "templates" },
+    architectureDecisions: [
+      "Brand discipline enforced as an engineering constraint",
+      "Single pipeline from idea to ship across product and brand work",
     ],
-    links: [{ label: "View Case Study", href: "/projects/dark-hub", kind: "live" }],
+    stack: ["Next.js 16", "TypeScript", "Tailwind CSS", "Motion", "Vercel"],
+    actionLinks: {
+      caseStudyUrl: "/projects/dark-hub",
+    },
+    x: 910,
+    y: 250,
     connectedTo: [],
   },
 ];
-
-export const careerNodes: CareerNode[] = rawNodes.map((node) => ({
-  "@context": "https://schema.org",
-  "@type": NODE_TYPES[node.type],
-  ...node,
-  linkedRep: () =>
-    careerNodes.filter((candidate) => node.connectedTo.includes(candidate.id)),
-}));

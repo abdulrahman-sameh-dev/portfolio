@@ -9,13 +9,16 @@ export const metadata: Metadata = {
     "Print-ready system brief and career record of Abdulrahman Sameh — Full Stack Engineer & Systems Architect.",
 };
 
+const parseTimelineStart = (timeline: string) =>
+  Number(timeline.split(" — ")[0].replace(".", ""));
+
 const byStartDesc = (a: (typeof careerNodes)[number], b: (typeof careerNodes)[number]) =>
-  Number(b.dateRange.start) - Number(a.dateRange.start);
+  parseTimelineStart(b.timeline) - parseTimelineStart(a.timeline);
 
 const experience = careerNodes
-  .filter((node) => node.type === "Company" || node.type === "KeyProject")
+  .filter((node) => node.category === "company" || node.category === "project")
   .sort(byStartDesc);
-const foundations = careerNodes.filter((node) => node.type !== "Company" && node.type !== "KeyProject");
+const foundations = careerNodes.filter((node) => node.category === "architecture_epoch");
 
 export default function ResumePage() {
   const featuredSkills = siteConfig.skills.filter((skill) => skill.featured);
@@ -129,29 +132,30 @@ export default function ResumePage() {
                   <div className="px-5 py-3 bg-zinc-900/60 print:bg-white border-b border-zinc-800 print:border-black flex flex-wrap items-start justify-between gap-2">
                     <div>
                       <h3 className="font-bold text-white print:text-black">
-                        {node.role ?? node.name}
+                        {node.title}
                       </h3>
                       <p className="font-mono text-[10px] uppercase tracking-wider text-zinc-400 print:text-neutral-600">
-                        {node.name} {"//"} {node.dateRange.label}
+                        {node.category.toUpperCase()} {"//"} {node.timeline}
                       </p>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {node.metrics.map((metric) => (
-                        <span
-                          key={metric.label}
-                          className="font-mono text-[9px] uppercase tracking-wider px-2 py-1 rounded-md bg-zinc-800/80 print:bg-neutral-100 text-zinc-300 print:text-black"
-                        >
-                          {metric.value} {metric.label}
-                        </span>
-                      ))}
                     </div>
                   </div>
                   <div className="px-5 py-4 space-y-3">
+                    <ul className="space-y-1">
+                      {node.impactMetrics.map((metric) => (
+                        <li
+                          key={metric}
+                          className="flex gap-1.5 items-start text-xs text-zinc-300 print:text-black"
+                        >
+                          <span className="text-indigo-500 print:text-black mt-px">{"▸"}</span>
+                          {metric}
+                        </li>
+                      ))}
+                    </ul>
                     <p className="text-sm text-zinc-400 leading-relaxed print:text-black">
                       {node.summary}
                     </p>
                     <ul className="flex flex-wrap gap-x-4 gap-y-1">
-                      {node.decisions.map((decision) => (
+                      {node.architectureDecisions.map((decision) => (
                         <li
                           key={decision}
                           className="text-xs text-zinc-300 print:text-black flex gap-1.5 items-center"
@@ -162,7 +166,7 @@ export default function ResumePage() {
                       ))}
                     </ul>
                     <ul className="flex flex-wrap gap-1.5">
-                      {node.tech.map((tech) => (
+                      {node.stack.map((tech) => (
                         <li
                           key={tech}
                           className="font-mono text-[9px] uppercase tracking-wider px-2 py-0.5 rounded bg-zinc-800/80 print:bg-neutral-100 text-zinc-500 print:text-black"
@@ -186,9 +190,9 @@ export default function ResumePage() {
               {foundations.map((node) => (
                 <li key={node.id} className="px-5 py-3 bg-zinc-900/60 print:bg-white">
                   <div className="flex flex-wrap items-baseline justify-between gap-1">
-                    <p className="font-bold text-white print:text-black">{node.name}</p>
+                    <p className="font-bold text-white print:text-black">{node.title}</p>
                     <p className="font-mono text-[9px] uppercase tracking-wider text-zinc-500 print:text-neutral-600">
-                      {node.dateRange.label}
+                      {node.timeline}
                     </p>
                   </div>
                   <p className="mt-1 text-xs text-zinc-400 leading-relaxed print:text-neutral-700">

@@ -1,9 +1,75 @@
 "use client";
 
 import { motion, AnimatePresence } from "motion/react";
+import Link from "next/link";
 import { ArrowUpRight, X } from "lucide-react";
 import { GithubIcon } from "lucide-animated";
-import type { CareerNode } from "@/lib/data/career";
+import { careerNodes, type CareerActionLinks, type CareerNode } from "@/lib/data/career";
+
+// Precomputed once from the static career data.
+const lifetime = (() => {
+  const systemsShipped = careerNodes.filter(
+    (node) => node.category === "project" || node.category === "company"
+  ).length;
+  const counts = new Map<string, number>();
+  for (const node of careerNodes) {
+    for (const tech of node.stack) {
+      counts.set(tech, (counts.get(tech) ?? 0) + 1);
+    }
+  }
+  const primaryStack = [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 4)
+    .map(([tech]) => tech);
+  const currentFocus =
+    careerNodes.find((node) => node.timeline.endsWith("PRESENT"))?.title ??
+    "Full Stack Engineer & Systems Architect";
+  return { systemsShipped, primaryStack, currentFocus };
+})();
+
+function ReferenceLink({ links }: { links: CareerActionLinks }) {
+  const entries: { label: string; href: string; icon: "arrow" | "github" | "live" }[] = [];
+  if (links.caseStudyUrl) entries.push({ label: "View Case Study", href: links.caseStudyUrl, icon: "arrow" });
+  if (links.liveDemoUrl) entries.push({ label: "Live Demo", href: links.liveDemoUrl, icon: "live" });
+  if (links.githubUrl) entries.push({ label: "Source on GitHub", href: links.githubUrl, icon: "github" });
+
+  if (entries.length === 0) return null;
+
+  return (
+    <div className="space-y-2 pt-2 border-t border-zinc-800">
+      <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
+        References
+      </span>
+      <div className="flex flex-col gap-1.5">
+        {entries.map((link) => {
+          const inner = (
+            <>
+              {link.icon === "github" ? (
+                <GithubIcon size={13} />
+              ) : link.icon === "live" ? (
+                <ArrowUpRight size={13} />
+              ) : (
+                <ArrowUpRight size={13} />
+              )}
+              {link.label}
+            </>
+          );
+          const base =
+            "inline-flex items-center gap-1.5 font-mono text-xs text-indigo-400 hover:text-indigo-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded";
+          return link.href.startsWith("/") ? (
+            <Link key={link.href} href={link.href} className={base}>
+              {inner}
+            </Link>
+          ) : (
+            <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className={base}>
+              {inner}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export default function InspectorPanel({
   node,
@@ -35,30 +101,25 @@ export default function InspectorPanel({
           {node ? (
             <motion.div
               key={node.id}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
               className="p-5 space-y-6"
             >
               {/* Identity */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                    {node.type.toUpperCase()}
+                    {node.category.toUpperCase()}
                   </span>
                   <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">
-                    {node.dateRange.label}
+                    {node.timeline}
                   </span>
                 </div>
                 <h3 className="text-2xl font-bold tracking-tighter text-white">
-                  {node.name}
+                  {node.title}
                 </h3>
-                {node.role && (
-                  <p className="font-mono text-[11px] text-zinc-400 uppercase tracking-widest">
-                    {node.role}
-                  </p>
-                )}
               </div>
 
               {/* Impact */}
@@ -66,18 +127,26 @@ export default function InspectorPanel({
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
                   Impact
                 </span>
-                <p className="text-sm text-zinc-400 leading-relaxed">
-                  {node.summary}
-                </p>
+                <ul className="space-y-1.5">
+                  {node.impactMetrics.map((impact) => (
+                    <li
+                      key={impact}
+                      className="flex gap-2 text-sm text-zinc-300 leading-snug"
+                    >
+                      <span className="text-indigo-500 font-mono">{"▸"}</span>
+                      {impact}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              {/* Key Decisions */}
+              {/* Architecture Decisions */}
               <div className="space-y-2">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                  Key Decisions
+                  Architecture Decisions
                 </span>
                 <ul className="space-y-1.5">
-                  {node.decisions.map((decision) => (
+                  {node.architectureDecisions.map((decision) => (
                     <li
                       key={decision}
                       className="flex gap-2 text-sm text-zinc-300 leading-snug"
@@ -89,13 +158,13 @@ export default function InspectorPanel({
                 </ul>
               </div>
 
-              {/* Tech Stack */}
+              {/* Stack */}
               <div className="space-y-2">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                  Tech Stack
+                  Stack
                 </span>
                 <div className="flex flex-wrap gap-1.5">
-                  {node.tech.map((tech) => (
+                  {node.stack.map((tech) => (
                     <span
                       key={tech}
                       className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-800/80 text-zinc-400 border border-zinc-700/50"
@@ -106,53 +175,8 @@ export default function InspectorPanel({
                 </div>
               </div>
 
-              {/* Metrics */}
-              {node.metrics.length > 0 && (
-                <div className="space-y-2">
-                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                    Metrics
-                  </span>
-                  <div className="grid grid-cols-2 gap-px bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800">
-                    {node.metrics.map((m) => (
-                      <div key={m.label} className="bg-zinc-900/60 px-3 py-2.5">
-                        <p className="text-base font-bold text-white tracking-tighter">
-                          {m.value}
-                        </p>
-                        <p className="mt-0.5 font-mono text-[8px] uppercase tracking-[0.2em] text-zinc-500">
-                          {m.label}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* References */}
-              {node.links && node.links.length > 0 && (
-                <div className="space-y-2 pt-2 border-t border-zinc-800">
-                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                    References
-                  </span>
-                  <div className="flex flex-col gap-1.5">
-                    {node.links.map((link) => (
-                      <a
-                        key={link.href}
-                        href={link.href}
-                        target={link.kind === "live" ? undefined : "_blank"}
-                        rel={link.kind === "live" ? undefined : "noopener noreferrer"}
-                        className="inline-flex items-center gap-1.5 font-mono text-xs text-indigo-400 hover:text-indigo-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded"
-                      >
-                        {link.kind === "github" ? (
-                          <GithubIcon size={13} />
-                        ) : (
-                          <ArrowUpRight size={13} />
-                        )}
-                        {link.label}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {/* Action Links */}
+              <ReferenceLink links={node.actionLinks} />
             </motion.div>
           ) : (
             <motion.div
@@ -160,16 +184,69 @@ export default function InspectorPanel({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex flex-col items-center justify-center h-full min-h-64 px-6 text-center"
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="p-4"
             >
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-500">
-                No Node Selected
-              </span>
-              <p className="mt-3 max-w-[26ch] text-xs text-zinc-500 leading-relaxed">
-                Select a node on the topology to read its telemetry — impact,
-                decisions, and technical stack.
-              </p>
+              {/* Terminal card */}
+              <div className="rounded-xl border border-zinc-800 bg-zinc-950/60 overflow-hidden">
+                <div className="flex items-center gap-2 px-4 py-2.5 border-b border-zinc-800 bg-zinc-900/60">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500/80" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-300">
+                    {"// SYSTEM_INSPECTOR: AWAITING_SELECTION"}
+                  </span>
+                </div>
+                <div className="px-4 py-4 font-mono text-[11px] leading-relaxed text-zinc-300">
+                  Click any topology node on the graph to inspect architectural
+                  decisions, metrics, and codebase impact.
+                  <span className="inline-block w-2 h-3.5 ml-1 align-middle bg-indigo-400/80 animate-pulse" />
+                </div>
+              </div>
+
+              {/* Global lifetime summary */}
+              <div className="mt-4 rounded-xl border border-zinc-800 overflow-hidden">
+                <div className="px-4 py-2.5 border-b border-zinc-800 bg-zinc-900/60">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-400">
+                    Global Lifetime Summary
+                  </span>
+                </div>
+                <div className="px-4 py-4 space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">
+                      Total Systems Shipped
+                    </span>
+                    <span className="font-mono text-lg font-bold text-white tracking-tighter">
+                      {String(lifetime.systemsShipped).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="space-y-1.5">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">
+                      Primary Stack
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {lifetime.primaryStack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-800/80 text-zinc-400 border border-zinc-700/50"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-1.5 pt-1 border-t border-zinc-800">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">
+                      Current Focus Status
+                    </span>
+                    <p className="flex items-center gap-2 text-sm text-zinc-200 font-medium">
+                      <span className="relative flex h-2 w-2 shrink-0">
+                        <span className="absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75 animate-ping" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
+                      </span>
+                      {lifetime.currentFocus}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

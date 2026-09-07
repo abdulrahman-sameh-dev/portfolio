@@ -9,7 +9,7 @@ import { careerNodes } from "@/lib/data/career";
 
 export default function CareerPathPage() {
   const [epoch, setEpoch] = useState<EpochFilter>("all");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const visibleNodes = useMemo(
@@ -21,25 +21,30 @@ export default function CareerPathPage() {
   );
 
   const selectedNode = useMemo(
-    () => careerNodes.find((node) => node.id === selectedId) ?? null,
-    [selectedId]
+    () => careerNodes.find((node) => node.id === selectedNodeId) ?? null,
+    [selectedNodeId]
   );
 
   const handleEpochChange = (value: EpochFilter) => {
     setEpoch(value);
-    setSelectedId(null);
+    setSelectedNodeId(null);
     setHoveredId(null);
   };
 
   const experienceYears = new Date().getFullYear() - 2022;
 
   const jsonLd = useMemo(() => {
+    const schemaTypes = {
+      company: "Organization",
+      project: "CreativeWork",
+      architecture_epoch: "EducationalOccupationalCredential",
+    } as const;
     const graph = careerNodes.map((node) => ({
-      "@type": node["@type"],
-      name: node.name,
+      "@type": schemaTypes[node.category],
+      name: node.title,
       description: node.summary,
-      startDate: node.dateRange.start,
-      [node.type === "Company" ? "employeeRole" : "about"]: node.role,
+      startDate: node.timeline.split(" — ")[0],
+      dateCreated: node.timeline.includes("PRESENT") ? undefined : node.timeline.split(" — ")[1],
     }));
     return JSON.stringify({
       "@context": "https://schema.org",
@@ -107,16 +112,16 @@ export default function CareerPathPage() {
           <div className="lg:col-span-8">
             <TopologyCanvas
               nodes={visibleNodes}
-              selectedId={selectedId}
+              selectedId={selectedNodeId}
               hoveredId={hoveredId}
-              onSelect={setSelectedId}
+              onSelect={setSelectedNodeId}
               onHover={setHoveredId}
             />
           </div>
           <div className="lg:col-span-4 min-h-[320px]">
             <InspectorPanel
               node={selectedNode}
-              onClear={() => setSelectedId(null)}
+              onClear={() => setSelectedNodeId(null)}
             />
           </div>
         </div>
