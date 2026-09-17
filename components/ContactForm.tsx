@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
 import { Button } from "@/components/ui/button"; 
 import { Input } from "@/components/ui/input";
@@ -16,23 +16,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  REQUEST_PROTOCOL_EVENT,
+  serviceProtocolToContact,
+  type RequestProtocolDetail,
+} from "@/lib/contact";
 
 const contactFormSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
   lastName: z.string().min(2, "Last name is required"),
   email: z.string().email("Invalid email address"),
+  phone: z.string().optional(),
   category: z.string().min(1, "Please select a category"), // خليناه string بسيط للـ Select
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
-
-// Maps a service request protocol to the contact form category + message prefix.
-const serviceProtocols: Record<string, { category: string; label: string }> = {
-  architecture: { category: "Consultation", label: "ARCHITECTURE" },
-  build: { category: "Project", label: "FULL-STACK BUILD" },
-  audit: { category: "Consultation", label: "PERFORMANCE AUDIT" },
-};
 
 export default function ContactForm() {
   const { 
@@ -49,18 +48,34 @@ export default function ContactForm() {
     }
   });
 
-  // Read the ?service= request protocol from the URL and pre-fill the subject.
-  const protocolAppliedRef = useRef(false);
+  const messageRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const applyProtocol = useCallback((protocol: RequestProtocolDetail) => {
+    setValue("category", protocol.category, { shouldValidate: false });
+    setValue("message", protocol.message, { shouldValidate: false });
+    messageRef.current?.focus({ preventScroll: true });
+  }, [setValue]);
+
+  // Same-page bridge: Engagement Protocols → smooth scroll already done by Services,
+  // here we only listen for the protocol payload and pre-fill the form.
   useEffect(() => {
-    if (protocolAppliedRef.current) return;
+    const handleProtocol = (e: Event) => {
+      const detail = (e as CustomEvent<RequestProtocolDetail>).detail;
+      if (!detail) return;
+      applyProtocol(detail);
+    };
+    window.addEventListener(REQUEST_PROTOCOL_EVENT, handleProtocol);
+    return () => window.removeEventListener(REQUEST_PROTOCOL_EVENT, handleProtocol);
+  }, [applyProtocol]);
+
+  // Deep-link support: pre-fill when landing directly on /#contact?service=X.
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const service = params.get("service");
-    const protocol = service ? serviceProtocols[service] : undefined;
-    if (!protocol) return;
-    setValue("category", protocol.category);
-    setValue("message", `[REQUEST PROTOCOL: ${protocol.label}] `);
-    protocolAppliedRef.current = true;
-  }, [setValue]);
+    const protocol = service ? serviceProtocolToContact[service] : undefined;
+    if (!protocol || !service) return;
+    applyProtocol({ service, ...protocol });
+  }, [applyProtocol]);
 
   const onSubmit = async (data: ContactFormValues) => {
     try {
@@ -114,10 +129,16 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-zinc-300">Email Address</Label>
-              <Input id="email" {...register("email")} placeholder="hello@abdulrahmansameh.dev" className="bg-zinc-900/50 border-zinc-800 focus-visible:ring-indigo-500" />
-              {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-zinc-300">Email Address</Label>
+                <Input id="email" {...register("email")} placeholder="hello@abdulrahmansameh.dev" className="bg-zinc-900/50 border-zinc-800 focus-visible:ring-indigo-500" />
+                {errors.email && <p className="text-xs text-red-500">{errors.email.message}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-zinc-300">Phone Number</Label>
+                <Input id="phone" type="tel" {...register("phone")} placeholder="+20 10 0000 0000" className="bg-zinc-900/50 border-zinc-800 focus-visible:ring-indigo-500" />
+              </div>
             </div>
 
             {/* Shadcn Select with Controller */}
@@ -127,7 +148,7 @@ export default function ContactForm() {
                 name="category"
                 control={control}
                 render={({ field }) => (
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger className="bg-zinc-900/50 border-zinc-800 focus:ring-indigo-500 text-zinc-400 w-full">
                       <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
@@ -144,7 +165,7 @@ export default function ContactForm() {
 
             <div className="space-y-2">
               <Label htmlFor="message" className="text-zinc-300">Message</Label>
-              <Textarea id="message" {...register("message")} placeholder="Tell me about your vision..." className="min-h-[120px] bg-zinc-900/50 border-zinc-800 focus-visible:ring-indigo-500 resize-none" />
+              <Textarea id="message" {...register("message")} ref={(el) => { register("message").ref(el); messageRef.current = el; }} placeholder="Tell me about your vision..." className="min-h-[120px] bg-zinc-900/50 border-zinc-800 focus-visible:ring-indigo-500 resize-none" />
               {errors.message && <p className="text-xs text-red-500">{errors.message.message}</p>}
             </div>
 

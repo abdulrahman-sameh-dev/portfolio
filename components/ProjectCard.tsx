@@ -16,10 +16,13 @@ const ProjectCard = ({ project }: ProjectProps) => {
   const getStatusOverlay = (status: string) => {
     if (status.includes("Vision")) return { icon: <SchematicStack className="w-8 h-8" />, label: "Architecting Infrastructure" };
     if (status.includes("Beta")) return { icon: <SchematicFlow className="w-8 h-8" />, label: "Private Beta Access" };
+    if (status.includes("Production")) return { icon: <SchematicFlow className="w-8 h-8" />, label: "Live in Production" };
     return { icon: <SchematicPipeline className="w-8 h-8" />, label: "Compiling MVP" };
   };
 
   const overlay = getStatusOverlay(project.status);
+
+  const caseStudyHref = project.url?.caseStudy ?? `/projects/${project.slug}`;
 
   return (
     <motion.div
@@ -107,7 +110,7 @@ const ProjectCard = ({ project }: ProjectProps) => {
 
 
           <div className="flex flex-row gap-2 justify-end grow">
-            <Link href={`/projects/${project.slug}`}>
+            <Link href={caseStudyHref}>
               <Button className="text-white bg-linear-30 cursor-pointer from-indigo-700 to-indigo-400 border-0">
                 Case Study
                 <ArrowUpRightIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />

@@ -4,8 +4,9 @@ import { useState } from 'react';
 import {
   SiNextdotjs, SiReact, SiDocker, SiGithub, SiLinux, SiLivekit,
   SiMongodb, SiNodedotjs, SiTailwindcss, SiFramer, SiTypescript,
-  SiPostgresql, SiPrisma,
+  SiPostgresql, SiPrisma, SiPhp, SiLaravel, SiMysql,
 } from 'react-icons/si'
+import { LuBraces, LuDatabase } from 'react-icons/lu'
 import type { IconType } from 'react-icons';
 import { siteConfig } from "@/lib/site";
 
@@ -23,6 +24,11 @@ const iconMap: Record<string, IconType> = {
   docker: SiDocker,
   linux: SiLinux,
   github: SiGithub,
+  php: SiPhp,
+  laravel: SiLaravel,
+  mysql: SiMysql,
+  blade: LuBraces,
+  eloquent: LuDatabase,
 };
 
 const skills = siteConfig.skills;

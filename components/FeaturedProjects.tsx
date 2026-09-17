@@ -32,7 +32,7 @@ export const FeaturedProjects = () => {
           <ProjectCard project={projects[0]} />
         </div>
 
-        {/* Portfolite SaaS - مربع طولي أو جانبي */}
+        {/* First Onw HR - مربع طولي أو جانبي */}
         <div className="md:col-span-4 md:row-span-2">
           <ProjectCard project={projects[1]} />
         </div>

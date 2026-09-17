@@ -26,8 +26,8 @@ export default function AboutPage() {
     },
     { 
       year: "2026", 
-      title: "Red Connect", 
-      role: "System Architect & Lead Developer", 
+      title: "First Onw HR", 
+      role: "Serverless Full-Stack Engineering — Laravel 12 · PHP · MySQL", 
       current: true
     },
   ];
@@ -73,9 +73,10 @@ export default function AboutPage() {
             <span className="text-zinc-500 italic">Engineering Mindset.</span>
           </h1>
           <p className="text-zinc-400 max-w-2xl leading-relaxed">
-            I&apos;m Abdulrahman Sameh, a 22-year-old Full Stack Developer building
-            scalable architectures with Next.js and TypeScript. My work is defined
-            by minimalist aesthetics and robust system structure.
+            I&apos;m Abdulrahman Sameh, a 22-year-old Full Stack Engineer building
+            scalable architectures across Next.js, TypeScript, Laravel 12, PHP,
+            and MySQL. My work is defined by minimalist aesthetics and robust
+            system structure.
           </p>
         </motion.div>
 

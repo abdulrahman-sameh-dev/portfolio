@@ -10,6 +10,7 @@ export type Project = {
   url?: {
     liveDemo?: string;
     github?: string;
+    caseStudy?: string;
   };
   overview: string;
   problem: string;
@@ -62,7 +63,7 @@ export type Service = {
 
 export const siteConfig = {
   name: "Abdulrahman Sameh",
-  email: "hello@abdulrahmansameh.dev",
+  email: "abdulrahman.sameh.dev@proton.me",
   siteUrl: "https://portfolite-mocha.vercel.app",
   resumeUrl: "/resume",
   availability: {
@@ -245,6 +246,71 @@ export const siteConfig = {
       brandBg: "#181717",
       padding: "0px",
     },
+    {
+      name: "PHP",
+      code: "PHP",
+      category: "Backend",
+      level: "Advanced",
+      proficiency: 88,
+      description: "Serverless-first PHP 8 with hardened stateless runtime patterns.",
+      icon: "php",
+      brand: "#777BB4",
+      brandBg: "#ffffff",
+      padding: "0px",
+      featured: true,
+    },
+    {
+      name: "Laravel",
+      code: "LR",
+      category: "Backend",
+      level: "Advanced",
+      proficiency: 90,
+      description: "Laravel 12 — Eloquent, Blade, auth & Form Requests on Lambda.",
+      icon: "laravel",
+      brand: "#FF2D20",
+      brandBg: "#ffffff",
+      padding: "0px",
+      featured: true,
+    },
+    {
+      name: "MySQL",
+      code: "MY",
+      category: "Backend",
+      level: "Advanced",
+      proficiency: 86,
+      description: "Managed cloud MySQL — durable sessions, cache & queues.",
+      icon: "mysql",
+      brand: "#FFFFFF",
+      brandBg: "#4479A1",
+      padding: "0px",
+      featured: true,
+    },
+    {
+      name: "Blade",
+      code: "BL",
+      category: "Frontend",
+      level: "Advanced",
+      proficiency: 84,
+      description: "Laravel templating — layouts, components & slot-driven views.",
+      icon: "blade",
+      brand: "#FFFFFF",
+      brandBg: "#FF2D20",
+      padding: "2px",
+      featured: true,
+    },
+    {
+      name: "Eloquent",
+      code: "EQ",
+      category: "Backend",
+      level: "Advanced",
+      proficiency: 85,
+      description: "Model-bound CRUD, scopes, casting & validated mass assignment.",
+      icon: "eloquent",
+      brand: "#FFFFFF",
+      brandBg: "#6366F1",
+      padding: "2px",
+      featured: true,
+    },
   ] as Skill[],
   systems: [
     {
@@ -346,32 +412,37 @@ export const siteConfig = {
       ],
     },
     {
-      slug: "portfolite-platform",
-      title: "Portfolite SaaS",
-      status: "Beta / In-Concept",
+      slug: "first-onw-hr",
+      title: "First Onw HR",
+      status: "Production",
       description:
-        "A specialized platform for developers to deploy premium portfolios with zero design effort and custom subdomains.",
-      tags: ["Multi-tenancy", "SaaS", "Wildcard Domains", "Next.js"],
+        "Modern full-stack employee management platform — Laravel 12, PHP 8, MySQL, Blade & Eloquent, re-engineered stateless-first for Vercel serverless PHP on AWS Lambda.",
+      tags: ["Laravel 12", "PHP", "MySQL", "Blade", "Eloquent"],
       size: "medium",
-      datePublished: "2026-02-01",
+      datePublished: "2026-09-14",
+      url: {
+        caseStudy: "/case-studies/first-onw-hr",
+      },
       overview:
-        "Portfolite is a platform for developers who want a premium portfolio without the design grind — isolated workspaces, custom subdomains, and one-command deploys.",
+        "First Onw HR is a complete, authenticated employee management platform: registration, login, email verification, password reset, profile management, and a paginated employee directory with full CRUD flows. Build on a modern Laravel 12 + MySQL full-stack, then re-engineered stateless-first so it runs flawlessly on Vercel's serverless PHP runtime. The engineering thesis is not the CRUD — it is the deployment substrate. Every framework default that assumed a persistent filesystem was deliberately re-bound.",
       problem:
-        "Developers spend hours handcrafting portfolio design instead of shipping the work that actually gets them hired.",
+        "Laravel expects a persistent, writable filesystem — storage/ for compiled views, sessions, cache and logs; bootstrap/cache for configuration; and a long-lived web server process to boot the framework. A stateless function runtime provides none of these: the filesystem is read-only after deploy, /tmp is ephemeral and instance-local, and every invocation may boot cold.",
       architecture: {
         summary:
-          "A multi-tenant SaaS where each developer gets an isolated workspace, a custom subdomain, and zero-config deploys on a shared Next.js core.",
-        stack: ["Next.js", "Multi-tenancy", "Wildcard Domains", "PostgreSQL"],
+          "A bespoke api/index.php front controller pre-declares the storage override, idempotently materializes the writable tree under /tmp, then rebinds storage via Application::useStoragePath() before Laravel boots. All state moves out of the filesystem: SESSION_DRIVER, CACHE_STORE and QUEUE_CONNECTION run on the shared Aiven MySQL instance, converting stateless functions into a stateful application. Blade views and Eloquent models stay idiomatic Laravel while the hybrid Vercel build graph (framework: null) keeps the PHP lambda and the CDN-served static edge on one domain.",
+        stack: ["Laravel 12", "PHP 8", "MySQL", "Blade", "Eloquent", "Vercel PHP", "Pest", "Vite"],
       },
       challenges: [
-        "Multi-tenant isolation per developer workspace",
-        "Wildcard subdomain routing to per-user content",
-        "Zero-config deploys so developers stay in flow",
+        "Read-only filesystem after deploy — Laravel's first eager-loaded compiled view threw file_put_contents errors until the storage path was re-bound to /tmp",
+        "Ephemeral /tmp breaks sessions — file-backed sessions silently 'forget' users, so all state moved to database drivers",
+        "Cold-start latency — dev-only providers suppressed via dont-discover, optimized autoloader, and committed Vite assets served from the edge",
+        "TLS terminated at the CDN — URL::forceScheme('https') in production to avoid mixed-content and broken redirects",
       ],
       metrics: [
-        { value: "< 5 min", label: "From signup to live portfolio" },
-        { value: "0", label: "Design effort required from the developer" },
-        { value: "1-click", label: "Custom subdomain provisioning" },
+        { value: "25", label: "Records per page — simplePaginate(25)" },
+        { value: "4", label: "Employee CRUD ops over 6 fields" },
+        { value: "5", label: "Feature tests on the full lifecycle + auth guards" },
+        { value: "17", label: "Commits incl. an explicit serverless-hardening phase" },
       ],
     },
     {

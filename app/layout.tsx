@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     google: "OZK-VlhBTdy11FQf4a0uuq-rjERT39lDsJ1ag_0up0o", // حط الكود اللي بعد كلمة content هنا
   },
   description:
-    "Official portfolio of Abdulrahman Sameh. A Professional Full Stack Developer specializing in building scalable web systems and Next.js architecture.",
+    "Official portfolio of Abdulrahman Sameh. A Professional Full Stack Developer specializing in building scalable web systems with Next.js, TypeScript, Laravel 12, PHP, and MySQL.",
   keywords: [
     "Abdulrahman Sameh",
     "Abdulrahman Sameh Developer",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     "System Design",
     "DevOps",
     "Software Architecture",
-    "portfolite",
+    "first-onw-hr",
     "portfolio"
   ],
   authors: [{ name: "Abdulrahman Sameh" }],
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Abdulrahman Sameh",
     description:
-      "Full Stack Developer specializing in MERN Stack & System Design",
+      "Full Stack Developer specializing in Next.js, Laravel 12, PHP, MySQL & System Design",
   },
 };
 

@@ -206,6 +206,13 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ s
               </Link>
             </Button>
           )}
+          {project.url?.caseStudy && (
+            <Button className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border" asChild>
+              <Link href={project.url.caseStudy}>
+                Read Full Case Study
+              </Link>
+            </Button>
+          )}
           <Button variant="ghost" className="text-zinc-400 hover:text-white px-0" asChild>
             <Link href="/projects">
               <ArrowLeft className="mr-2 h-4 w-4" />

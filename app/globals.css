@@ -223,6 +223,7 @@
     padding: 0 !important;
   }
   @page {
-    margin: 12mm;
+    size: A4;
+    margin: 14mm;
   }
 }

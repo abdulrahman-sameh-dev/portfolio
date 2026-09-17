@@ -23,12 +23,13 @@ export async function POST(req: Request) {
   const resend = new Resend(apiKey);
 
   try {
-    const { firstName, lastName, email, category, message } = await req.json();
+    const { firstName, lastName, email, phone, category, message } = await req.json();
 
     const safe = {
       firstName: escapeHtml(String(firstName ?? "")),
       lastName: escapeHtml(String(lastName ?? "")),
       email: escapeHtml(String(email ?? "")),
+      phone: escapeHtml(String(phone ?? "")),
       category: escapeHtml(String(category ?? "")),
       message: escapeHtml(String(message ?? "")),
     };
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
         <h3>New Contact Form Submission</h3>
         <p><strong>Name:</strong> ${safe.firstName} ${safe.lastName}</p>
         <p><strong>Email:</strong> ${safe.email}</p>
+        ${safe.phone ? `<p><strong>Phone:</strong> ${safe.phone}</p>` : ""}
         <p><strong>Category:</strong> ${safe.category}</p>
         <p><strong>Message:</strong></p>
         <p>${safe.message}</p>

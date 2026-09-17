@@ -207,19 +207,19 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                     Current Focus
                   </p>
                   <span className="text-[10px] px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                    65%
+                    100%
                   </span>
                 </div>
 
                 <p className="text-white font-bold text-lg tracking-tight">
-                  Portfolite Platform Architecture
+                  First Onw HR Serverless Architecture
                 </p>
 
                 <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
                   <motion.div
                     className="h-full bg-indigo-500"
                     initial={{ width: 0 }}
-                    animate={{ width: "65%" }}
+                    animate={{ width: "100%" }}
                     transition={{ duration: 1.5, delay: 0.8 }}
                   />
                 </div>

@@ -3,6 +3,11 @@ import { motion, type Variants } from "motion/react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { siteConfig } from "@/lib/site";
+import {
+  REQUEST_PROTOCOL_EVENT,
+  serviceProtocolToContact,
+  type RequestProtocolDetail,
+} from "@/lib/contact";
 
 const gridVariants: Variants = {
   hidden: {},
@@ -16,6 +21,36 @@ const cardVariants: Variants = {
     y: 0,
     transition: { duration: 0.5, ease: "easeOut" },
   },
+};
+
+const requestProtocol = (
+  e: React.MouseEvent<HTMLAnchorElement>,
+  serviceId: string
+) => {
+  e.preventDefault();
+  const protocol = serviceProtocolToContact[serviceId];
+  if (!protocol) return;
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  document
+    .getElementById("contact")
+    ?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+
+  const detail: RequestProtocolDetail = {
+    service: serviceId,
+    ...protocol,
+  };
+  window.dispatchEvent(
+    new CustomEvent<RequestProtocolDetail>(REQUEST_PROTOCOL_EVENT, {
+      detail,
+    })
+  );
+
+  if (window.history.replaceState) {
+    window.history.replaceState(null, "", `/#contact?service=${serviceId}`);
+  }
 };
 
 export const Services = () => {
@@ -75,7 +110,8 @@ export const Services = () => {
 
             <Link
               href={`/#contact?service=${service.id}`}
-              className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded"
+              onClick={(e) => requestProtocol(e, service.id)}
+              className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded cursor-pointer"
             >
               Request Protocol
               <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5" />

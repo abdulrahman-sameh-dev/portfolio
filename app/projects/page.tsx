@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookOpen, Layers, ArrowUpRight } from "lucide-react";
 import { SchematicStack, SchematicFlow, SchematicPipeline, SchematicNodes } from "@/components/SchematicIcons";
+import { SystemStatusStrip } from "@/components/SystemStatusStrip";
 import { siteConfig } from "@/lib/site";
 import type { SystemIcon } from "@/lib/site";
 
@@ -180,30 +181,7 @@ export default function Projects() {
       </div>
 
       {/* ── Telemetry Strip ── */}
-      <div className="flex items-center justify-between px-5 md:px-6 py-3 border-t border-zinc-800/60 bg-zinc-900/10">
-        <div className="flex items-center gap-2.5">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
-          </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-400">
-            STATUS: LIVE
-          </span>
-        </div>
-        <div className="hidden sm:flex items-center gap-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
-            <span className="text-zinc-300">SYSTEMS:</span> 4
-          </span>
-          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
-            <span className="text-zinc-300">UPTIME:</span> ALL NOMINAL
-          </span>
-          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
-            <span className="text-zinc-300">ENV:</span> DEVELOPMENT
-          </span>
-        </div>
-      </div>
+      <SystemStatusStrip stackLabel="NEXT.JS 16" systemsCount={systems.length} />
 
     </section>
   );

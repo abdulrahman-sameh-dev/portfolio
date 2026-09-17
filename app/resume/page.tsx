@@ -41,9 +41,9 @@ export default function ResumePage() {
       </div>
 
       {/* ── Document ── */}
-      <div className="print:p-0">
+      <div className="print:border print:border-zinc-300 print:rounded-lg print:px-8 print:max-w-none">
         {/* Header */}
-        <header className="print:pt-0 px-6 md:px-8 pt-8 pb-6 border-b border-zinc-800/60">
+        <header className="print:pt-0 print:px-0 px-6 md:px-8 pt-8 pb-6 border-b border-zinc-800/60">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-500 print:text-black">
             System Brief {"//"} PERSON RECORD
           </p>
@@ -65,7 +65,7 @@ export default function ResumePage() {
         </header>
 
         {/* Contact Strip */}
-        <div className="px-6 md:px-8 py-4 border-b border-zinc-800/60 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-wider text-zinc-400 print:text-black">
+        <div className="print:px-0 px-6 md:px-8 py-4 border-b border-zinc-800/60 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-wider text-zinc-400 print:text-black">
           <span>
             <span className="text-zinc-300 print:text-black">AVAILABILITY:</span>{" "}
             {siteConfig.availability.label}
@@ -85,19 +85,21 @@ export default function ResumePage() {
         </div>
 
         {/* Body */}
-        <div className="px-6 md:px-8 py-8 space-y-10">
+        <div className="print:px-0 print:py-6 px-6 md:px-8 py-8 space-y-10">
           {/* Summary */}
           <section className="space-y-3">
             <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-500 print:text-black">
               Summary
             </h2>
             <p className="text-zinc-300 leading-relaxed max-w-3xl print:text-black">
-              Full Stack Engineer specializing in real-time systems and scalable
-              web architecture. I treat deployment as a first-class output, data
+              Full Stack Engineer specializing in real-time systems, scalable
+              web architecture, and serverless PHP platforms (Laravel 12 · PHP 8 ·
+              MySQL). I treat deployment as a first-class output, data
               contracts as the first line of defense, and boring, observable
               systems as the highest form of elegance. From logic foundations in
-              C++ to production real-time platforms, everything ships, everything
-              is typed, and nothing runs outside a pipeline.
+              C++ to production real-time and serverless PHP platforms,
+              everything ships, everything is typed, and nothing runs outside a
+              pipeline.
             </p>
           </section>
 
@@ -127,7 +129,7 @@ export default function ResumePage() {
               {experience.map((node) => (
                 <article
                   key={node.id}
-                  className="border border-zinc-800 print:border-black rounded-xl overflow-hidden"
+                  className="border border-zinc-800 print:border-black print:break-inside-avoid rounded-xl overflow-hidden"
                 >
                   <div className="px-5 py-3 bg-zinc-900/60 print:bg-white border-b border-zinc-800 print:border-black flex flex-wrap items-start justify-between gap-2">
                     <div>

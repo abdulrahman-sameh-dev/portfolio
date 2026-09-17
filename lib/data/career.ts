@@ -165,7 +165,7 @@ export const careerNodes: CareerNode[] = [
     actionLinks: {},
     x: 745,
     y: 300,
-    connectedTo: ["eaalim-meet", "red-connect", "portfolite", "dark-hub"],
+    connectedTo: ["eaalim-meet", "red-connect", "first-onw-hr", "dark-hub"],
   },
   {
     id: "eaalim-meet",
@@ -215,24 +215,24 @@ export const careerNodes: CareerNode[] = [
     connectedTo: [],
   },
   {
-    id: "portfolite",
-    title: "Portfolite SaaS Platform",
+    id: "first-onw-hr",
+    title: "First Onw HR Platform",
     category: "project",
     epoch: "architect",
-    timeline: "2026.02 — 2026.06",
+    timeline: "2026.09 — PRESENT",
     summary:
-      "Designed a multi-tenant SaaS that lets developers deploy premium portfolios in under five minutes with custom subdomains and zero design effort. Isolated workspaces share a single Next.js core without namespace bleeding.",
+      "Shipped a full-stack employee management platform with Laravel 12, PHP 8, and MySQL — then re-engineered it stateless-first to survive Vercel's serverless PHP runtime on AWS Lambda. Every framework default that assumed a persistent filesystem was deliberately re-bound.",
     impactMetrics: [
-      "From signup to live portfolio in under 5 minutes",
-      "One-click custom subdomain provisioning per workspace",
+      "4 employee CRUD ops over 6 fields with 25 records per page",
+      "5 feature tests covering the full lifecycle + auth guards",
     ],
     architectureDecisions: [
-      "Multi-tenant isolation per workspace — no namespace bleeding",
-      "Wildcard subdomain routing resolved through a single resolver contract",
+      "All state moved to MySQL — sessions, cache and queues out of the ephemeral /tmp",
+      "Hybrid build graph: framework: null with a PHP lambda + static edge on one domain",
     ],
-    stack: ["Next.js", "TypeScript", "PostgreSQL", "Wildcard DNS", "Vercel"],
+    stack: ["Laravel 12", "PHP 8", "MySQL", "Blade", "Eloquent", "Vercel"],
     actionLinks: {
-      caseStudyUrl: "/projects/portfolite-platform",
+      caseStudyUrl: "/projects/first-onw-hr",
     },
     x: 810,
     y: 105,

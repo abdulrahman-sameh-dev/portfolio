@@ -5,6 +5,7 @@ import HexNode from "@/components/ui/HexNode";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRightIcon } from "@/components/ui/arrow-up-right";
 import ExecutiveSummary from "@/components/ui/executive-summary";
+import { SystemStatusStrip } from "@/components/SystemStatusStrip";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 
@@ -58,7 +59,7 @@ const Hero = () => {
               variants={item}
               className="max-w-xl text-lg md:text-xl text-zinc-400 leading-relaxed"
             >
-              Full Stack Developer specialized in Next.js, TypeScript, Node.js & Scalable Architecture.
+              Full Stack Developer specialized in Next.js, TypeScript, Laravel 12, PHP, MySQL, Node.js & Scalable Architecture.
             </motion.p>
 
             <motion.div
@@ -75,14 +76,6 @@ const Hero = () => {
             </motion.div>
 
             <motion.div variants={item} className="flex flex-wrap gap-4">
-              <Button
-                className="text-white bg-linear-30 from-indigo-700 to-indigo-400 border-0 py-5 px-7 text-base hover:shadow-[0_0_28px_rgba(99,102,241,0.4)]"
-                asChild
-              >
-                <Link href={"/career-path"}>
-                  Explore Career Topology <span className="font-mono">-&gt;</span>
-                </Link>
-              </Button>
               <Button
                 className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border py-5 px-7 text-base"
                 onClick={() => setSummaryOpen(true)}
@@ -133,30 +126,7 @@ const Hero = () => {
       </div>
 
       {/* ── Bottom Telemetry Strip ── */}
-      <div className="flex items-center justify-between px-6 md:px-10 py-3 border-t border-zinc-800/60 bg-zinc-900/10">
-        <div className="flex items-center gap-2.5">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
-          </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-400">
-            STATUS: OPERATIONAL
-          </span>
-        </div>
-        <div className="hidden sm:flex items-center gap-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
-            <span className="text-zinc-300">STACK:</span> NEXT.JS 16
-          </span>
-          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
-            <span className="text-zinc-300">ENV:</span> PRODUCTION
-          </span>
-          <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
-            <span className="text-zinc-300">UPTIME:</span> 99.9%
-          </span>
-        </div>
-      </div>
+      <SystemStatusStrip />
 
       <ExecutiveSummary open={summaryOpen} onClose={() => setSummaryOpen(false)} />
     </section>
