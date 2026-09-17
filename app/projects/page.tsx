@@ -20,7 +20,7 @@ const systems = siteConfig.systems;
 
 export default function Projects() {
   return (
-    <section className="border border-zinc-800/80 rounded-3xl overflow-hidden bg-zinc-900/[0.03]">
+    <section className="border border-zinc-800/80 rounded-3xl overflow-hidden bg-zinc-900/3">
 
       {/* ── Monitor Header ── */}
       <div className="flex items-center justify-between px-5 md:px-6 py-3 border-b border-zinc-800/60">

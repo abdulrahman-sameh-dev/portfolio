@@ -57,7 +57,7 @@ export function SystemStatusStrip({
           </span>
         </div>
         <div className="hidden sm:flex items-center gap-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-500">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
             <span className="text-zinc-400">STACK:</span> {stackLabel}
           </span>
         </div>
@@ -97,30 +97,30 @@ export function SystemStatusStrip({
         </span>
       </div>
       <div className="hidden sm:flex items-center gap-3">
-        <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
           <span className="text-zinc-300">STACK:</span> {stackLabel}
         </span>
         {systemsCount !== undefined && (
           <>
             <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
               <span className="text-zinc-300">SYSTEMS:</span> {systemsCount}
             </span>
           </>
         )}
         <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
           <span className="text-zinc-300">BUILD:</span>{" "}
           {effective.commit?.shortSha ?? "—"}
         </span>
         <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
           <span className="text-zinc-300">ENV:</span> {effective.envLabel}
         </span>
         {showDeployed && (
           <>
             <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
               <span className="text-zinc-300">DEPLOYED:</span>{" "}
               {timeAgo(effective.deployedAt)}
             </span>
