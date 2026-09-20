@@ -39,7 +39,7 @@ export default function ContactForm() {
     handleSubmit, 
     reset, 
     setValue,
-    control, // محتاجين control عشان الـ Select
+    control,
     formState: { errors, isSubmitting } 
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -113,7 +113,7 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className="max-sm:p-6 p-8 rounded-xl border border-zinc-800 bg-zinc-950/50 backdrop-blur-sm">
+        <div id="Form" className="max-sm:p-6 p-8 max-sm:mt-10 rounded-xl border border-zinc-800 bg-zinc-950/50 backdrop-blur-sm">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

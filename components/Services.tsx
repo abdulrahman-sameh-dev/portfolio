@@ -35,7 +35,7 @@ const requestProtocol = (
     "(prefers-reduced-motion: reduce)"
   ).matches;
   document
-    .getElementById("contact")
+    .getElementById("Form")
     ?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
 
   const detail: RequestProtocolDetail = {
