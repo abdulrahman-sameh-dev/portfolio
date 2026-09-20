@@ -25,7 +25,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-full min-h-[80vh] flex flex-col border border-zinc-800/80 rounded-3xl overflow-hidden bg-zinc-900/[0.03]">
+    <section className="relative w-full min-h-[80vh] flex flex-col border border-zinc-800/80 rounded-3xl overflow-hidden bg-zinc-900/3">
 
       {/* ── Main Canvas: Left Panel + Right Monitor ── */}
       <div className="flex-1 flex flex-col lg:flex-row">
@@ -64,7 +64,7 @@ const Hero = () => {
 
             <motion.div
               variants={item}
-              className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800 w-fit max-sm:flex-wrap max-sm:items-start"
+              className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800 w-fit max-sm:items-start"
             >
               <span className="relative flex h-2 w-2 mt-0.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
@@ -77,12 +77,12 @@ const Hero = () => {
 
             <motion.div variants={item} className="flex flex-wrap gap-4">
               <Button
-                className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border py-5 px-7 text-base"
+                className="bg-white/0 text-white hover:bg-white/3 border-indigo-300/40 border py-5 px-7 text-base"
                 onClick={() => setSummaryOpen(true)}
               >
                 View Executive Summary
               </Button>
-              <Button className="bg-white/0 text-white hover:bg-white/[0.03] border-indigo-300/40 border py-5 px-7 text-base" asChild>
+              <Button className="bg-white/0 text-white hover:bg-white/3 border-indigo-300/40 border py-5 px-7 text-base" asChild>
                 <Link href={"/about"}>
                   Learn More <ArrowUpRightIcon />
                 </Link>
