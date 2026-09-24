@@ -26,10 +26,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
     default: "Abdulrahman Sameh",
-    template: "%s | Abdulrahman Sameh", // عشان لو عملت صفحات تانية زي /projects
+    template: "%s | Abdulrahman Sameh", 
   },
   verification: {
-    google: "OZK-VlhBTdy11FQf4a0uuq-rjERT39lDsJ1ag_0up0o", // حط الكود اللي بعد كلمة content هنا
+    google: "OZK-VlhBTdy11FQf4a0uuq-rjERT39lDsJ1ag_0up0o", 
   },
   description:
     "Official portfolio of Abdulrahman Sameh. A Professional Full Stack Developer specializing in building scalable web systems with Next.js, TypeScript, Laravel 12, PHP, and MySQL.",
@@ -60,10 +60,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/assets/MetaDeta.png",
+        url: "/assets/Metadeta.png",
         width: 1200,
         height: 630,
-        alt: "abdulrahman sameh portfo Preview",
+        alt: "abdulrahman sameh portfolio Preview",
       },
     ],
     url: siteConfig.siteUrl,
@@ -83,7 +83,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark dark:bg-[#050505]" suppressHydrationWarning>
-      {/* suppressHydrationWarning مهمة جداً هنا عشان الـ dark mode والـ classes */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#050505] text-white flex flex-col`}
       >
@@ -97,7 +96,6 @@ export default function RootLayout({
         <CustomCursor />
         <NavigationWrapper />
         <CommandPalette />
-        {/* الـ container يكون هنا عشان يتحكم في عرض المحتوى بس */}
         <main id="main" className="relative grow container mx-auto px-4 pt-20">
           <TransitionLayout>{children}</TransitionLayout>
         </main>
