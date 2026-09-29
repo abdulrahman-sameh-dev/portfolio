@@ -109,9 +109,9 @@ const ProjectCard = ({ project }: ProjectProps) => {
           </div>
 
 
-          <div className="flex flex-row gap-2 justify-end grow">
+          <div className="flex flex-row gap-2 justify-end grow ">
             <Link href={caseStudyHref}>
-              <Button className="text-white bg-linear-30 cursor-pointer from-indigo-700 to-indigo-400 border-0">
+              <Button className="text-white bg-linear-30 group-hover:z-10 cursor-pointer from-indigo-700 to-indigo-400 border-0">
                 Case Study
                 <ArrowUpRightIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
               </Button>
