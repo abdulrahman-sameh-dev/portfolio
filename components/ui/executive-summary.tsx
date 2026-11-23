@@ -6,8 +6,6 @@ import Link from "next/link";
 import { XIcon } from "lucide-animated";
 import { siteConfig } from "@/lib/site";
 
-const experienceYears = new Date().getFullYear() - 2022;
-
 export default function ExecutiveSummary({
   open,
   onClose,
@@ -18,16 +16,11 @@ export default function ExecutiveSummary({
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const featured = siteConfig.skills.filter((s) => s.featured);
-  const avgProficiency = Math.round(
-    featured.reduce((acc, s) => acc + s.proficiency, 0) / featured.length
-  );
 
   const metrics = [
-    { value: String(siteConfig.projects.length), label: "SHIPPED SYSTEMS" },
-    { value: String(siteConfig.systems.length), label: "ACTIVE SYSTEMS" },
-    { value: String(experienceYears), label: "YEARS EXPLORING" },
-    { value: String(siteConfig.skills.length), label: "STACK UNITS" },
-    { value: `${avgProficiency}%`, label: "AVG PROFICIENCY" },
+    { value: String(siteConfig.projects.length), label: "PROJECT CASE STUDIES" },
+    { value: String(siteConfig.lab.length), label: "LAB EXPLORATIONS" },
+    { value: String(featured.length), label: "FEATURED SKILLS" },
   ];
 
   useEffect(() => {
@@ -82,7 +75,7 @@ export default function ExecutiveSummary({
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-label="Executive summary"
+            aria-label="Quick summary"
             tabIndex={-1}
             initial={{ opacity: 0, y: -8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -94,7 +87,7 @@ export default function ExecutiveSummary({
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-800">
               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-400">
-                Executive Summary {"//"} System State
+                Quick Summary {"//"} Portfolio State
               </span>
               <button
                 onClick={onClose}
@@ -109,9 +102,9 @@ export default function ExecutiveSummary({
               {/* Key Metrics */}
               <section className="space-y-3">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                  Key Metrics
+                  At a Glance
                 </span>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-px bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800">
+                <div className="grid grid-cols-3 gap-px bg-zinc-800 rounded-lg overflow-hidden border border-zinc-800">
                   {metrics.map((m) => (
                     <div key={m.label} className="bg-zinc-900 px-3 py-3">
                       <p className="text-xl font-bold text-white tracking-tighter">
@@ -128,7 +121,7 @@ export default function ExecutiveSummary({
               {/* Core Stack Proficiency */}
               <section className="space-y-3">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                  Core Stack Proficiency
+                  Core Stack
                 </span>
                 <div className="space-y-2">
                   {featured.map((skill) => (
@@ -147,8 +140,8 @@ export default function ExecutiveSummary({
                           className="h-full bg-indigo-500"
                         />
                       </div>
-                      <span className="w-10 shrink-0 text-right font-mono text-[10px] text-zinc-500">
-                        {skill.proficiency}%
+                      <span className="w-16 shrink-0 text-right font-mono text-[10px] text-zinc-500">
+                        {skill.level}
                       </span>
                     </div>
                   ))}

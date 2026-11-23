@@ -15,7 +15,23 @@ export const Navbar = ({ onOpenMenu, isOpen }: { onOpenMenu: () => void; isOpen:
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
           </span>
-          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">System Building</span>
+          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">Building</span>
+        </div>
+
+        <div className="hidden lg:flex items-center gap-1 px-2 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm">
+          {[
+            { href: "/projects", label: "Projects" },
+            { href: "/about", label: "Who I Am" },
+            { href: "/lab", label: "The Lab" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="px-3 py-1.5 rounded-full text-[11px] font-mono uppercase tracking-wider text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
 
         <Link

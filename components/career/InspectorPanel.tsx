@@ -23,7 +23,7 @@ const lifetime = (() => {
     .map(([tech]) => tech);
   const currentFocus =
     careerNodes.find((node) => node.timeline.endsWith("PRESENT"))?.title ??
-    "Full Stack Engineer & Systems Architect";
+    "Building and shipping real projects";
   return { systemsShipped, primaryStack, currentFocus };
 })();
 
@@ -125,7 +125,7 @@ export default function InspectorPanel({
               {/* Impact */}
               <div className="space-y-2">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                  Impact
+                  Notes
                 </span>
                 <ul className="space-y-1.5">
                   {node.impactMetrics.map((impact) => (
@@ -143,7 +143,7 @@ export default function InspectorPanel({
               {/* Architecture Decisions */}
               <div className="space-y-2">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                  Architecture Decisions
+                  Decisions
                 </span>
                 <ul className="space-y-1.5">
                   {node.architectureDecisions.map((decision) => (
@@ -206,13 +206,13 @@ export default function InspectorPanel({
               <div className="mt-4 rounded-xl border border-zinc-800 overflow-hidden">
                 <div className="px-4 py-2.5 border-b border-zinc-800 bg-zinc-900/60">
                   <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-400">
-                    Global Lifetime Summary
+                    Overview
                   </span>
                 </div>
                 <div className="px-4 py-4 space-y-3">
                   <div className="flex items-center justify-between gap-3">
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">
-                      Total Systems Shipped
+                      Tracked Milestones
                     </span>
                     <span className="font-mono text-lg font-bold text-white tracking-tighter">
                       {String(lifetime.systemsShipped).padStart(2, "0")}

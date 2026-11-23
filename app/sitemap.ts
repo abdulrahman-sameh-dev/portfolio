@@ -22,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${siteConfig.siteUrl}/lab`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${siteConfig.siteUrl}/career-path`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -54,5 +60,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       : []),
   ]);
 
-  return [...staticRoutes, ...projectRoutes];
+  const labRoutes: MetadataRoute.Sitemap = siteConfig.lab.map((item) => ({
+    url: `${siteConfig.siteUrl}/lab/${item.slug}`,
+    lastModified: new Date(item.datePublished),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...projectRoutes, ...labRoutes];
 }

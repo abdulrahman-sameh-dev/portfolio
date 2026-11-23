@@ -126,22 +126,19 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 grow items-center">
             {/* Links */}
             <div className="flex flex-col gap-2 md:gap-4">
-              {["Home", "About", "Projects", "Export System Brief (.PDF)", "Get in touch"].map((item) => (
-                <motion.div key={item} variants={itemVariants}>
+              {[
+                { label: "Home", href: "/" },
+                { label: "Who I Am", href: "/about" },
+                { label: "Projects", href: "/projects" },
+                { label: "The Lab", href: "/lab" },
+                { label: "Résumé", href: siteConfig.resumeUrl },
+                { label: "Get in touch", href: "/#contact" },
+              ].map((item) => (
+                <motion.div key={item.href} variants={itemVariants}>
                   <MotionLink
-                    href={
-                      item === "Home"
-                        ? "/"
-                        : item === "Get in touch"
-                        ? "/#contact"
-                        : item === "Export System Brief (.PDF)"
-                        ? siteConfig.resumeUrl
-                        : `/${item.toLowerCase()}`
-                    }
-                    target={item === "Export System Brief (.PDF)" ? "_blank" : undefined}
-                    rel={item === "Export System Brief (.PDF)" ? "noopener noreferrer" : undefined}
+                    href={item.href}
                     onClick={(e) => {
-                      if (item === "Get in touch") {
+                      if (item.label === "Get in touch") {
                         handleContactClick(e);
                       } else {
                         onClose();
@@ -150,7 +147,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
                     className="text-5xl md:text-8xl font-bold text-zinc-400 lg:text-zinc-500 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:underline decoration-indigo-400 underline-offset-8 transition-all tracking-tighter inline-block"
                     whileHover={{ x: 25, transition: { duration: 0.3 } }}
                   >
-                    {item}
+                    {item.label}
                     <span className="text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity">
                       .
                     </span>
@@ -201,28 +198,17 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
               </div>
 
               {/* Project Card */}
-              <div className="p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-md space-y-4 max-w-sm">
-                <div className="flex justify-between items-start">
-                  <p className="text-zinc-400 text-xs font-mono">
-                    Current Focus
-                  </p>
-                  <span className="text-[10px] px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                    100%
-                  </span>
-                </div>
-
-                <p className="text-white font-bold text-lg tracking-tight">
-                  First Onw HR Serverless Architecture
+              <div className="p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-md space-y-3 max-w-sm">
+                <p className="text-zinc-400 text-xs font-mono uppercase tracking-widest">
+                  Current Focus
                 </p>
-
-                <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-indigo-500"
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 1.5, delay: 0.8 }}
-                  />
-                </div>
+                <p className="text-white font-bold text-lg tracking-tight">
+                  Building and shipping real projects
+                </p>
+                <p className="text-zinc-500 text-xs leading-relaxed">
+                  Also learning product planning, project management, and how to turn ideas into
+                  clear scopes.
+                </p>
               </div>
             </motion.div>
           </div>
@@ -230,7 +216,7 @@ export const NavMenu = ({ isOpen, onClose, handleContactClick }: NavMenuProps) =
           {/* Footer */}
           <div className="mt-auto pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4">
             <span className="text-muted-foreground text-[10px] font-mono uppercase tracking-[0.3em]">
-              © 2026 Abdulrahman Sameh / Systems Architect
+              © 2026 Abdulrahman Sameh / {siteConfig.role}
             </span>
 
             <div className="flex gap-4">

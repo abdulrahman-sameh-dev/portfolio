@@ -7,7 +7,8 @@ import { motion, AnimatePresence } from "motion/react";
 const shortcuts = [
   { keys: ["g", "h"], label: "Go Home", href: "/" },
   { keys: ["g", "p"], label: "Go Projects", href: "/projects" },
-  { keys: ["g", "a"], label: "Go About", href: "/about" },
+  { keys: ["g", "a"], label: "Go Who I Am", href: "/about" },
+  { keys: ["g", "l"], label: "Go The Lab", href: "/lab" },
   { keys: ["c"], label: "Scroll to Contact", href: "/#contact" },
   { keys: ["?"], label: "Show shortcuts", href: null },
 ];
@@ -93,6 +94,7 @@ export default function CommandPalette() {
         if (e.key === "h") navigate("/");
         else if (e.key === "p") navigate("/projects");
         else if (e.key === "a") navigate("/about");
+        else if (e.key === "l") navigate("/lab");
         else if (e.key === "?") setLeader(null);
         setLeader(null);
         return;

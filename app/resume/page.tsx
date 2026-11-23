@@ -4,9 +4,9 @@ import { careerNodes } from "@/lib/data/career";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "System Brief",
+  title: "Résumé",
   description:
-    "Print-ready system brief and career record of Abdulrahman Sameh — Full Stack Engineer & Systems Architect.",
+    "Print-ready résumé and project record of Abdulrahman Sameh — product-minded software developer with a full-stack background.",
 };
 
 const parseTimelineStart = (timeline: string) =>
@@ -53,7 +53,7 @@ export default function ResumePage() {
                 {siteConfig.name}
               </h1>
               <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400 print:text-neutral-600">
-                Full Stack Engineer {"//"} Systems Architect
+                {siteConfig.role} {"//"} Full-Stack Background
               </p>
             </div>
             <address className="not-italic font-mono text-[11px] uppercase tracking-wider text-zinc-400 print:text-neutral-600 space-y-1 md:text-right">
@@ -92,15 +92,30 @@ export default function ResumePage() {
               Summary
             </h2>
             <p className="text-zinc-300 leading-relaxed max-w-3xl print:text-black">
-              Full Stack Engineer specializing in real-time systems, scalable
-              web architecture, and serverless PHP platforms (Laravel 12 · PHP 8 ·
-              MySQL). I treat deployment as a first-class output, data
-              contracts as the first line of defense, and boring, observable
-              systems as the highest form of elegance. From logic foundations in
-              C++ to production real-time and serverless PHP platforms,
-              everything ships, everything is typed, and nothing runs outside a
-              pipeline.
+              Product-minded software developer with a full-stack background across Next.js,
+              TypeScript, Laravel, PHP, MySQL, and Node.js. I focus on understanding the problem,
+              planning the work in clear milestones, and building applications that hold up in real
+              use. My recent work includes a Printify-connected storefront, a local-first video
+              clipping tool, and a Laravel platform adapted for serverless deployment.
             </p>
+          </section>
+
+          {/* Training */}
+          <section className="space-y-3">
+            <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-500 print:text-black">
+              Training & Learning
+            </h2>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+              {siteConfig.learning.map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-2 text-sm text-zinc-300 leading-relaxed print:text-black"
+                >
+                  <span className="text-indigo-500 print:text-black mt-px">{"▸"}</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </section>
 
           {/* Core Stack */}

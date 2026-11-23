@@ -24,34 +24,36 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: "Abdulrahman Sameh",
-    template: "%s | Abdulrahman Sameh", // عشان لو عملت صفحات تانية زي /projects
+    default: `${siteConfig.name} — ${siteConfig.role}`,
+    template: `%s | ${siteConfig.name}`,
   },
   verification: {
-    google: "OZK-VlhBTdy11FQf4a0uuq-rjERT39lDsJ1ag_0up0o", // حط الكود اللي بعد كلمة content هنا
+    google: "OZK-VlhBTdy11FQf4a0uuq-rjERT39lDsJ1ag_0up0o",
   },
   description:
-    "Official portfolio of Abdulrahman Sameh. A Professional Full Stack Developer specializing in building scalable web systems with Next.js, TypeScript, Laravel 12, PHP, and MySQL.",
+    "Official portfolio of Abdulrahman Sameh, a product-minded software developer with a full-stack foundation. Selected projects, case studies, and ongoing explorations.",
   keywords: [
     "Abdulrahman Sameh",
+    "Product-minded Developer",
     "Full-Stack Developer",
     "Full Stack Developer Egypt",
     "Next.js Developer",
+    "TypeScript",
     "Laravel Developer",
     "Laravel 12",
     "PHP Developer",
-    "Software Architecture",
-    "System Design",
-    "Remote Full-Stack Developer",
-    "Egypt Remote Developer",
-    "Giza Egypt Developer",
-    "TypeScript",
-    "Scalable Web Systems",
+    "PostgreSQL",
+    "MySQL",
+    "Software Development",
+    "Project Planning",
+    "The Lab",
+    "Zitsy Store",
+    "Clip Tool",
     "First Onw HR",
   ],
-  authors: [{ name: "Abdulrahman Sameh" }],
-  creator: "Abdulrahman Sameh",
-  publisher: "Abdulrahman Sameh",
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
   category: "Technology",
   alternates: {
     canonical: siteConfig.siteUrl,
@@ -68,27 +70,26 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Abdulrahman Sameh | Full-Stack Developer & Software Architect",
-    description:
-      "Full-Stack Developer in Egypt specializing in Next.js, Laravel 12, PHP, MySQL, and scalable software architecture for remote teams.",
+    title: `${siteConfig.name} — ${siteConfig.role}`,
+    description: siteConfig.intro,
     type: "website",
     locale: "en_US",
-    siteName: "Abdulrahman Sameh",
+    siteName: siteConfig.name,
     images: [
       {
         url: "/assets/MetaDeta.png",
         width: 1200,
         height: 630,
-        alt: "Abdulrahman Sameh — Full-Stack Developer portfolio preview",
+        alt: `${siteConfig.name} — ${siteConfig.role}`,
       },
     ],
     url: siteConfig.siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Abdulrahman Sameh | Full-Stack Developer",
+    title: `${siteConfig.name} — ${siteConfig.role}`,
     description:
-      "Next.js, Laravel 12, PHP, MySQL & software architecture. Full-stack engineering from Giza, Egypt — working remotely.",
+      "Selected projects, case studies, and ongoing explorations from a product-minded software developer with a full-stack foundation.",
     site: "@darkhub_dev",
     creator: "@darkhub_dev",
     images: ["/assets/MetaDeta.png"],
@@ -102,7 +103,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark dark:bg-[#050505]" suppressHydrationWarning>
-      {/* suppressHydrationWarning مهمة جداً هنا عشان الـ dark mode والـ classes */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#050505] text-white flex flex-col`}
       >
@@ -116,7 +116,6 @@ export default function RootLayout({
         <CustomCursor />
         <NavigationWrapper />
         <CommandPalette />
-        {/* الـ container يكون هنا عشان يتحكم في عرض المحتوى بس */}
         <main id="main" className="relative grow container mx-auto px-4 pt-20">
           <TransitionLayout>{children}</TransitionLayout>
         </main>
