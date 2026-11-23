@@ -117,9 +117,9 @@ export default function InspectorPanel({
                     {node.timeline}
                   </span>
                 </div>
-                <h3 className="text-2xl font-bold tracking-tighter text-white">
+                <h2 className="text-2xl font-bold tracking-tighter text-white">
                   {node.title}
-                </h3>
+                </h2>
               </div>
 
               {/* Impact */}

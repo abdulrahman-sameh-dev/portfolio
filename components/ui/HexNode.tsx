@@ -1,7 +1,15 @@
 "use client";
-import { animate, motion, useMotionValue, useReducedMotion, useTransform } from "motion/react";
+import {
+  animate,
+  motion,
+  motionValue,
+  useAnimationFrame,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "motion/react";
 import type { AnimationPlaybackControls, Easing, MotionValue } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type NodeId = "client" | "core" | "db" | "release";
 type Phase = NodeId | "transit" | "deploy" | "overview";
@@ -42,19 +50,6 @@ const SHOTS: Record<string, Frame> = {
 };
 
 const motionCss = `
-  .pkt { animation-timing-function: linear; animation-iteration-count: infinite; }
-  @keyframes flowFwd { from { offset-distance: 0%; } to { offset-distance: 100%; } }
-  @keyframes flowBack { from { offset-distance: 100%; } to { offset-distance: 0%; } }
-  .pk1a { offset-path: path("${P_CLIENT_CORE}"); animation-name: flowFwd; animation-duration: 3.4s; }
-  .pk1b { offset-path: path("${P_CLIENT_CORE}"); animation-name: flowBack; animation-duration: 3.4s; animation-delay: -1.7s; }
-  .pk2a { offset-path: path("${P_CORE_DB}"); animation-name: flowFwd; animation-duration: 3s; animation-delay: -0.8s; }
-  .pk2b { offset-path: path("${P_CORE_DB}"); animation-name: flowBack; animation-duration: 3s; animation-delay: -2.3s; }
-  .pk3 { offset-path: path("${P_DB_CORE}"); animation-name: flowFwd; animation-duration: 3s; animation-delay: -0.3s; }
-  .pk3b { offset-path: path("${P_DB_CORE}"); animation-name: flowBack; animation-duration: 3s; animation-delay: -1.8s; }
-  .pk4 { offset-path: path("${P_CORE_CLIENT}"); animation-name: flowFwd; animation-duration: 3.4s; animation-delay: -1s; }
-  .pk4b { offset-path: path("${P_CORE_CLIENT}"); animation-name: flowBack; animation-duration: 3.4s; animation-delay: -2.7s; }
-  .pk5a { offset-path: path("${P_DB_RELEASE}"); animation-name: flowFwd; animation-duration: 3.2s; animation-delay: -0.6s; }
-  .pk5b { offset-path: path("${P_DB_RELEASE}"); animation-name: flowBack; animation-duration: 3.2s; animation-delay: -2.2s; }
   @keyframes pingring { 0% { transform: scale(0.3); opacity: 0.7; } 100% { transform: scale(1.6); opacity: 0; } }
   .ping { transform-box: fill-box; transform-origin: center; animation: pingring 1.9s cubic-bezier(0,0,0.2,1) infinite; }
   .ping2 { transform-box: fill-box; transform-origin: center; animation: pingring 1.9s cubic-bezier(0,0,0.2,1) infinite; animation-delay: -0.95s; }
@@ -76,20 +71,118 @@ const motionCss = `
   @keyframes dbblink { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.9; } }
   .dbblink { animation: dbblink 1.5s ease-in-out infinite; }
   @media (prefers-reduced-motion: reduce) {
-    .pkt, .ping, .ping2, .iops, .iops2, .ringbreath, .codeline, .codeline2, .codeline3, .caret, .corepulse, .corewave, .dbblink { animation: none !important; }
+    .ping, .ping2, .iops, .iops2, .ringbreath, .codeline, .codeline2, .codeline3, .caret, .corepulse, .corewave, .dbblink { animation: none !important; }
   }
 `;
 
-const DataFlowDiagram = ({ className = "w-75 h-75", delay = 1 }) => {
+type Pt = { x: number; y: number };
+
+const parsePath = (d: string): Pt[] => {
+  const pts: Pt[] = [];
+  d.replace(/([ML])\s*([-\d.]+)[,\s]+([-\d.]+)/g, (_m, _c, x, y) => {
+    pts.push({ x: parseFloat(x), y: parseFloat(y) });
+    return _m;
+  });
+  return pts;
+};
+
+const samplePath = (verts: Pt[], steps: number): Pt[] => {
+  if (verts.length < 2) return verts;
+  const segLen: number[] = [];
+  let total = 0;
+  for (let i = 0; i < verts.length - 1; i++) {
+    const l = Math.hypot(verts[i + 1].x - verts[i].x, verts[i + 1].y - verts[i].y);
+    segLen.push(l);
+    total += l;
+  }
+  const out: Pt[] = [];
+  for (let s = 0; s <= steps; s++) {
+    const t = (s / steps) * total;
+    let acc = 0;
+    for (let i = 0; i < segLen.length; i++) {
+      if (acc + segLen[i] >= t) {
+        const f = segLen[i] === 0 ? 0 : (t - acc) / segLen[i];
+        out.push({
+          x: verts[i].x + (verts[i + 1].x - verts[i].x) * f,
+          y: verts[i].y + (verts[i + 1].y - verts[i].y) * f,
+        });
+        break;
+      }
+      acc += segLen[i];
+    }
+  }
+  return out;
+};
+
+const pointAt = (pts: Pt[], v: number, reverse: boolean): Pt => {
+  if (pts.length === 0) return { x: 0, y: 0 };
+  const t = Math.min(1, Math.max(0, v % 1));
+  const u = reverse ? 1 - t : t;
+  const idx = u * (pts.length - 1);
+  const i = Math.min(Math.floor(idx), pts.length - 2);
+  const f = idx - i;
+  return {
+    x: pts[i].x + (pts[i + 1].x - pts[i].x) * f,
+    y: pts[i].y + (pts[i + 1].y - pts[i].y) * f,
+  };
+};
+
+const PACKET_SPECS = [
+  { path: P_CLIENT_CORE, duration: 3.4, reverse: false, offsetFrac: 0 },
+  { path: P_CLIENT_CORE, duration: 3.4, reverse: true, offsetFrac: 1.7 / 3.4 },
+  { path: P_CORE_DB, duration: 3, reverse: false, offsetFrac: 0.8 / 3 },
+  { path: P_CORE_DB, duration: 3, reverse: true, offsetFrac: 2.3 / 3 },
+  { path: P_DB_CORE, duration: 3, reverse: false, offsetFrac: 0.3 / 3 },
+  { path: P_DB_CORE, duration: 3, reverse: true, offsetFrac: 1.8 / 3 },
+  { path: P_CORE_CLIENT, duration: 3.4, reverse: false, offsetFrac: 1 / 3.4 },
+  { path: P_CORE_CLIENT, duration: 3.4, reverse: true, offsetFrac: 2.7 / 3.4 },
+  { path: P_DB_RELEASE, duration: 3.2, reverse: false, offsetFrac: 0.6 / 3.2 },
+  { path: P_DB_RELEASE, duration: 3.2, reverse: true, offsetFrac: 2.2 / 3.2 },
+];
+
+const PACKET_PATHS = PACKET_SPECS.map((spec) =>
+  samplePath(parsePath(spec.path), 48)
+);
+
+const STORYBOARD_PATHS = {
+  transit: samplePath(parsePath(P_CLIENT_CORE), 48),
+  deploy: samplePath(parsePath(P_CORE_DB), 48),
+  release: samplePath(parsePath(P_DB_RELEASE), 48),
+};
+
+function FlowPacket({
+  index,
+  progress,
+}: {
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const spec = PACKET_SPECS[index];
+  const points = PACKET_PATHS[index];
+  const position = useTransform(progress, (v) =>
+    pointAt(points, v, spec.reverse)
+  );
+  const x = useTransform(position, (point) => point.x);
+  const y = useTransform(position, (point) => point.y);
+
+  return (
+    <motion.g style={{ x, y }}>
+      <circle r="4.5" fill="#818cf8" opacity="0.18" />
+      <circle r="2.2" fill="#a5b4fc" />
+    </motion.g>
+  );
+}
+
+const DataFlowDiagram = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
   const [hovered, setHovered] = useState<NodeId | null>(null);
   const [phase, setPhase] = useState<Phase>("overview");
   const reduced = useReducedMotion();
 
   const viewBox = useMotionValue("0 0 320 320");
   const tab = useMotionValue(1);
-  const pkt1 = useMotionValue("0%");
-  const pkt2 = useMotionValue("0%");
-  const pkt3 = useMotionValue("0%");
+  const pkt1 = useMotionValue(0);
+  const pkt2 = useMotionValue(0);
+  const pkt3 = useMotionValue(0);
 
   const tabX = useTransform(tab, (v) => {
     const c = Math.min(Math.max(v, 0), 2);
@@ -118,8 +211,8 @@ const DataFlowDiagram = ({ className = "w-75 h-75", delay = 1 }) => {
       anims.push(anim);
       return anim;
     };
-    const travel = (mv: MotionValue<string>, duration: number) => {
-      const anim = animate(mv, "100%", { duration, ease: CAM_EASE });
+    const travel = (mv: MotionValue<number>, duration: number) => {
+      const anim = animate(mv, 1, { duration, ease: CAM_EASE });
       anims.push(anim);
       return anim;
     };
@@ -138,19 +231,19 @@ const DataFlowDiagram = ({ className = "w-75 h-75", delay = 1 }) => {
         if (cancelled) return;
 
         setPhase("transit");
-        pkt1.set("0%");
+        pkt1.set(0);
         await Promise.all([cam(SHOTS.core, 1.8), travel(pkt1, 1.8), tabTo(2, 1.8)]);
         await wait(1000);
         if (cancelled) return;
 
         setPhase("deploy");
-        pkt2.set("0%");
+        pkt2.set(0);
         await Promise.all([cam(SHOTS.db, 1.8), travel(pkt2, 1.8)]);
         await wait(1000);
         if (cancelled) return;
 
         setPhase("release");
-        pkt3.set("0%");
+        pkt3.set(0);
         await Promise.all([cam(SHOTS.release, 1.8), travel(pkt3, 1.8)]);
         await wait(1000);
         if (cancelled) return;
@@ -169,18 +262,36 @@ const DataFlowDiagram = ({ className = "w-75 h-75", delay = 1 }) => {
     };
   }, [reduced, delay, viewBox, tab, pkt1, pkt2, pkt3]);
 
-  const packetClasses = [
-    { cls: "pk1a", delay: "0s" },
-    { cls: "pk1b", delay: "0s" },
-    { cls: "pk2a", delay: "0s" },
-    { cls: "pk2b", delay: "0s" },
-    { cls: "pk3", delay: "0s" },
-    { cls: "pk3b", delay: "0s" },
-    { cls: "pk4", delay: "0s" },
-    { cls: "pk4b", delay: "0s" },
-    { cls: "pk5a", delay: "0s" },
-    { cls: "pk5b", delay: "0s" },
-  ];
+  const packetProgress = useMemo(
+    () => PACKET_SPECS.map((spec) => motionValue(spec.offsetFrac)),
+    []
+  );
+
+  useAnimationFrame((_, delta) => {
+    if (reduced) return;
+    const elapsed = Math.min(delta, 50);
+    PACKET_SPECS.forEach((spec, index) => {
+      const next = (packetProgress[index].get() + elapsed / (spec.duration * 1000)) % 1;
+      packetProgress[index].set(next);
+    });
+  });
+
+  const transitPoint = useTransform(pkt1, (v) =>
+    pointAt(STORYBOARD_PATHS.transit, v, false)
+  );
+  const deployPoint = useTransform(pkt2, (v) =>
+    pointAt(STORYBOARD_PATHS.deploy, v, false)
+  );
+  const releasePoint = useTransform(pkt3, (v) =>
+    pointAt(STORYBOARD_PATHS.release, v, false)
+  );
+
+  const transitX = useTransform(transitPoint, (point) => point.x);
+  const transitY = useTransform(transitPoint, (point) => point.y);
+  const deployX = useTransform(deployPoint, (point) => point.x);
+  const deployY = useTransform(deployPoint, (point) => point.y);
+  const releaseX = useTransform(releasePoint, (point) => point.x);
+  const releaseY = useTransform(releasePoint, (point) => point.y);
 
   return (
     <motion.div
@@ -486,34 +597,28 @@ const DataFlowDiagram = ({ className = "w-75 h-75", delay = 1 }) => {
           </text>
         </g>
 
-        {/* ── Data packets (offset-path motion, reduced-motion aware) ── */}
-        <g>
-          {packetClasses.map((p) => (
-            <g key={p.cls}>
-              <circle className={`pkt ${p.cls}`} r="4.5" fill="#818cf8" opacity="0.18" />
-              <circle className={`pkt ${p.cls}`} r="2.2" fill="#a5b4fc" />
-            </g>
+        {!reduced &&
+          PACKET_SPECS.map((_, index) => (
+            <FlowPacket key={index} index={index} progress={packetProgress[index]} />
           ))}
-        </g>
 
-        {/* ── Storyboard camera packets (phase-gated) ── */}
-        {phase === "transit" && (
-          <g>
-            <motion.circle r="5" fill="#818cf8" opacity="0.2" style={{ offsetPath: `path("${P_CLIENT_CORE}")`, offsetDistance: pkt1 }} />
-            <motion.circle r="2.4" fill="#a5b4fc" style={{ offsetPath: `path("${P_CLIENT_CORE}")`, offsetDistance: pkt1 }} />
-          </g>
+        {phase === "transit" && !reduced && (
+          <motion.g style={{ x: transitX, y: transitY }}>
+            <circle r="5" fill="#818cf8" opacity="0.2" />
+            <circle r="2.4" fill="#a5b4fc" />
+          </motion.g>
         )}
-        {phase === "deploy" && (
-          <g>
-            <motion.circle r="5" fill="#818cf8" opacity="0.2" style={{ offsetPath: `path("${P_CORE_DB}")`, offsetDistance: pkt2 }} />
-            <motion.circle r="2.4" fill="#a5b4fc" style={{ offsetPath: `path("${P_CORE_DB}")`, offsetDistance: pkt2 }} />
-          </g>
+        {phase === "deploy" && !reduced && (
+          <motion.g style={{ x: deployX, y: deployY }}>
+            <circle r="5" fill="#818cf8" opacity="0.2" />
+            <circle r="2.4" fill="#a5b4fc" />
+          </motion.g>
         )}
-        {phase === "release" && (
-          <g>
-            <motion.circle r="5" fill="#818cf8" opacity="0.2" style={{ offsetPath: `path("${P_DB_RELEASE}")`, offsetDistance: pkt3 }} />
-            <motion.circle r="2.4" fill="#a5b4fc" style={{ offsetPath: `path("${P_DB_RELEASE}")`, offsetDistance: pkt3 }} />
-          </g>
+        {phase === "release" && !reduced && (
+          <motion.g style={{ x: releaseX, y: releaseY }}>
+            <circle r="5" fill="#818cf8" opacity="0.2" />
+            <circle r="2.4" fill="#a5b4fc" />
+          </motion.g>
         )}
 
         {/* Sub-nodes / interface dots on each tier */}

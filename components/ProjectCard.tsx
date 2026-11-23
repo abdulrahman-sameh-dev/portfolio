@@ -1,79 +1,100 @@
 "use client";
+
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "motion/react";
 import { GithubIcon, ArrowUpRightIcon } from "lucide-animated";
-import { SchematicStack, SchematicFlow, SchematicPipeline } from "@/components/SchematicIcons";
+import {
+  SchematicStack,
+  SchematicFlow,
+  SchematicPipeline,
+} from "@/components/SchematicIcons";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/site";
+
+const LiveDemoModal = dynamic(() => import("@/components/LiveDemoModal"), {
+  ssr: false,
+});
 
 interface ProjectProps {
   project: Project;
 }
 
 const ProjectCard = ({ project }: ProjectProps) => {
-  // دالة لتحديد أيقونة ونص الـ Hover بناءً على الحالة
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+
   const getStatusOverlay = (status: string) => {
-    if (status.includes("Vision")) return { icon: <SchematicStack className="w-8 h-8" />, label: "Architecting Infrastructure" };
-    if (status.includes("Beta")) return { icon: <SchematicFlow className="w-8 h-8" />, label: "Private Beta Access" };
-    if (status.includes("Production")) return { icon: <SchematicFlow className="w-8 h-8" />, label: "Live in Production" };
-    return { icon: <SchematicPipeline className="w-8 h-8" />, label: "Compiling MVP" };
+    if (status.includes("Vision"))
+      return {
+        icon: <SchematicStack className="w-8 h-8" />,
+        label: "Architecting Infrastructure",
+      };
+    if (status.includes("Beta"))
+      return {
+        icon: <SchematicFlow className="w-8 h-8" />,
+        label: "Private Beta Access",
+      };
+    if (status.includes("Production"))
+      return {
+        icon: <SchematicFlow className="w-8 h-8" />,
+        label: "Live in Production",
+      };
+    return {
+      icon: <SchematicPipeline className="w-8 h-8" />,
+      label: "Compiling MVP",
+    };
   };
 
   const overlay = getStatusOverlay(project.status);
-
   const caseStudyHref = project.url?.caseStudy ?? `/projects/${project.slug}`;
+  const liveDemoHref = project.url?.liveDemo;
 
   return (
     <motion.div
       whileHover={{ y: -5 }}
       className="group relative h-full w-full overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900/20 backdrop-blur-2xl p-8 max-sm:py-6 hover:border-indigo-500/50 transition-all duration-500"
     >
-        <div className="absolute inset-0 bg-linear-to-tr from-indigo-300/5 flex md:hidden via-indigo-600/15 m-1 backdrop-blur-3xl opacity-50 from-35% z-20 to-transparent rounded-2xl pointer-events-none" />
-      {/* 1. Background Image Layer */}
+      <div className="absolute inset-0 bg-linear-to-tr from-indigo-300/5 via-indigo-600/15 m-1 backdrop-blur-3xl opacity-50 from-35% z-20 to-transparent rounded-2xl pointer-events-none md:hidden" />
+
       {project.image && (
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
             src={project.image}
-            alt={project.title}
+            alt=""
             fill
-            sizes="100"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover opacity-20 group-hover:opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700"
           />
           <div className="absolute inset-0 bg-linear-to-t from-[#050505] via-[#050505]/90 to-transparent" />
         </div>
       )}
 
-      {/* 2. COMING SOON OVERLAY (The Magic Part) */}
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
-        <motion.div 
-          initial={{ scale: 0.8, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          className="flex flex-col items-center gap-4 text-center p-6"
-        >
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 group-focus-within:opacity-0 transition-all duration-500 pointer-events-none">
+        <div className="flex scale-95 flex-col items-center gap-4 text-center p-6 transition-transform duration-500 group-hover:scale-100">
           <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
             {overlay.icon}
           </div>
           <div className="space-y-1">
-            <h4 className="text-white font-bold tracking-tighter text-xl uppercase">System Soon</h4>
+            <h3 className="text-white font-bold tracking-tighter text-xl">
+              System Soon
+            </h3>
             <p className="text-indigo-300/70 font-mono text-[10px] tracking-[0.3em] uppercase">
               {overlay.label}
             </p>
           </div>
-          
-          {/* Progress Bar Style */}
           <div className="w-32 h-1 bg-zinc-800 rounded-full mt-2 overflow-hidden">
-            <motion.div 
-              className="h-full bg-indigo-500"
-              initial={{ width: "0%" }}
-              whileInView={{ width: "100%" }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+            <motion.div
+              className="h-full w-full origin-left bg-indigo-500"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* 3. Original Content (Visible by default) */}
       <div className="relative z-10 flex h-full flex-col justify-between group-hover:blur-sm group-hover:scale-[0.98] transition-all duration-500">
         <div>
           <div className="flex items-center justify-between mb-6">
@@ -107,34 +128,66 @@ const ProjectCard = ({ project }: ProjectProps) => {
               </span>
             ))}
           </div>
-
-
-          <div className="flex flex-row gap-2 justify-end grow ">
-            <Link href={caseStudyHref}>
-              <Button className="text-white bg-linear-30 group-hover:z-10 cursor-pointer from-indigo-700 to-indigo-400 border-0">
-                Case Study
-                <ArrowUpRightIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
-              </Button>
-            </Link>
-            {project.url?.liveDemo && (
-              <Link href={project.url.liveDemo} target="_blank" rel="noopener noreferrer">
-                <Button className="bg-white/0 text-white cursor-pointer border-indigo-300/40">
-                  Live Demo
-                  <ArrowUpRightIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
-                </Button>
-              </Link>
-            )}
-            {project.url?.github && (
-              <Link href={project.url.github} target="_blank" rel="noopener noreferrer">
-                <Button className="bg-white/0 text-white cursor-pointer border-indigo-300/40">
-                  GitHub
-                  <GithubIcon className="w-5 h-5 mt-0.5 text-indigo-50 hover:text-white cursor-pointer transition-colors" />
-                </Button>
-              </Link>
-            )}
-          </div>
         </div>
       </div>
+
+      <div className="relative z-30 mt-6 flex flex-wrap justify-end gap-2">
+        <Link
+          href={caseStudyHref}
+          aria-label={`Read the ${project.title} case study`}
+        >
+          <Button className="text-white bg-linear-30 cursor-pointer from-indigo-700 to-indigo-400 border-0">
+            Case Study
+            <ArrowUpRightIcon aria-hidden="true" className="w-5 h-5 mt-0.5 text-indigo-50" />
+          </Button>
+        </Link>
+
+        {liveDemoHref ? (
+          <Link
+            href={liveDemoHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open the ${project.title} live demo in a new tab`}
+          >
+            <Button className="bg-white/0 text-white cursor-pointer border-indigo-300/40">
+              Live Demo
+              <ArrowUpRightIcon aria-hidden="true" className="w-5 h-5 mt-0.5 text-indigo-50" />
+            </Button>
+          </Link>
+        ) : (
+          <Button
+            type="button"
+            aria-label={`Show live demo status for ${project.title}`}
+            onClick={() => setDemoModalOpen(true)}
+            className="bg-white/0 text-white cursor-pointer border border-indigo-300/40"
+          >
+            Live Demo
+            <ArrowUpRightIcon aria-hidden="true" className="w-5 h-5 mt-0.5 text-indigo-50" />
+          </Button>
+        )}
+
+        {project.url?.github && (
+          <Link
+            href={project.url.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View the ${project.title} source code on GitHub`}
+          >
+            <Button className="bg-white/0 text-white cursor-pointer border-indigo-300/40">
+              GitHub
+              <GithubIcon aria-hidden="true" className="w-5 h-5 mt-0.5 text-indigo-50" />
+            </Button>
+          </Link>
+        )}
+      </div>
+
+      {demoModalOpen && (
+        <LiveDemoModal
+          open={demoModalOpen}
+          onOpenChange={setDemoModalOpen}
+          projectTitle={project.title}
+        />
+      )}
     </motion.div>
   );
 };

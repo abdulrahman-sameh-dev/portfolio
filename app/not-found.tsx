@@ -1,41 +1,64 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { useCallback, useEffect, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 
-const flatlinePoints = [
-  "0,120", "10,60", "20,80", "30,30", "40,90", "50,50",
-  "60,70", "70,20", "80,100", "90,40", "100,60",
-  "110,110", "120,120", "130,120", "140,120", "150,120",
-  "160,120", "170,120", "180,120", "190,120", "200,120",
-];
+const BEAT_SEGMENT = [
+  [0, 120],
+  [18, 120],
+  [24, 120],
+  [28, 110],
+  [32, 132],
+  [38, 82],
+  [44, 120],
+  [52, 120],
+  [56, 116],
+  [60, 120],
+  [72, 120],
+  [86, 120],
+  [100, 120],
+] as const;
+
+const heartbeatPath = Array.from({ length: 6 }, (_, segment) =>
+  BEAT_SEGMENT.map(([x, y], index) => `${index === 0 ? "M" : "L"} ${x + segment * 100} ${y}`).join(" ")
+).join(" ");
 
 export default function NotFound() {
-  const svgRef = useRef<SVGSVGElement>(null);
-  const [reconnecting, setReconnecting] = useState(false);
+  const reducedMotion = useReducedMotion();
+  const [runKey, setRunKey] = useState(0);
+  const [flatlineRun, setFlatlineRun] = useState(-1);
+  const phase =
+    reducedMotion || flatlineRun === runKey ? "flatline" : "live";
+
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    const timeout = window.setTimeout(() => setFlatlineRun(runKey), 4200);
+    return () => window.clearTimeout(timeout);
+  }, [reducedMotion, runKey]);
 
   const handleReconnect = useCallback(() => {
-    setReconnecting(true);
-    setTimeout(() => setReconnecting(false), 3000);
+    setRunKey((value) => value + 1);
   }, []);
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-xs mb-12">
         <svg
-          ref={svgRef}
           viewBox="0 0 200 140"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="w-full"
+          aria-hidden="true"
         >
-          {/* Grid lines */}
           {[0, 1, 2, 3, 4].map((i) => (
             <line
-              key={i}
-              x1="0" y1={20 + i * 25}
-              x2="200" y2={20 + i * 25}
+              key={`h${i}`}
+              x1="0"
+              y1={20 + i * 25}
+              x2="200"
+              y2={20 + i * 25}
               stroke="#27272a"
               strokeWidth="0.3"
             />
@@ -43,57 +66,46 @@ export default function NotFound() {
           {[0, 1, 2, 3, 4].map((i) => (
             <line
               key={`v${i}`}
-              x1={40 + i * 40} y1="20"
-              x2={40 + i * 40} y2="140"
+              x1={40 + i * 40}
+              y1="20"
+              x2={40 + i * 40}
+              y2="140"
               stroke="#27272a"
               strokeWidth="0.3"
             />
           ))}
 
-          {/* Signal line */}
-          <motion.path
-            d={`M ${flatlinePoints.join(" L ")}`}
-            stroke="#818cf8"
-            strokeWidth="1"
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            fill="none"
-            initial={{ pathLength: 1 }}
-            animate={
-              reconnecting
-                ? {
-                    pathLength: [1, 0, 1],
-                  }
-                : { pathLength: 1 }
-            }
-            transition={
-              reconnecting
-                ? { duration: 1.5, ease: "easeInOut" }
-                : {}
-            }
-          />
+          {phase === "live" && (
+            <motion.g
+              animate={{ x: [0, -100] }}
+              transition={{ duration: 1, ease: "linear", repeat: Infinity }}
+              style={{ willChange: "transform" }}
+            >
+              <path
+                d={heartbeatPath}
+                stroke="#818cf8"
+                strokeWidth="1"
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </motion.g>
+          )}
 
-          {/* Flatline dot */}
-          <motion.circle
-            cx="200"
-            cy="120"
-            r="1.5"
-            fill="#818cf8"
-            animate={
-              reconnecting
-                ? { opacity: [0, 1, 0] }
-                : { opacity: 0.6 }
-            }
-            transition={
-              reconnecting
-                ? { duration: 2, repeat: Infinity }
-                : {}
-            }
-          />
-
-          {/* Blip before flatline */}
-          <circle cx="90" cy="40" r="1" fill="#818cf8" opacity="0.4" />
-          <line x1="90" y1="40" x2="90" y2="120" stroke="#818cf8" strokeWidth="0.3" opacity="0.15" strokeDasharray="2 2" />
+          <motion.g
+            initial={{ opacity: 0 }}
+            animate={{ opacity: phase === "flatline" ? 1 : 0 }}
+            transition={{ duration: reducedMotion ? 0 : 0.9 }}
+          >
+            <path
+              d="M 0 120 L 200 120"
+              stroke="#818cf8"
+              strokeWidth="1"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <circle cx="200" cy="120" r="1.5" fill="#818cf8" />
+          </motion.g>
         </svg>
       </div>
 
@@ -104,11 +116,19 @@ export default function NotFound() {
         className="text-center"
       >
         <div className="flex items-center justify-center gap-3 mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
+          <span
+            className={`w-1.5 h-1.5 rounded-full ${
+              phase === "live" ? "bg-indigo-400" : "bg-zinc-700"
+            }`}
+          />
           <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-zinc-400">
-            Signal Lost
+            {phase === "live" ? "Signal Active" : "Flatline"}
           </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-zinc-700" />
+          <span
+            className={`w-1.5 h-1.5 rounded-full ${
+              phase === "live" ? "bg-indigo-400" : "bg-zinc-700"
+            }`}
+          />
         </div>
 
         <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-white mb-4">
@@ -116,7 +136,7 @@ export default function NotFound() {
         </h1>
 
         <p className="text-zinc-400 text-base leading-relaxed mb-10 max-w-sm mx-auto">
-          The route you requested does not exist on this server. 
+          The route you requested does not exist on this server.
           The connection was terminated.
         </p>
 

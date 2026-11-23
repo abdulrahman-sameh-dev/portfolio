@@ -422,7 +422,6 @@ export const siteConfig = {
       datePublished: "2026-09-14",
       url: {
         caseStudy: "/case-studies/first-onw-hr",
-        github: "https://github.com/abdulrahman-sameh-dev/CRUD-operation",
       },
       overview:
         "First Onw HR is a complete, authenticated employee management platform: registration, login, email verification, password reset, profile management, and a paginated employee directory with full CRUD flows. Build on a modern Laravel 12 + MySQL full-stack, then re-engineered stateless-first so it runs flawlessly on Vercel's serverless PHP runtime. The engineering thesis is not the CRUD — it is the deployment substrate. Every framework default that assumed a persistent filesystem was deliberately re-bound.",

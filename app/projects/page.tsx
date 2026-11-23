@@ -89,9 +89,9 @@ export default function Projects() {
                     <span className="text-xs font-mono text-zinc-400">{system.progress}%</span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white mb-3 tracking-tight">
+                  <h2 className="text-lg font-bold text-white mb-3 tracking-tight">
                     {system.label}
-                  </h3>
+                  </h2>
 
                   <p className="text-sm text-zinc-400 leading-relaxed mb-6">
                     {system.description}

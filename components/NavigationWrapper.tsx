@@ -47,6 +47,7 @@ export default function NavigationWrapper() {
   }, []);
 
   // --- 2. BFCache Fix (Hydration/State Persistence) ---
+  // ده الجزء اللي بيحل مشكلة الـ Context loss لما المستخدم يرجع بظهره في المتصفح
   useEffect(() => {
     const handlePageShow = (event: PageTransitionEvent) => {
       if (event.persisted) {
@@ -59,6 +60,7 @@ export default function NavigationWrapper() {
   }, []);
 
   // --- 3. Body Scroll Lock ---
+  // بنقفل الـ scroll بتاع الصفحة لما المنيو تفتح عشان الـ UX يكون مظبوط
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -83,6 +85,7 @@ export default function NavigationWrapper() {
         el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
       }
     } else {
+      // لو مش في الصفحة الرئيسية، بنروح لها ونضيف الـ hash
       router.push("/#contact");
     }
   }, [pathname, router]);

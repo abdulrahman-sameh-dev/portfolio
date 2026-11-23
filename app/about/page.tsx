@@ -174,9 +174,9 @@ export default function AboutPage() {
             
             <div className="flex items-center gap-2 mb-12">
               <SchematicZap className="w-4 h-4 text-indigo-500" />
-              <h3 className="text-zinc-200 font-bold text-sm uppercase tracking-[0.2em]">
+              <h2 className="text-zinc-200 font-bold text-sm uppercase tracking-[0.2em]">
                 Career Architecture
-              </h3>
+              </h2>
             </div>
 
             <div className="relative flex flex-col ml-2">
@@ -251,7 +251,7 @@ export default function AboutPage() {
                       </span>
 
                       <div className="flex items-center gap-2">
-                        <h4
+                        <h3
                           className={`
                             font-bold tracking-tight leading-tight mt-1
                             ${isCurrent 
@@ -260,7 +260,7 @@ export default function AboutPage() {
                           `}
                         >
                           {exp.title}
-                        </h4>
+                        </h3>
 
                         {isCurrent && (
                           <span className="text-[10px] px-2 py-0.5 bg-indigo-500/20 text-indigo-400 rounded-full font-mono">

@@ -84,7 +84,7 @@ const Hero = () => {
               </Button>
               <Button className="bg-white/0 text-white hover:bg-white/3 border-indigo-300/40 border py-5 px-7 text-base" asChild>
                 <Link href={"/about"}>
-                  Learn More <ArrowUpRightIcon />
+                  About Abdulrahman — Full-Stack Developer <ArrowUpRightIcon />
                 </Link>
               </Button>
             </motion.div>

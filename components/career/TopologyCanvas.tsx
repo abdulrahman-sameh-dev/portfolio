@@ -304,14 +304,30 @@ export default function TopologyCanvas({
   // Build edges only between visible nodes.
   const edges = useMemo(() => {
     const map = new Map(nodes.map((n) => [n.id, n]));
-    const out: { d: string; tx: number; ty: number; from: string; to: string }[] = [];
+    const out: {
+      d: string;
+      sx: number;
+      sy: number;
+      tx: number;
+      ty: number;
+      from: string;
+      to: string;
+    }[] = [];
     for (const n of nodes) {
       for (const targetId of n.connectedTo) {
         const t = map.get(targetId);
         if (!t) continue;
         const s = edgeEndpoint(n, t);
         const e = edgeEndpoint(t, n);
-        out.push({ d: `M ${s.x} ${s.y} L ${e.x} ${e.y}`, tx: e.x, ty: e.y, from: n.id, to: targetId });
+        out.push({
+          d: `M ${s.x} ${s.y} L ${e.x} ${e.y}`,
+          sx: s.x,
+          sy: s.y,
+          tx: e.x,
+          ty: e.y,
+          from: n.id,
+          to: targetId,
+        });
       }
     }
     return out;
@@ -376,15 +392,15 @@ export default function TopologyCanvas({
                       r={3.4}
                       fill="#6366f1"
                       opacity={0.55}
-                      style={{ offsetPath: `path("${e.d}")` }}
-                      animate={{ offsetDistance: ["0%", "100%"] }}
+                      initial={{ x: e.sx, y: e.sy }}
+                      animate={{ x: [e.sx, e.tx], y: [e.sy, e.ty] }}
                       transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
                     />
                     <motion.circle
                       r={1.6}
                       fill="#a5b4fc"
-                      style={{ offsetPath: `path("${e.d}")` }}
-                      animate={{ offsetDistance: ["0%", "100%"] }}
+                      initial={{ x: e.sx, y: e.sy }}
+                      animate={{ x: [e.sx, e.tx], y: [e.sy, e.ty] }}
                       transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
                     />
                   </>

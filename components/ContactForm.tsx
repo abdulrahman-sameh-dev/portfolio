@@ -1,7 +1,6 @@
 "use client"
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { toast } from "sonner";
 import { useEffect, useRef, useCallback } from "react";
 
@@ -17,30 +16,29 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  contactFormSchema,
   REQUEST_PROTOCOL_EVENT,
   serviceProtocolToContact,
+  type ContactFormValues,
   type RequestProtocolDetail,
 } from "@/lib/contact";
 
-const contactFormSchema = z.object({
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().optional(),
-  category: z.string().min(1, "Please select a category"), // خليناه string بسيط للـ Select
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
-
-type ContactFormValues = z.infer<typeof contactFormSchema>;
+function createIdempotencyKey(): string {
+  return (
+    globalThis.crypto?.randomUUID?.() ??
+    `${Date.now()}-${Math.random().toString(36).slice(2)}`
+  );
+}
 
 export default function ContactForm() {
   const { 
-    register, 
-    handleSubmit, 
-    reset, 
+    register,
+    handleSubmit,
+    reset,
     setValue,
+    setError,
     control,
-    formState: { errors, isSubmitting } 
+    formState: { errors, isSubmitting }
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -49,6 +47,7 @@ export default function ContactForm() {
   });
 
   const messageRef = useRef<HTMLTextAreaElement | null>(null);
+  const submittingRef = useRef(false);
 
   const applyProtocol = useCallback((protocol: RequestProtocolDetail) => {
     setValue("category", protocol.category, { shouldValidate: false });
@@ -78,17 +77,50 @@ export default function ContactForm() {
   }, [applyProtocol]);
 
   const onSubmit = async (data: ContactFormValues) => {
+    if (submittingRef.current) return;
+    submittingRef.current = true;
+
+    const idempotencyKey = createIdempotencyKey();
+
     try {
-      const response = await fetch('/api/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKey,
+        },
         body: JSON.stringify(data),
       });
-      if (!response.ok) throw new Error();
+
+      const result = (await response.json().catch(() => null)) as {
+        error?: string;
+        fieldErrors?: Record<string, string[] | undefined>;
+      } | null;
+
+      if (!response.ok) {
+        if (result?.fieldErrors) {
+          const [firstField, firstMessages] =
+            Object.entries(result.fieldErrors).find(([, messages]) => messages?.length) ??
+            [];
+          if (firstField && firstMessages?.[0]) {
+            setError(firstField as keyof ContactFormValues, {
+              message: firstMessages[0],
+            });
+          }
+        }
+        throw new Error(
+          result?.error ?? "Your message could not be sent. Please try again."
+        );
+      }
+
       toast.success("Message sent successfully!");
       reset();
-    } catch {
-      toast.error("Failed to send message.");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to send message."
+      );
+    } finally {
+      submittingRef.current = false;
     }
   };
 
@@ -113,8 +145,13 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div id="Form" className="max-sm:p-6 p-8 max-sm:mt-10 rounded-xl border border-zinc-800 bg-zinc-950/50 backdrop-blur-sm">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="max-sm:p-6 p-8 rounded-xl border border-zinc-800 bg-zinc-950/50 backdrop-blur-sm">
+          <form
+            onSubmit={(event) => {
+              void handleSubmit(onSubmit)(event);
+            }}
+            className="space-y-6"
+          >
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
