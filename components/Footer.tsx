@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { GithubIcon, ArrowUpRightIcon, LinkedinIcon, TwitterIcon } from "lucide-animated";
 import { siteConfig } from "@/lib/site";

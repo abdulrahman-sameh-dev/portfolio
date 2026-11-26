@@ -53,9 +53,6 @@ importers:
       resend:
         specifier: ^6.12.2
         version: 6.12.2
-      shadcn:
-        specifier: ^4.1.2
-        version: 4.5.0(@types/node@20.19.39)(typescript@5.9.3)
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -65,9 +62,6 @@ importers:
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
-      vercel:
-        specifier: ^59.11.7
-        version: 59.11.7(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -90,12 +84,18 @@ importers:
       eslint-config-next:
         specifier: 16.2.2
         version: 16.2.2(@typescript-eslint/parser@8.59.1(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
+      shadcn:
+        specifier: ^4.1.2
+        version: 4.5.0(@types/node@20.19.39)(typescript@5.9.3)
       tailwindcss:
         specifier: ^4
         version: 4.2.4
       typescript:
         specifier: ^5
         version: 5.9.3
+      vercel:
+        specifier: ^59.11.7
+        version: 59.11.7(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
 
 packages:
 

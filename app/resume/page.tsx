@@ -34,7 +34,7 @@ export default function ResumePage() {
             <span className="w-2 h-2 rounded-full bg-green-500/30" />
           </div>
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">
-            System Brief {"//"} Document 001
+            Résumé
           </span>
         </div>
         <PrintButton />
@@ -45,7 +45,7 @@ export default function ResumePage() {
         {/* Header */}
         <header className="print:pt-0 print:px-0 px-6 md:px-8 pt-8 pb-6 border-b border-zinc-800/60">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-500 print:text-black">
-            System Brief {"//"} PERSON RECORD
+            Résumé
           </p>
           <div className="mt-3 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
@@ -58,8 +58,8 @@ export default function ResumePage() {
             </div>
             <address className="not-italic font-mono text-[11px] uppercase tracking-wider text-zinc-400 print:text-neutral-600 space-y-1 md:text-right">
               <p>{siteConfig.location.city}</p>
-              <p>{siteConfig.location.coordinates}</p>
               <p>{siteConfig.email}</p>
+              <p>{siteConfig.socials.linkedin.replace("https://www.", "")}</p>
             </address>
           </div>
         </header>
@@ -79,8 +79,8 @@ export default function ResumePage() {
             {siteConfig.socials.github.replace("https://", "")}
           </span>
           <span>
-            <span className="text-zinc-300 print:text-black">X:</span>{" "}
-            {siteConfig.socials.x.replace("https://", "")}
+            <span className="text-zinc-300 print:text-black">LINKEDIN:</span>{" "}
+            {siteConfig.socials.linkedin.replace("https://www.", "")}
           </span>
         </div>
 
@@ -138,7 +138,7 @@ export default function ResumePage() {
           {/* Experience */}
           <section className="space-y-4">
             <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-500 print:text-black">
-              Experience & Signature Systems
+              Experience & Projects
             </h2>
             <div className="space-y-6">
               {experience.map((node) => (

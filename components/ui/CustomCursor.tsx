@@ -2,8 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue, useReducedMotion } from "motion/react";
 
+const isFinePointer = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(pointer: fine)").matches;
+
 export default function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
+  const [enabled, setEnabled] = useState(false);
   const reduceMotion = useReducedMotion();
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -14,6 +19,10 @@ export default function CustomCursor() {
   const mainY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    // المؤشر المخصص للأجهزة اللي فيها ماوس دقيق فقط — من غير ما نحمّل أجهزة اللمس
+    if (!isFinePointer()) return;
+    setEnabled(true);
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -34,6 +43,8 @@ export default function CustomCursor() {
       window.removeEventListener("mouseover", handleHover);
     };
   }, [cursorX, cursorY]);
+
+  if (!enabled) return null;
 
   return (
     // المكون لا يظهر إلا في الشاشات الكبيرة (أكبر من Tablet)

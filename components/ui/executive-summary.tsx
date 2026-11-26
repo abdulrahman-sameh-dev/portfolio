@@ -87,7 +87,7 @@ export default function ExecutiveSummary({
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-800">
               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-zinc-400">
-                Quick Summary {"//"} Portfolio State
+                Quick Summary
               </span>
               <button
                 onClick={onClose}
@@ -118,7 +118,7 @@ export default function ExecutiveSummary({
                 </div>
               </section>
 
-              {/* Core Stack Proficiency */}
+              {/* Core Stack */}
               <section className="space-y-3">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
                   Core Stack
@@ -127,20 +127,12 @@ export default function ExecutiveSummary({
                   {featured.map((skill) => (
                     <div
                       key={skill.name}
-                      className="flex items-center gap-3 text-sm"
+                      className="flex items-center justify-between gap-3 text-sm"
                     >
-                      <span className="w-28 shrink-0 font-mono text-[10px] uppercase tracking-widest text-zinc-300">
+                      <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-300">
                         {skill.name}
                       </span>
-                      <div className="flex-1 h-[3px] bg-zinc-800 rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${skill.proficiency}%` }}
-                          transition={{ duration: 0.7, ease: "easeOut" }}
-                          className="h-full bg-indigo-500"
-                        />
-                      </div>
-                      <span className="w-16 shrink-0 text-right font-mono text-[10px] text-zinc-500">
+                      <span className="font-mono text-[10px] text-zinc-500">
                         {skill.level}
                       </span>
                     </div>
@@ -148,15 +140,15 @@ export default function ExecutiveSummary({
                 </div>
               </section>
 
-              {/* Contact Protocols */}
+              {/* Contact */}
               <section className="space-y-3">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                  Contact Protocols
+                  Contact
                 </span>
                 <div className="rounded-lg border border-zinc-800 divide-y divide-zinc-800">
                   <div className="flex items-center justify-between px-4 py-2.5">
                     <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
-                      Direct Line
+                      Email
                     </span>
                     <a
                       href={`mailto:${siteConfig.email}`}
@@ -167,7 +159,7 @@ export default function ExecutiveSummary({
                   </div>
                   <div className="flex items-center justify-between px-4 py-2.5">
                     <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
-                      QoS Location
+                      Location
                     </span>
                     <span className="font-mono text-xs text-zinc-200">
                       {siteConfig.location.city} — {siteConfig.location.timezone}
@@ -187,7 +179,7 @@ export default function ExecutiveSummary({
               {/* Quiet link to full topology */}
               <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-zinc-500">
-                  Need the full trace?
+                  Want the full picture?
                 </span>
                 <Link
                   href="/career-path"

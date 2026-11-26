@@ -72,7 +72,7 @@ export default function CareerPathPage() {
             <span className="w-2 h-2 rounded-full bg-green-500/30" />
           </div>
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">
-            Career Operating System
+            Career Path
           </span>
         </div>
         <span className="font-mono text-[9px] tracking-wider text-zinc-400">
@@ -90,8 +90,8 @@ export default function CareerPathPage() {
           className="space-y-4"
         >
           <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-[1.05]">
-            Career Operating <br className="hidden md:block" />
-            <span className="text-indigo-500">System.</span>
+            My Career <br className="hidden md:block" />
+            <span className="text-indigo-500">Path.</span>
           </h1>
           <p className="text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed">
             A map of the learning phases, projects, and decisions that shaped my path. Each node is

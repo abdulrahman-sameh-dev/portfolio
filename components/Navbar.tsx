@@ -39,7 +39,7 @@ export const Navbar = ({ onOpenMenu, isOpen }: { onOpenMenu: () => void; isOpen:
           className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-800 text-sm font-medium text-zinc-300 hover:text-white hover:border-indigo-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 transition-all"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.15em]">
-            [System Status / Career]
+            Career Path
           </span>
         </Link>
 
