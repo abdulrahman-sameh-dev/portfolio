@@ -4,9 +4,9 @@ import { careerNodes } from "@/lib/data/career";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "System Brief",
+  title: "Résumé",
   description:
-    "Print-ready system brief and career record of Abdulrahman Sameh — Full Stack Engineer & Systems Architect.",
+    "Print-ready résumé and project record of Abdulrahman Sameh — product-minded software developer with a full-stack background.",
 };
 
 const parseTimelineStart = (timeline: string) =>
@@ -34,7 +34,7 @@ export default function ResumePage() {
             <span className="w-2 h-2 rounded-full bg-green-500/30" />
           </div>
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">
-            System Brief {"//"} Document 001
+            Résumé
           </span>
         </div>
         <PrintButton />
@@ -45,7 +45,7 @@ export default function ResumePage() {
         {/* Header */}
         <header className="print:pt-0 print:px-0 px-6 md:px-8 pt-8 pb-6 border-b border-zinc-800/60">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-500 print:text-black">
-            System Brief {"//"} PERSON RECORD
+            Résumé
           </p>
           <div className="mt-3 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
@@ -53,13 +53,13 @@ export default function ResumePage() {
                 {siteConfig.name}
               </h1>
               <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400 print:text-neutral-600">
-                Full Stack Engineer {"//"} Systems Architect
+                {siteConfig.role} {"//"} Full-Stack Background
               </p>
             </div>
             <address className="not-italic font-mono text-[11px] uppercase tracking-wider text-zinc-400 print:text-neutral-600 space-y-1 md:text-right">
               <p>{siteConfig.location.city}</p>
-              <p>{siteConfig.location.coordinates}</p>
               <p>{siteConfig.email}</p>
+              <p>{siteConfig.socials.linkedin.replace("https://www.", "")}</p>
             </address>
           </div>
         </header>
@@ -79,8 +79,8 @@ export default function ResumePage() {
             {siteConfig.socials.github.replace("https://", "")}
           </span>
           <span>
-            <span className="text-zinc-300 print:text-black">X:</span>{" "}
-            {siteConfig.socials.x.replace("https://", "")}
+            <span className="text-zinc-300 print:text-black">LINKEDIN:</span>{" "}
+            {siteConfig.socials.linkedin.replace("https://www.", "")}
           </span>
         </div>
 
@@ -92,15 +92,30 @@ export default function ResumePage() {
               Summary
             </h2>
             <p className="text-zinc-300 leading-relaxed max-w-3xl print:text-black">
-              Full Stack Engineer specializing in real-time systems, scalable
-              web architecture, and serverless PHP platforms (Laravel 12 · PHP 8 ·
-              MySQL). I treat deployment as a first-class output, data
-              contracts as the first line of defense, and boring, observable
-              systems as the highest form of elegance. From logic foundations in
-              C++ to production real-time and serverless PHP platforms,
-              everything ships, everything is typed, and nothing runs outside a
-              pipeline.
+              Product-minded software developer with a full-stack background across Next.js,
+              TypeScript, Laravel, PHP, MySQL, and Node.js. I focus on understanding the problem,
+              planning the work in clear milestones, and building applications that hold up in real
+              use. My recent work includes a Printify-connected storefront, a local-first video
+              clipping tool, and a Laravel platform adapted for serverless deployment.
             </p>
+          </section>
+
+          {/* Training */}
+          <section className="space-y-3">
+            <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-500 print:text-black">
+              Training & Learning
+            </h2>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+              {siteConfig.learning.map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-2 text-sm text-zinc-300 leading-relaxed print:text-black"
+                >
+                  <span className="text-indigo-500 print:text-black mt-px">{"▸"}</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </section>
 
           {/* Core Stack */}
@@ -123,7 +138,7 @@ export default function ResumePage() {
           {/* Experience */}
           <section className="space-y-4">
             <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-indigo-500 print:text-black">
-              Experience & Signature Systems
+              Experience & Projects
             </h2>
             <div className="space-y-6">
               {experience.map((node) => (

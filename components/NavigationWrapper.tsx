@@ -26,8 +26,10 @@ export default function NavigationWrapper() {
   // --- 1. Scroll Direction Logic (Hide/Show Navbar) ---
   useEffect(() => {
     let lastScrollY = window.scrollY;
+    let ticking = false;
 
-    const onScroll = () => {
+    const update = () => {
+      ticking = false;
       const currentScrollY = window.scrollY;
 
       // Hide on scroll down, show on scroll up
@@ -40,6 +42,14 @@ export default function NavigationWrapper() {
       // Add background/blur after scrolling 20px
       setScrolled(currentScrollY > 20);
       lastScrollY = currentScrollY;
+    };
+
+    // rAF throttle: حد أقصى تحديث واحد لكل فريم بدل تحديث مع كل scroll event
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });

@@ -42,24 +42,23 @@ const Hero = () => {
               variants={item}
               className="border border-indigo-500/30 bg-indigo-500/5 text-indigo-300 text-sm md:text-base font-medium px-5 py-3 rounded-xl w-fit backdrop-blur-sm"
             >
-              Specialized in Scalable Web Systems
+              {siteConfig.role}
             </motion.span>
 
             <motion.h1
               variants={item}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-balance"
             >
-              Developing High-Performance <br />
-              <span className="text-indigo-400">
-                Full-Stack Applications.
-              </span>
+              {siteConfig.headline}
             </motion.h1>
 
             <motion.p
               variants={item}
               className="max-w-xl text-lg md:text-xl text-zinc-400 leading-relaxed"
             >
-              Full Stack Developer specialized in Next.js, TypeScript, Laravel 12, PHP, MySQL, Node.js & Scalable Architecture.
+              Full-stack foundation across Next.js, TypeScript, Laravel, PHP, and MySQL. I focus on
+              understanding the problem, planning the solution, and building products that hold up
+              in real use.
             </motion.p>
 
             <motion.div
@@ -80,11 +79,11 @@ const Hero = () => {
                 className="bg-white/0 text-white hover:bg-white/3 border-indigo-300/40 border py-5 px-7 text-base"
                 onClick={() => setSummaryOpen(true)}
               >
-                View Executive Summary
+                View Quick Summary
               </Button>
               <Button className="bg-white/0 text-white hover:bg-white/3 border-indigo-300/40 border py-5 px-7 text-base" asChild>
                 <Link href={"/about"}>
-                  About Abdulrahman — Full-Stack Developer <ArrowUpRightIcon />
+                  Who I Am — Abdulrahman <ArrowUpRightIcon />
                 </Link>
               </Button>
             </motion.div>

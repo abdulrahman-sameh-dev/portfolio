@@ -9,7 +9,7 @@ import {
   useTransform,
 } from "motion/react";
 import type { AnimationPlaybackControls, Easing, MotionValue } from "motion/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type NodeId = "client" | "core" | "db" | "release";
 type Phase = NodeId | "transit" | "deploy" | "overview";
@@ -178,6 +178,29 @@ const DataFlowDiagram = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
   const [phase, setPhase] = useState<Phase>("overview");
   const reduced = useReducedMotion();
 
+  // نشغّل الأنيميشن فقط لما المكوّن ظاهر على الشاشة والتبويب مفتوح
+  // عشان منحرقش CPU/Battery على حاجة محدش شايفها
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const el = rootRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setActive(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const onVisibility = () => setActive(!document.hidden);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
   const viewBox = useMotionValue("0 0 320 320");
   const tab = useMotionValue(1);
   const pkt1 = useMotionValue(0);
@@ -200,7 +223,7 @@ const DataFlowDiagram = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
   const labelOpacity = (node: NodeId) => (hovered === node || phase === node ? 1 : 0.6);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || !active) return;
 
     const anims: AnimationPlaybackControls[] = [];
     let cancelled = false;
@@ -260,7 +283,7 @@ const DataFlowDiagram = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
       cancelled = true;
       anims.forEach((anim) => anim.stop());
     };
-  }, [reduced, delay, viewBox, tab, pkt1, pkt2, pkt3]);
+  }, [reduced, active, delay, viewBox, tab, pkt1, pkt2, pkt3]);
 
   const packetProgress = useMemo(
     () => PACKET_SPECS.map((spec) => motionValue(spec.offsetFrac)),
@@ -268,7 +291,7 @@ const DataFlowDiagram = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
   );
 
   useAnimationFrame((_, delta) => {
-    if (reduced) return;
+    if (reduced || !active) return;
     const elapsed = Math.min(delta, 50);
     PACKET_SPECS.forEach((spec, index) => {
       const next = (packetProgress[index].get() + elapsed / (spec.duration * 1000)) % 1;
@@ -295,6 +318,7 @@ const DataFlowDiagram = ({ className = "w-[300px] h-[300px]", delay = 1 }) => {
 
   return (
     <motion.div
+      ref={rootRef}
       className={`relative flex items-center justify-center ${className}`}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}

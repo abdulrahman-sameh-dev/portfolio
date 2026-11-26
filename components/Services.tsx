@@ -62,12 +62,10 @@ export const Services = () => {
         viewport={{ once: true }}
         className="mb-12"
       >
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">
-          Engagement Protocols.
-        </h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-4">Ways to Work Together.</h2>
         <p className="text-zinc-400 text-lg max-w-2xl">
-          Three defined ways to put a system in motion — each scoped,
-          contract-driven, and shipped with the same precision.
+          Three practical ways to collaborate — building something new, planning an idea, or
+          improving an application that already exists.
         </p>
       </motion.div>
 
@@ -113,7 +111,7 @@ export const Services = () => {
               onClick={(e) => requestProtocol(e, service.id)}
               className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded cursor-pointer"
             >
-              Request Protocol
+              Start a Conversation
               <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5" />
             </Link>
           </motion.div>

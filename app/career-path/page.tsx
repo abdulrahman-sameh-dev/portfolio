@@ -6,6 +6,7 @@ import TopologyCanvas from "@/components/career/TopologyCanvas";
 import InspectorPanel from "@/components/career/InspectorPanel";
 import EpochBar, { type EpochFilter } from "@/components/career/EpochBar";
 import { careerNodes } from "@/lib/data/career";
+import { siteConfig } from "@/lib/site";
 
 export default function CareerPathPage() {
   const [epoch, setEpoch] = useState<EpochFilter>("all");
@@ -31,8 +32,6 @@ export default function CareerPathPage() {
     setHoveredId(null);
   };
 
-  const experienceYears = new Date().getFullYear() - 2022;
-
   const jsonLd = useMemo(() => {
     const schemaTypes = {
       company: "Organization",
@@ -50,9 +49,9 @@ export default function CareerPathPage() {
       "@context": "https://schema.org",
       "@type": "Person",
       name: "Abdulrahman Sameh",
-      jobTitle: "Full Stack Engineer & Systems Architect",
+      jobTitle: siteConfig.role,
       description:
-        "Engineered career trajectory from logic foundations to real-time systems and architecture-level ownership.",
+        "A learning path from logic and web foundations to full-stack projects, product planning, and ongoing experiments.",
       hasPart: graph,
     });
   }, []);
@@ -73,7 +72,7 @@ export default function CareerPathPage() {
             <span className="w-2 h-2 rounded-full bg-green-500/30" />
           </div>
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-400">
-            Career Operating System
+            Career Path
           </span>
         </div>
         <span className="font-mono text-[9px] tracking-wider text-zinc-400">
@@ -91,13 +90,12 @@ export default function CareerPathPage() {
           className="space-y-4"
         >
           <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-[1.05]">
-            Career Operating <br className="hidden md:block" />
-            <span className="text-indigo-500">System.</span>
+            My Career <br className="hidden md:block" />
+            <span className="text-indigo-500">Path.</span>
           </h1>
           <p className="text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed">
-            A live topology of the journey from logic foundations to
-            architecture-level ownership. Each node is a milestone — select it
-            to read its telemetry.
+            A map of the learning phases, projects, and decisions that shaped my path. Each node is
+            a milestone — select it to read the notes behind it.
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
             Drag to pan {"//"} Scroll or pinch to zoom {"//"} Click a node to inspect
@@ -140,7 +138,7 @@ export default function CareerPathPage() {
         </div>
         <div className="hidden sm:flex items-center gap-3">
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">
-            <span className="text-zinc-300">EXPERIENCE:</span> {experienceYears} YEARS
+            <span className="text-zinc-300">TRACK:</span> FOUNDATIONS TO PRODUCT
           </span>
           <span className="font-mono text-[10px] text-zinc-400">{"//"}</span>
           <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-400">

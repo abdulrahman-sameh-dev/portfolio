@@ -100,7 +100,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ s
           <div className="flex items-center gap-3 mb-5">
             <Layers size={16} className="text-indigo-400" />
             <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-indigo-400">
-              System Case Study
+              Project Case Study
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-4 mb-6">
@@ -177,7 +177,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ s
           </div>
           <div className="bg-zinc-900/60 p-8">
             <h2 className="text-[10px] font-mono uppercase tracking-[0.3em] text-indigo-400 mb-4">
-              Key Metrics
+              Key Facts
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {project.metrics.map((metric) => (
@@ -216,7 +216,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ s
           <Button variant="ghost" className="text-zinc-400 hover:text-white px-0" asChild>
             <Link href="/projects">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to systems
+              Back to projects
             </Link>
           </Button>
         </div>

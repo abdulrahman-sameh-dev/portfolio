@@ -17,20 +17,20 @@ export const REQUEST_PROTOCOL_EVENT = "request-protocol";
 export type RequestProtocolDetail = ContactProtocol & { service: string };
 
 export const serviceProtocolToContact: Record<string, ContactProtocol> = {
-  architecture: {
-    category: "Consultation",
-    message:
-      "I'd like to initiate an Architecture & System Design engagement. I'm looking for end-to-end architecture that starts with data contracts and ends with a clear deployment path, production-ready before a single UI pixel ships.",
-  },
   build: {
     category: "Project",
     message:
-      "I'd like to initiate a Full-Stack Product Build engagement. I'd like to take a project from greenfield to shipped, owning the full vertical slice — schema, API, interface, and deployment as one coherent system.",
+      "I'd like to talk about building a web application. I'm looking for help from the interface through the API and database, with a clear deployment path and code that is easy to maintain.",
   },
-  audit: {
+  planning: {
     category: "Consultation",
     message:
-      "I'd like to initiate a Performance & Reliability Audit engagement. I'd like a forensic pass over latency, bundle weight, and failure modes, with a prioritized remediation plan I can act on.",
+      "I'd like help clarifying a product idea. I need support defining the problem, setting scope, and splitting the work into milestones before development starts.",
+  },
+  improve: {
+    category: "Consultation",
+    message:
+      "I'd like a practical review of an existing application. I'm interested in usability, performance, and deployment issues, with a short list of fixes I can act on.",
   },
 };
 
