@@ -141,7 +141,7 @@ export default function ContactForm() {
           
           <div className="pt-8 border-t border-zinc-800 flex flex-col gap-1">
             <span className="text-zinc-400 text-sm font-medium uppercase tracking-wider">Email</span>
-            <span className="text-white text-lg font-mono">darkhub.dev@gmail.com</span>
+            <span className="text-white text-lg font-mono">abdulrahman.sameh.giza.eg@gmail.com</span>
           </div>
         </div>
 
