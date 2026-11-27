@@ -94,7 +94,7 @@ export const siteConfig = {
   headline: "Building useful digital products with a full-stack foundation.",
   intro:
     "I'm Abdulrahman Sameh, a product-minded software developer with a full-stack background. I care about understanding the problem, planning the solution, and building systems that serve real needs.",
-  email: "darkhub.dev@gmail.com",
+  email: "abdulrahman.sameh.giza.eg@gmail.com",
   siteUrl: "https://abdulrahman-sameh-dev.vercel.app",
   resumeUrl: "/resume",
   availability: {
